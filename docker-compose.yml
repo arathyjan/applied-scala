@@ -1,0 +1,36 @@
+version: "2"
+
+services:
+  dev:
+    build: support/dev
+    working_dir: /work
+    command: support/dev/run
+    environment:
+      PORT: 8080
+      DATABASE_HOST: database
+      DATABASE_NAME: listingdb
+      DATABASE_USERNAME: lp
+      DATABASE_PASSWORD: lp
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/work
+      - ivy-cache:/root/.ivy2
+      - docker-scala-sbt-cache:/root/.sbt
+    depends_on:
+      - database
+
+  database:
+    image: postgres:9.6
+    environment:
+      POSTGRES_USER: lp
+      POSTGRES_PASSWORD: lp
+      POSTGRES_DB: listingdb
+    ports:
+      - 5432:5432
+
+volumes:
+  ivy-cache:
+    external: true
+  docker-scala-sbt-cache:
+    external: true
