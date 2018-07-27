@@ -16,7 +16,7 @@ mainClass in Compile := Some("com.reagroup.listings.listingpublisher.api.Main")
 
 // When building to run locally/test
 // Overrides the "mainClass setting in the "Compile" configuration, only during the "run" task
-mainClass in (Compile, run) := Some("com.reagroup.listings.listingpublisher.api.Dev")
+mainClass in(Compile, run) := Some("com.reagroup.listings.listingpublisher.api.Dev")
 
 resolvers ++= Seq(
   "rea nexus release" at "http://rea-sonatype-nexus.services.delivery.realestate.com.au/nexus/content/repositories/releases"
@@ -32,21 +32,28 @@ val reaScalaLoggingVersion = "1.0.0"
 val reaScalaDiagnosticsVersion = "1.0.1"
 
 libraryDependencies ++= Seq(
-  "io.circe"                    %% "circe-core"                       % circeVersion,
-  "io.circe"                    %% "circe-parser"                     % circeVersion,
-  "io.circe"                    %% "circe-java8"                      % circeVersion,
-  "org.typelevel"               %% "cats-core"                        % catsVersion,
-  "com.rea-group"               %% "rea-scala-logging"                % reaScalaLoggingVersion,
-  "com.rea-group"               %% "rea-scala-diagnostics"            % reaScalaDiagnosticsVersion,
-  "org.http4s"                  %% "http4s-blaze-server"              % Http4sVersion,
-  "org.http4s"                  %% "http4s-circe"                     % Http4sVersion,
-  "org.http4s"                  %% "http4s-dsl"                       % Http4sVersion,
-  "org.lyranthe"                %% "http4s-timer-core"                % Http4sTimerVersion,
-  "org.lyranthe"                %% "http4s-timer-newrelic"            % Http4sTimerVersion,
-  "org.specs2"                  %% "specs2-core"                      % specs2Version           % "test",
-  "org.specs2"                  %% "specs2-matcher-extra"             % specs2Version           % "test",
-  "org.specs2"                  %% "specs2-scalacheck"                % specs2Version           % "test",
-  "org.http4s"                  %% "http4s-testing"                   % Http4sVersion           % "test"
+  "io.circe" %% "circe-core",
+  "io.circe" %% "circe-generic",
+  "io.circe" %% "circe-parser",
+  // for auto-derivation of JSON codecs
+  "io.circe" %% "circe-generic",
+  // for string interpolation to JSON model
+  "io.circe" %% "circe-literal"
+).map(_ % circeVersion)
+
+libraryDependencies ++= Seq(
+  "org.typelevel" %% "cats-core" % catsVersion,
+  "com.rea-group" %% "rea-scala-logging" % reaScalaLoggingVersion,
+  "com.rea-group" %% "rea-scala-diagnostics" % reaScalaDiagnosticsVersion,
+  "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
+  "org.http4s" %% "http4s-circe" % Http4sVersion,
+  "org.http4s" %% "http4s-dsl" % Http4sVersion,
+  "org.lyranthe" %% "http4s-timer-core" % Http4sTimerVersion,
+  "org.lyranthe" %% "http4s-timer-newrelic" % Http4sTimerVersion,
+  "org.specs2" %% "specs2-core" % specs2Version % "test",
+  "org.specs2" %% "specs2-matcher-extra" % specs2Version % "test",
+  "org.specs2" %% "specs2-scalacheck" % specs2Version % "test",
+  "org.http4s" %% "http4s-testing" % Http4sVersion % "test"
 )
 
 scalacOptions ++= Seq(
@@ -76,7 +83,7 @@ testFrameworks := Seq(TestFrameworks.Specs2)
 test in assembly := {}
 
 assemblyMergeStrategy in assembly := {
-  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+  case PathList("META-INF", xs@_*) => MergeStrategy.discard
   case x => MergeStrategy.first
 }
 
