@@ -1,4 +1,4 @@
-package com.reagroup.listings.listingpublisher.api
+package com.reagroup.movies.api
 
 import java.util.concurrent.Executors
 

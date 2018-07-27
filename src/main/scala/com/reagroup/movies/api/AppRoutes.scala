@@ -1,4 +1,4 @@
-package com.reagroup.listings.listingpublisher.api
+package com.reagroup.movies.api
 
 import cats.effect._
 import org.http4s.dsl.Http4sDsl

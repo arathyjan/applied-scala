@@ -1,4 +1,4 @@
-package com.reagroup.listings.listingpublisher.api
+package com.reagroup.movies.api
 
 import cats.effect.IO
 import org.http4s.HttpService
