@@ -11,8 +11,8 @@ class MoviesController(repository: MoviesRepository) {
       case PostMovieReq(name, synopsis) =>
         val ioMovieId = repository.saveMovie(Movie(name, synopsis, Vector.empty))
         AppResponse.fromIO(ioMovieId, PostMovieResp)
-      case InvalidReq(_, error) => IO.pure(ErrorResp(error))
-      case UnknownReq(_) => IO.pure(RouteNotFoundResp)
+      case InvalidReq(_, error) => IO.pure(ErrorResp(InvalidRequestErr, error))
+      case UnknownReq(req) => IO.pure(ErrorResp(RouteNotFoundErr, req.toString()))
     }
 
 }

@@ -12,11 +12,11 @@ javaOptions += "-Duser.timezone=UTC"
 
 // When building for deployment
 // Overrides the "mainClass" setting in the "Compile" configuration
-mainClass in Compile := Some("com.reagroup.listings.listingpublisher.api.Main")
+mainClass in Compile := Some("com.reagroup.movies.api.Main")
 
 // When building to run locally/test
 // Overrides the "mainClass setting in the "Compile" configuration, only during the "run" task
-mainClass in(Compile, run) := Some("com.reagroup.listings.listingpublisher.api.Dev")
+mainClass in(Compile, run) := Some("com.reagroup.movies.api.Main")
 
 resolvers ++= Seq(
   "rea nexus release" at "http://rea-sonatype-nexus.services.delivery.realestate.com.au/nexus/content/repositories/releases"
