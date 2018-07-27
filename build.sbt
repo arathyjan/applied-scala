@@ -1,4 +1,4 @@
-name := "listing-publisher-api"
+name := "applied-scala"
 
 version := "1.0"
 

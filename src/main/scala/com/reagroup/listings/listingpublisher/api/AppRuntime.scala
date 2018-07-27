@@ -7,8 +7,6 @@ class AppRuntime() {
 
   private val appRoutes = new AppRoutes(_ => ???)
 
-  val appServices: HttpService[IO] = appRoutes.openRoutes
-
-  val routes: HttpService[IO] = appServices
+  val routes: HttpService[IO] = appRoutes.openRoutes
 
 }
