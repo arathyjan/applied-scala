@@ -15,19 +15,16 @@ case class GetMovieReq(id: MovieId) extends AppRequest
 
 case class PostMovieReq(name: String, synopsis: String) extends AppRequest
 
-case class UnknownReq(req: Request[IO]) extends AppRequest
-
 case class InvalidReq(req: Request[IO], error: String) extends AppRequest
 
 object AppRequest {
 
-  def fromHttp4s(req: Request[IO]): IO[AppRequest] = req match {
+  def fromHttp4s: PartialFunction[Request[IO], IO[AppRequest]] = {
     case GET -> Root / "movies" / LongVar(id) => IO.pure(GetMovieReq(MovieId(id)))
-    case POST -> Root / "movies" => req.as[Json].map(_.as[PostMovieReq] match {
+    case req@POST -> Root / "movies" => req.as[Json].map(_.as[PostMovieReq] match {
       case Left(e) => InvalidReq(req, e.getMessage())
       case Right(r) => r
     })
-    case r => IO.pure(UnknownReq(r))
   }
 
 }
