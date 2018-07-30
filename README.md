@@ -4,6 +4,9 @@
 
 ### Day 1
 
+- Introduction
+  - Use case. What are we building?
+  - Architecture and software components
 - Http4s
   - IO
   - Partial functions
