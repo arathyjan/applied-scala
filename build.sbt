@@ -26,7 +26,7 @@ val catsVersion = "1.1.0"
 val circeVersion = "0.9.3"
 val monixVersion = "2.3.3"
 val specs2Version = "4.3.0"
-val Http4sVersion = "0.18.13"
+val Http4sVersion = "0.18.15"
 val Http4sTimerVersion = "0.0.3"
 val reaScalaLoggingVersion = "1.0.0"
 val reaScalaDiagnosticsVersion = "1.0.1"
@@ -65,7 +65,6 @@ scalacOptions ++= Seq(
   "-Ywarn-dead-code",
   "-Ywarn-numeric-widen",
   "-Ywarn-value-discard",
-  "-Ywarn-unused-import",
   "-language:higherKinds",
   "-Ypartial-unification"
 )
