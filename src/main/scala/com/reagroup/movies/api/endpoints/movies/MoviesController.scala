@@ -2,24 +2,24 @@ package com.reagroup.movies.api.endpoints.movies
 
 import cats.effect.IO
 import com.reagroup.movies.api.models._
-import AppResponse.toAppResp
+import org.http4s._
+import io.circe.generic.auto._
+import org.http4s.circe.CirceEntityCodec._
 
-class MoviesController(repository: MoviesRepository) {
+class MoviesController(f: MovieId => IO[Option[Movie]], g: Movie => IO[MovieId]) {
 
-  def apply(request: AppRequest): IO[AppResponse] =
-    request match {
+  def getMovie(movieId: Long): IO[Response[IO]] =
+    f(MovieId(movieId)).flatMap(encodeOptMovie)
 
-      case GetMovieReq(id) =>
-        val optMovie = repository.getMovie(id)
-        toAppResp(optMovie, MovieResp)
-
-      case PostMovieReq(name, synopsis) =>
-        val newMovie = Movie(name, synopsis, Vector.empty)
-        val ioMovieId = repository.saveMovie(newMovie)
-        toAppResp(ioMovieId, NewMovieResp)
-
-      case InvalidReq(error) => IO.pure(ErrorResp(error))
-
+  def saveMovie(req: Request[IO]): IO[Response[IO]] =
+    req.as[NewMovieRequest].flatMap {
+      case NewMovieRequest(name, synopsis) =>
+        val movie = Movie(name, synopsis, Vector.empty)
+        g(movie).flatMap(encodeMovieId)
     }
+
+  private def encodeOptMovie(optMovie: Option[Movie]): IO[Response[IO]] = ???
+
+  private def encodeMovieId(movieId: MovieId): IO[Response[IO]] = ???
 
 }

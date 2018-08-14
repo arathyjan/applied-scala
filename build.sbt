@@ -57,16 +57,16 @@ libraryDependencies ++= Seq(
 )
 
 scalacOptions ++= Seq(
-  "-unchecked",
-  "-deprecation",
-  "-feature",
-  "-Xlint",
-  "-Xfatal-warnings",
-  "-Ywarn-dead-code",
-  "-Ywarn-numeric-widen",
-  "-Ywarn-value-discard",
-  "-language:higherKinds",
-  "-Ypartial-unification"
+//  "-unchecked",
+//  "-deprecation",
+//  "-feature",
+//  "-Xlint",
+//  "-Xfatal-warnings",
+//  "-Ywarn-dead-code",
+//  "-Ywarn-numeric-widen",
+//  "-Ywarn-value-discard",
+//  "-language:higherKinds",
+//  "-Ypartial-unification"
 )
 
 scalacOptions in Test ++= Seq("-Yrangepos")
