@@ -2,6 +2,7 @@ package com.reagroup.movies.api
 
 import cats.effect._
 import com.reagroup.movies.api.models._
+import io.circe.Json
 import io.circe.generic.auto._
 import io.circe.syntax._
 import org.http4s.circe._
@@ -18,7 +19,7 @@ class AppRoutes(handler: AppRequest => IO[AppResponse]) extends Http4sDsl[IO] {
     } yield http4sResp
 
   val openRoutes = HttpService[IO] {
-    AppRequest.fromHttp4s andThen handleAppReq
+    case req => handleAppReq(AppRequest.fromHttp4s(req))
   }
 
   private def toHttp4sResponse(appResponse: AppResponse): IO[Response[IO]] =
@@ -26,7 +27,7 @@ class AppRoutes(handler: AppRequest => IO[AppResponse]) extends Http4sDsl[IO] {
       case MovieResp(Some(movie)) => Ok(movie.asJson)
       case NewMovieResp(id) => Ok(id.asJson)
       case MovieResp(None) => NotFound()
-      case ErrorResp(RouteNotFoundErr, _) => NotFound()
+      case ErrorResp(RouteNotFoundErr(req), _) => NotFound(Json.obj("msg" -> s"Unknown route: $req".asJson))
       case ErrorResp(InvalidRequestErr, _) => BadRequest()
       case ErrorResp(InternalServerErr, _) => InternalServerError()
     }

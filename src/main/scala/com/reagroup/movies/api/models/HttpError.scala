@@ -2,7 +2,7 @@ package com.reagroup.movies.api.models
 
 sealed trait HttpError
 
-case object RouteNotFoundErr extends HttpError
+case class RouteNotFoundErr(route: String) extends HttpError
 
 case object InvalidRequestErr extends HttpError
 

@@ -15,11 +15,14 @@ case class PostMovieReq(name: String, synopsis: String) extends AppRequest
 
 case class InvalidReq(req: Request[IO], error: String) extends AppRequest
 
+case class UnknownReq(req: Request[IO]) extends AppRequest
+
 object AppRequest {
 
-  def fromHttp4s: PartialFunction[Request[IO], IO[AppRequest]] = {
+  def fromHttp4s: Request[IO] => IO[AppRequest] = {
     case GET -> Root / "movies" / LongVar(id) => IO.pure(GetMovieReq(MovieId(id)))
     case req@POST -> Root / "movies" => req.attemptAs[PostMovieReq].fold(e => InvalidReq(req, e.getMessage()), identity)
+    case req => IO.pure(UnknownReq(req))
   }
 
 }
