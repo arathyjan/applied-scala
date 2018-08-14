@@ -8,6 +8,7 @@ class MoviesController(repository: MoviesRepository) {
 
   def apply(request: AppRequest): IO[AppResponse] =
     request match {
+
       case GetMovieReq(id) =>
         val optMovie = repository.getMovie(id)
         toAppResp(optMovie, MovieResp)
@@ -17,9 +18,8 @@ class MoviesController(repository: MoviesRepository) {
         val ioMovieId = repository.saveMovie(newMovie)
         toAppResp(ioMovieId, NewMovieResp)
 
-      case InvalidReq(_, error) => IO.pure(ErrorResp(InvalidRequestErr, Some(error)))
+      case InvalidReq(error) => IO.pure(ErrorResp(error))
 
-      case UnknownReq(req) => IO.pure(ErrorResp(RouteNotFoundErr(req.pathInfo), None))
     }
 
 }
