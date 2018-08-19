@@ -8,11 +8,11 @@ class AppRuntime() {
 
   private val repository = new InMemRepository
 
-  private val service = new MoviesService(repository.getMovie, repository.saveMovie)
+  private val service = new MoviesService(repository)
 
-  private val controller = new MoviesController(service.getMovie, service.saveMovie)
+  private val controller = new MoviesController(service)
 
-  private val appRoutes = new AppRoutes(controller.getMovie, controller.saveMovie)
+  private val appRoutes = new AppRoutes(controller)
 
   val routes: HttpService[IO] = appRoutes.openRoutes
 

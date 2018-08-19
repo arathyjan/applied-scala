@@ -18,9 +18,9 @@ mainClass in Compile := Some("com.reagroup.movies.api.Main")
 // Overrides the "mainClass setting in the "Compile" configuration, only during the "run" task
 mainClass in(Compile, run) := Some("com.reagroup.movies.api.Main")
 
-resolvers ++= Seq(
-  "rea nexus release" at "http://rea-sonatype-nexus.services.delivery.realestate.com.au/nexus/content/repositories/releases"
-)
+//resolvers ++= Seq(
+//  "rea nexus release" at "http://rea-sonatype-nexus.services.delivery.realestate.com.au/nexus/content/repositories/releases"
+//)
 
 val catsVersion = "1.1.0"
 val circeVersion = "0.9.3"
@@ -43,8 +43,8 @@ libraryDependencies ++= Seq(
 
 libraryDependencies ++= Seq(
   "org.typelevel" %% "cats-core" % catsVersion,
-  "com.rea-group" %% "rea-scala-logging" % reaScalaLoggingVersion,
-  "com.rea-group" %% "rea-scala-diagnostics" % reaScalaDiagnosticsVersion,
+//  "com.rea-group" %% "rea-scala-logging" % reaScalaLoggingVersion,
+//  "com.rea-group" %% "rea-scala-diagnostics" % reaScalaDiagnosticsVersion,
   "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
   "org.http4s" %% "http4s-circe" % Http4sVersion,
   "org.http4s" %% "http4s-dsl" % Http4sVersion,
@@ -70,11 +70,6 @@ scalacOptions ++= Seq(
 )
 
 scalacOptions in Test ++= Seq("-Yrangepos")
-
-scalacOptions in Test --= Seq(
-  "-Ywarn-value-discard",
-  "-Ywarn-numeric-widen"
-)
 
 //Allows doing: > testOnly *ExampleSpec -- -ex "this is example two"
 testFrameworks := Seq(TestFrameworks.Specs2)
