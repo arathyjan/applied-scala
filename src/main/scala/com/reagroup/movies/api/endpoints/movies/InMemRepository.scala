@@ -6,7 +6,6 @@ class InMemRepository extends MoviesRepository {
 
   override def getMovie(movieId: MovieId): IO[Option[Movie]] =
     IO.raiseError(new RuntimeException("JACK IS DONE"))
-//    IO.pure(Some(Movie("Batman", "Good movie", Vector.empty)))
 
   override def saveMovie(movie: Movie): IO[MovieId] =
     IO.pure(MovieId(12345))

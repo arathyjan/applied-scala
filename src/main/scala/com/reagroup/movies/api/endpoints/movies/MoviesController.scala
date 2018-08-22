@@ -9,7 +9,7 @@ import io.circe.syntax._
 import org.http4s.circe.CirceEntityCodec._
 import org.http4s.dsl.Http4sDsl
 
-class MoviesController(service: MoviesService) extends Http4sDsl[IO] {
+class MoviesController(service: MoviesServiceActions) extends Http4sDsl[IO] {
 
   def getMovie(movieId: Long): IO[Response[IO]] = {
     val optMovie = service.get(MovieId(movieId))
@@ -18,6 +18,15 @@ class MoviesController(service: MoviesService) extends Http4sDsl[IO] {
       case None => NotFound()
     })
   }
+
+  def gm(movieId: Long): IO[Response[IO]] = for {
+    movieOrError <- service.get(MovieId(movieId)).attempt
+    resp <- movieOrError match {
+      case Right(Some(movie)) => Ok(movie.asJson)
+      case Right(None) => NotFound()
+      case Left(e) => InternalServerError(Json.obj("error" -> e.getMessage.asJson))
+    }
+  } yield resp
 
   def saveMovie(req: Request[IO]): IO[Response[IO]] =
     for {
