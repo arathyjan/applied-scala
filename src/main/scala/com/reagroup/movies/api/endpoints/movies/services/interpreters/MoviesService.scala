@@ -1,6 +1,8 @@
-package com.reagroup.movies.api.endpoints.movies
+package com.reagroup.movies.api.endpoints.movies.services.interpreters
 
 import cats.effect.IO
+import com.reagroup.movies.api.endpoints.movies.repositories.algebras.MoviesRepository
+import com.reagroup.movies.api.endpoints.movies.services.algebras.MoviesServiceActions
 import com.reagroup.movies.api.models.{Movie, MovieId, NewMovie}
 
 class MoviesService(repository: MoviesRepository) extends MoviesServiceActions {

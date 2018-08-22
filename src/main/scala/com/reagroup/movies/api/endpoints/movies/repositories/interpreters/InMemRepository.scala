@@ -1,5 +1,7 @@
-package com.reagroup.movies.api.endpoints.movies
+package com.reagroup.movies.api.endpoints.movies.repositories.interpreters
+
 import cats.effect.IO
+import com.reagroup.movies.api.endpoints.movies.repositories.algebras.MoviesRepository
 import com.reagroup.movies.api.models.{Movie, MovieId}
 
 class InMemRepository extends MoviesRepository {
