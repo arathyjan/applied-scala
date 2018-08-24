@@ -1,14 +1,19 @@
 package com.reagroup.movies.api
 
 import cats.effect.IO
-import com.reagroup.movies.api.endpoints.movies.repositories.interpreters.InMemRepository
+
+import com.reagroup.movies.api.endpoints.movies.repositories.interpreters.{InMemRepository, PostgresqlRepository}
 import com.reagroup.movies.api.endpoints.movies.MoviesController
 import com.reagroup.movies.api.endpoints.movies.services.interpreters.MoviesService
 import org.http4s._
 
 class AppRuntime() {
 
-  private val repository = new InMemRepository
+  private val repository = if (sys.env.contains("DATABASE_HOST")) {
+    PostgresqlRepository(sys.env)
+  } else {
+    new InMemRepository
+  }
 
   private val service = new MoviesService(repository)
 
