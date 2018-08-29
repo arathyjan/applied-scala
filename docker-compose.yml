@@ -8,9 +8,9 @@ services:
     environment:
       PORT: 8080
       DATABASE_HOST: database
-      DATABASE_NAME: listingdb
-      DATABASE_USERNAME: lp
-      DATABASE_PASSWORD: lp
+      DATABASE_NAME: moviedb
+      DATABASE_USERNAME: moviedb
+      DATABASE_PASSWORD: moviedb
     ports:
       - "8080:8080"
     volumes:
@@ -23,11 +23,13 @@ services:
   database:
     image: postgres:9.6
     environment:
-      POSTGRES_USER: lp
-      POSTGRES_PASSWORD: lp
-      POSTGRES_DB: listingdb
+      POSTGRES_USER: moviedb
+      POSTGRES_PASSWORD: moviedb
+      POSTGRES_DB: moviedb
     ports:
       - 5432:5432
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
 
 volumes:
   ivy-cache:
