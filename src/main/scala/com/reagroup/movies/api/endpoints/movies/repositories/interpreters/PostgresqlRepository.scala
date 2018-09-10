@@ -5,9 +5,8 @@ import cats.implicits._
 import doobie._
 import doobie.implicits._
 import org.postgresql.ds.PGSimpleDataSource
-
-import com.reagroup.movies.api.endpoints.movies.repositories.algebras.MoviesRepository
-import com.reagroup.movies.api.models.{Movie, MovieId, Review}
+import com.reagroup.movies.api.endpoints.movies.repositories.effects.MoviesRepository
+import com.reagroup.movies.api.models.{Movie, MovieId, NewMovie, Review}
 
 class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository {
   def getMovie(movieId: MovieId): IO[Option[Movie]] = {
@@ -27,16 +26,14 @@ class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository 
     } yield toMovie(rows)
   }
 
-  def saveMovie(movie: Movie): IO[MovieId] = {
-    def insertMovie: ConnectionIO[MovieId] = for {
-      movieId <- sql"""
-        INSERT INTO movie (name, synopsis) VALUES (${movie.name}, ${movie.synopsis})
-        RETURNING id
-      """.query[MovieId].unique
-      reviewRows = movie.reviews.map(r => (movieId, r.author, r.comment))
-      _ <- Update[(MovieId, String, String)]("INSERT INTO review (movie_id, author, comment) (?, ?, ?)")
-        .updateMany(reviewRows)
-    } yield movieId
+  def saveMovie(movie: NewMovie): IO[MovieId] = {
+    val insertMovie: ConnectionIO[MovieId] =
+      for {
+        movieId <- sql"""
+                        INSERT INTO movie (name, synopsis) VALUES (${movie.name}, ${movie.synopsis})
+                        RETURNING id
+                      """.query[MovieId].unique
+      } yield movieId
 
     insertMovie.transact(transactor)
   }

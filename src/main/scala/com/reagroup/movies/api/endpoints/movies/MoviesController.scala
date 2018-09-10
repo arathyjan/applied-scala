@@ -1,7 +1,7 @@
 package com.reagroup.movies.api.endpoints.movies
 
 import cats.effect.IO
-import com.reagroup.movies.api.endpoints.movies.services.algebras.MoviesServiceActions
+import com.reagroup.movies.api.endpoints.movies.services.effects.MoviesServiceEffects
 import com.reagroup.movies.api.models._
 import io.circe.Json
 import io.circe.generic.auto._
@@ -10,7 +10,7 @@ import org.http4s._
 import org.http4s.circe.CirceEntityCodec._
 import org.http4s.dsl.Http4sDsl
 
-class MoviesController(service: MoviesServiceActions) extends Http4sDsl[IO] {
+class MoviesController(service: MoviesServiceEffects) extends Http4sDsl[IO] {
 
   def getMovie(movieId: Long): IO[Response[IO]] = for {
     errorOrMovie <- service.get(MovieId(movieId)).attempt
