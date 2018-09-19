@@ -1,10 +1,10 @@
 package com.reagroup.movies.api.endpoints.movies
 
 import cats.effect.IO
+import cats.data.Validated._
 import com.reagroup.movies.api.endpoints.movies.services.effects.MoviesServiceEffects
 import com.reagroup.movies.api.models._
 import io.circe.Json
-import io.circe.generic.auto._
 import io.circe.syntax._
 import org.http4s._
 import org.http4s.circe.CirceEntityCodec._
@@ -15,8 +15,7 @@ class MoviesController(service: MoviesServiceEffects) extends Http4sDsl[IO] {
   def getMovie(movieId: Long): IO[Response[IO]] = for {
     errorOrMovie <- service.get(MovieId(movieId)).attempt
     resp <- errorOrMovie match {
-      case Right(Some(movie)) => Ok(movie.asJson)
-      case Right(None) => NotFound()
+      case Right(enrichedMovie) => Ok(enrichedMovie.asJson)
       case Left(e) => encodeError(e)
     }
   } yield resp
@@ -26,7 +25,8 @@ class MoviesController(service: MoviesServiceEffects) extends Http4sDsl[IO] {
       newMovieReq <- req.as[NewMovie]
       errorOrNewMovieId <- service.save(newMovieReq).attempt
       resp <- errorOrNewMovieId match {
-        case Right(newMovieId) => Created(newMovieId.asJson)
+        case Right(Valid(newMovieId)) => Created(newMovieId.asJson)
+        case Right(Invalid(errors)) => BadRequest(errors.asJson)
         case Left(e) => encodeError(e)
       }
     } yield resp
