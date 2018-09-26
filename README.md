@@ -28,3 +28,10 @@
   - Setting up data
 - Deployment
   - What AWS account?
+  
+## Test queries
+
+```
+$ curl -H "Accept: application/json"  -X POST -d "{\"name\": \"\", \"synopsis\": \"\"}" http://localhost:8080/movies
+$ curl http://localhost:8080/movies/123
+```

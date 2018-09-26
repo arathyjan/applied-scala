@@ -48,6 +48,7 @@ libraryDependencies ++= Seq(
 //  "com.rea-group" %% "rea-scala-logging" % reaScalaLoggingVersion,
 //  "com.rea-group" %% "rea-scala-diagnostics" % reaScalaDiagnosticsVersion,
   "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
+  "org.http4s" %% "http4s-blaze-client" % Http4sVersion,
   "org.http4s" %% "http4s-circe" % Http4sVersion,
   "org.http4s" %% "http4s-dsl" % Http4sVersion,
   "org.lyranthe" %% "http4s-timer-core" % Http4sTimerVersion,
@@ -72,7 +73,7 @@ scalacOptions ++= Seq(
 //  "-Ywarn-numeric-widen",
 //  "-Ywarn-value-discard",
 //  "-language:higherKinds",
-//  "-Ypartial-unification"
+  "-Ypartial-unification"
 )
 
 scalacOptions in Test ++= Seq("-Yrangepos")
