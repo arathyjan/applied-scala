@@ -23,10 +23,10 @@
 
 ### Day 2
 
-- Slick
-  - Flyway
-  - Setting up data
-- Deployment
+- Doobie
+  - Flyway (do it for them)
+  - Setting up data (do it for them)
+- Deployment (do it for them)
   - What AWS account?
   
 ## Test queries

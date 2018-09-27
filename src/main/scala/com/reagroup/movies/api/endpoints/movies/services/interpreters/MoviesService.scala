@@ -9,6 +9,7 @@ import com.reagroup.movies.api.models._
 
 class MoviesService(moviesRepo: MoviesRepository, starRatingsRepo: StarRatingsRepository) extends MoviesServiceEffects {
 
+  // TODO: Extension - Handle no StarRating gracefully
   override def get(movieId: MovieId): IO[EnrichedMovie] = {
 
     for {
