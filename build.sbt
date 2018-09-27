@@ -45,8 +45,8 @@ libraryDependencies ++= Seq(
 
 libraryDependencies ++= Seq(
   "org.typelevel" %% "cats-core" % catsVersion,
-//  "com.rea-group" %% "rea-scala-logging" % reaScalaLoggingVersion,
-//  "com.rea-group" %% "rea-scala-diagnostics" % reaScalaDiagnosticsVersion,
+  //  "com.rea-group" %% "rea-scala-logging" % reaScalaLoggingVersion,
+  //  "com.rea-group" %% "rea-scala-diagnostics" % reaScalaDiagnosticsVersion,
   "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
   "org.http4s" %% "http4s-blaze-client" % Http4sVersion,
   "org.http4s" %% "http4s-circe" % Http4sVersion,
@@ -56,23 +56,19 @@ libraryDependencies ++= Seq(
   "org.postgresql" % "postgresql" % postgresqlVersion,
   "org.tpolecat" %% "doobie-core" % doobieVersion,
   "org.tpolecat" %% "doobie-postgres" % doobieVersion,
-  "org.specs2" %% "specs2-core" % specs2Version % "test",
-  "org.specs2" %% "specs2-matcher-extra" % specs2Version % "test",
-  "org.specs2" %% "specs2-scalacheck" % specs2Version % "test",
-  "org.http4s" %% "http4s-testing" % Http4sVersion % "test",
-  "org.tpolecat" %% "doobie-specs2" % doobieVersion % "test"
+  "org.scalatest" %% "scalatest" % "3.0.5" % Test
 )
 
 scalacOptions ++= Seq(
-//  "-unchecked",
-//  "-deprecation",
-//  "-feature",
-//  "-Xlint",
-//  "-Xfatal-warnings",
-//  "-Ywarn-dead-code",
-//  "-Ywarn-numeric-widen",
-//  "-Ywarn-value-discard",
-//  "-language:higherKinds",
+  //  "-unchecked",
+  //  "-deprecation",
+  //  "-feature",
+  //  "-Xlint",
+  //  "-Xfatal-warnings",
+  //  "-Ywarn-dead-code",
+  //  "-Ywarn-numeric-widen",
+  //  "-Ywarn-value-discard",
+  //  "-language:higherKinds",
   "-Ypartial-unification"
 )
 

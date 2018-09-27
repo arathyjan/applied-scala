@@ -1,11 +1,12 @@
 package com.reagroup.movies.api.endpoints.movies.services.interpreters
 
-import cats.data.ValidatedNel
+import cats.data._
 import cats.effect.IO
 import com.reagroup.movies.api.endpoints.movies.repositories.effects.{MoviesRepository, StarRatingsRepository}
-import com.reagroup.movies.api.endpoints.movies.services.{InvalidNewMovieErr, NewMovieValidator}
+import com.reagroup.movies.api.endpoints.movies.services.{InvalidNewMovieErr, InvalidReviewErr, NewMovieValidator, ReviewValidator}
 import com.reagroup.movies.api.endpoints.movies.services.effects.MoviesServiceEffects
 import com.reagroup.movies.api.models._
+import cats.implicits._
 
 class MoviesService(moviesRepo: MoviesRepository, starRatingsRepo: StarRatingsRepository) extends MoviesServiceEffects {
 
@@ -27,4 +28,12 @@ class MoviesService(moviesRepo: MoviesRepository, starRatingsRepo: StarRatingsRe
 
   override def save(newMovieReq: NewMovie): IO[ValidatedNel[InvalidNewMovieErr, MovieId]] =
     NewMovieValidator.validate(newMovieReq).traverse(moviesRepo.saveMovie)
+
+  override def saveReviews(movieId: MovieId, reviews: NonEmptyVector[Review]): IO[IorNel[InvalidReviewErr, NonEmptyVector[ReviewId]]] =
+    reviews.map(ReviewValidator.validate)
+      .map(_.map(NonEmptyVector.one))
+      .map(_.toIor)
+      .reduce
+      .traverse(moviesRepo.saveReviews(movieId, _))
+
 }
