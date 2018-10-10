@@ -1,15 +1,16 @@
 package com.reagroup.movies.api.endpoints.movies.repositories.interpreters
 
+import cats.data.NonEmptyVector
 import cats.effect.IO
 import cats.implicits._
 import doobie._
 import doobie.implicits._
 import org.postgresql.ds.PGSimpleDataSource
 import com.reagroup.movies.api.endpoints.movies.repositories.effects.MoviesRepository
-import com.reagroup.movies.api.models.{Movie, MovieId, NewMovie, Review}
+import com.reagroup.movies.api.models._
 
 class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository {
-  def getMovie(movieId: MovieId): IO[Option[Movie]] = {
+  override def getMovie(movieId: MovieId): IO[Option[Movie]] = {
     case class MovieRow(name: String, synopsis: String, review: Option[Review])
 
     def toMovie(rows: Vector[MovieRow]): Option[Movie] = rows.headOption.map {
@@ -26,7 +27,7 @@ class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository 
     } yield toMovie(rows)
   }
 
-  def saveMovie(movie: NewMovie): IO[MovieId] = {
+  override def saveMovie(movie: NewMovie): IO[MovieId] = {
     val insertMovie: ConnectionIO[MovieId] =
       for {
         movieId <- sql"""
@@ -37,6 +38,8 @@ class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository 
 
     insertMovie.transact(transactor)
   }
+
+  override def saveReviews(movieId: MovieId, reviews: NonEmptyVector[Review]): IO[NonEmptyVector[ReviewId]] = ???
 }
 
 object PostgresqlRepository {
