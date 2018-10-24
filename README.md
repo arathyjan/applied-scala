@@ -30,6 +30,7 @@
     - Implement using `ValidatedNel`
   - `POST movie/{id}/reviews`
     - Probably nothing new here
+  - Refactor to Tagless Final
 
 ## Test queries
 
