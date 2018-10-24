@@ -4,30 +4,31 @@
 
 ### Day 1
 
-- Keynote (State of REA's Scala apps)
+- Keynote (State of REA's Scala apps) (Jake)
 - Introduction
+  - Deployment to AWS (Luke)
   - Use case. What are we building?
   - Architecture and software components
-  - Deployment to AWS
 - Prerequisites
   - IO Exercises
-    - Circe Exercises
-      - Implicits
-      - Manual codecs
-      - Auto-derivation
+    - map, flatMap, raiseError, attempt
+  - Circe Exercises
+    - Implicits
+    - Manual codecs
+    - Auto-derivation
 - Http4s
   - Testing (teach as we go)
-  - GET movie/{id}
+  - `GET movie/{id}`
     - Show `AppRoutes` to explain routing
     - Build `GET movie/{id}` endpoint to get `Movie` <-- use semi-auto codecs
     - Doobie
     - Extend endpoint to get `EnrichedMovie` <-- use custom codecs
-  - POST movie
+  - `POST movie`
     - Accept JSON body and decode into `NewMovieReq`
     - Collect all errors using `IO[MovieId]` return type (if name is empty... if synopsis is empty... if both are empty...) 
     - Teach `Semigroup`, `Validated`, `Traverse` theory (using Exercises)
     - Implement using `ValidatedNel`
-  - POST movie/{id}/reviews
+  - `POST movie/{id}/reviews`
     - Probably nothing new here
 
 ## Test queries
