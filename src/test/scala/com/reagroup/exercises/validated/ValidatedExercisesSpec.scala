@@ -22,46 +22,57 @@ final class ValidatedExercisesSpec extends FunSpec {
   //   validateInput(goodInput) should be (Person("Vladimir", "Putin", "crimea14"))
   // }
 
-  describe("ValidatedExercises") {
-    describe("should fail when") {
-      it("when a key is not found") {
-        validateKey("firstName", allBad) should be (Invalid(NonEmptyList.of(keyNotFound("firstName"))))
-        validateKey("lastName", allBad)  should be (Invalid(NonEmptyList.of(keyNotFound("lastName"))))
-        validateKey("password", allBad)  should be (Invalid(NonEmptyList.of(keyNotFound("password"))))
-      }
-
-      it("password too short") {
-        passwordLengthValidation("crim3a") should be (Invalid(NonEmptyList.of(passwordTooShort)))
-      }
-
-      it("password too weak") {
-        passwordStrengthValidation("crimeaasd") should be (Invalid(NonEmptyList.of(passwordTooWeak)))
-      }
-
-      it("empty first name") {
-        nameValidation("", "firstName") should be (Invalid(NonEmptyList.of(nameIsEmpty("firstName"))))
-      }
+  describe("validateKey") {
+    it("should fail when a key is not found") {
+      validateKey("firstName", allBad) should be (Invalid(NonEmptyList.of(keyNotFound("firstName"))))
+      validateKey("lastName", allBad)  should be (Invalid(NonEmptyList.of(keyNotFound("lastName"))))
+      validateKey("password", allBad)  should be (Invalid(NonEmptyList.of(keyNotFound("password"))))
     }
   }
 
+  describe("passwordLengthValidation") {
+    it("should fail when the password too short") {
+      passwordLengthValidation("crim3a") should be (Invalid(NonEmptyList.of(passwordTooShort)))
+    }
+  }
 
-  // "password too weak" in {
-  //   validateInput(passwordNoNumbers) should beFailing(NonEmptyList(passwordTooWeak))
-  // }
-  // "password too short and too weak" in {
-  //   validateInput(passwordNoNumbersAndTooShort) should beFailing(NonEmptyList(passwordTooShort, passwordTooWeak))
-  // }
-  // "no first name" in {
-  //   validateInput(noFirstName) should beFailing(NonEmptyList(keyNotFound("firstName")))
-  // }
-  // "no last name" in {
-  //   validateInput(noLastName) should beFailing(NonEmptyList(keyNotFound("lastName")))
-  // }
-  // "empty first name" in {
-  //   validateInput(emptyFirstName) should beFailing(NonEmptyList(nameIsEmpty("firstName")))
-  // }
-  // "empty last name" in {
-  //   validateInput(emptyLastName) should beFailing(NonEmptyList(nameIsEmpty("lastName")))
-  // }
+  describe("passwordStrengthValidation") {
+    it("should fail when password too weak") {
+      passwordStrengthValidation("crimeaasd") should be (Invalid(NonEmptyList.of(passwordTooWeak)))
+    }
+  }
 
+  describe("nameValidation") {
+    it("should fail when given an empty name") {
+      nameValidation("", "someLabel") should be (Invalid(NonEmptyList.of(nameIsEmpty("someLabel"))))
+    }
+  }
+
+  describe("validateInput") {
+    describe("should fail when") {
+      it("password too weak") {
+        validateInput(passwordNoNumbers) should be (Invalid(NonEmptyList.of(passwordTooWeak)))
+      }
+
+      it("password too short and too weak"){
+        validateInput(passwordNoNumbersAndTooShort) should be (Invalid(NonEmptyList.of(passwordTooShort, passwordTooWeak)))
+      }
+
+      it("no first name"){
+        validateInput(noFirstName) should be (Invalid(NonEmptyList.of(keyNotFound("firstName"))))
+      }
+
+      it("no last name"){
+        validateInput(noLastName) should be (Invalid(NonEmptyList.of(keyNotFound("lastName"))))
+      }
+
+      it("empty first name"){
+        validateInput(emptyFirstName) should be (Invalid(NonEmptyList.of(nameIsEmpty("firstName"))))
+      }
+
+      it("empty last name"){
+        validateInput(emptyLastName) should be (Invalid(NonEmptyList.of(nameIsEmpty("lastName"))))
+      }
+    }
+  }
 }

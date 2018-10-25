@@ -18,9 +18,12 @@ object ValidationExercises {
   def passwordLengthValidation(password: String): ValidatedNel[ErrorCode, String] =
     if (password.length < 8) passwordTooShort.invalidNel else password.validNel
 
-  def validateInput(input: Map[String, String]): ValidatedNel[ErrorCode, Person] = ???
-
-
+  def validateInput(input: Map[String, String]): ValidatedNel[ErrorCode, Person] =
+    (validateKey("firstName", input).andThen(nameValidation(_, "firstName")),
+     validateKey("lastName", input).andThen(nameValidation(_, "lastName")),
+     validateKey("password", input).andThen { password =>
+      passwordLengthValidation(password) |+| passwordStrengthValidation(password)
+    }).mapN(Person.apply)
 }
 
 case class Person(firstName: String, lastName: String, password: String)
