@@ -2,16 +2,21 @@ package com.reagroup.exercises.validated
 
 import cats.data.Validated
 import cats.data.ValidatedNel
+import cats.implicits._
 
 object ValidationExercises {
 
-  def validateKey(key: String, input: Map[String, String]): ValidatedNel[ErrorCode, String] = ???
+  def validateKey(key: String, input: Map[String, String]): ValidatedNel[ErrorCode, String] =
+    input.get(key).fold[ValidatedNel[ErrorCode, String]](keyNotFound(key).invalidNel)(x => x.validNel)
 
-  def nameValidation(name: String, label: String): ValidatedNel[ErrorCode, String] = ???
+  def nameValidation(name: String, label: String): ValidatedNel[ErrorCode, String] =
+    if (name.trim.isEmpty) nameIsEmpty(label).invalidNel else name.validNel
 
-  def passwordStrengthValidation(password: String): ValidatedNel[ErrorCode, String] = ???
+  def passwordStrengthValidation(password: String): ValidatedNel[ErrorCode, String] =
+    if (!password.exists(Character.isDigit)) passwordTooWeak.invalidNel else password.validNel
 
-  def passwordLengthValidation(password: String): ValidatedNel[ErrorCode, String] = ???
+  def passwordLengthValidation(password: String): ValidatedNel[ErrorCode, String] =
+    if (password.length < 8) passwordTooShort.invalidNel else password.validNel
 
   def validateInput(input: Map[String, String]): ValidatedNel[ErrorCode, Person] = ???
 

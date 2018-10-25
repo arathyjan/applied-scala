@@ -25,7 +25,7 @@ mainClass in(Compile, run) := Some("com.reagroup.movies.api.Main")
 val catsVersion = "1.1.0"
 val circeVersion = "0.9.3"
 val monixVersion = "2.3.3"
-val specs2Version = "4.3.0"
+val scalatestVersion = "3.0.5"
 val Http4sVersion = "0.18.15"
 val Http4sTimerVersion = "0.0.3"
 val reaScalaLoggingVersion = "1.0.0"
@@ -56,7 +56,7 @@ libraryDependencies ++= Seq(
   "org.postgresql" % "postgresql" % postgresqlVersion,
   "org.tpolecat" %% "doobie-core" % doobieVersion,
   "org.tpolecat" %% "doobie-postgres" % doobieVersion,
-  "org.scalatest" %% "scalatest" % "3.0.5" % Test
+  "org.scalatest" %% "scalatest" % scalatestVersion % Test
 )
 
 scalacOptions ++= Seq(
@@ -75,7 +75,7 @@ scalacOptions ++= Seq(
 scalacOptions in Test ++= Seq("-Yrangepos")
 
 //Allows doing: > testOnly *ExampleSpec -- -ex "this is example two"
-testFrameworks := Seq(TestFrameworks.Specs2)
+testFrameworks := Seq(TestFrameworks.ScalaTest)
 
 test in assembly := {}
 

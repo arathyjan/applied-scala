@@ -1,9 +1,12 @@
 package com.reagroup.exercises.validated
 
-import org.scalatest.{Matchers, WordSpecLike}
+import org.scalatest.FunSpec
 import ValidationExercises._
+import cats.data.NonEmptyList
+import org.scalatest.Matchers._
+import cats.data.Validated._
 
-final class Spec extends Matchers with WordSpecLike {
+final class ValidatedExercisesSpec extends FunSpec {
 
   val allBad = Map[String, String]()
   val goodInput = Map("firstName" -> "Vladimir", "lastName" -> "Putin", "password" -> "crimea14")
@@ -15,17 +18,32 @@ final class Spec extends Matchers with WordSpecLike {
   val emptyFirstName = goodInput + ("firstName" -> "")
   val emptyLastName = goodInput + ("lastName" -> "")
 
-  "Good input" in {
-    validateInput(goodInput) should be (Person("Vladimir", "Putin", "crimea14"))
+  // "Good input" in {
+  //   validateInput(goodInput) should be (Person("Vladimir", "Putin", "crimea14"))
+  // }
+
+  describe("ValidatedExercises") {
+    describe("should fail when") {
+      it("when a key is not found") {
+        validateKey("firstName", allBad) should be (Invalid(NonEmptyList.of(keyNotFound("firstName"))))
+        validateKey("lastName", allBad)  should be (Invalid(NonEmptyList.of(keyNotFound("lastName"))))
+        validateKey("password", allBad)  should be (Invalid(NonEmptyList.of(keyNotFound("password"))))
+      }
+
+      it("password too short") {
+        passwordLengthValidation("crim3a") should be (Invalid(NonEmptyList.of(passwordTooShort)))
+      }
+
+      it("password too weak") {
+        passwordStrengthValidation("crimeaasd") should be (Invalid(NonEmptyList.of(passwordTooWeak)))
+      }
+
+      it("empty first name") {
+        nameValidation("", "firstName") should be (Invalid(NonEmptyList.of(nameIsEmpty("firstName"))))
+      }
+    }
   }
 
-  // "All Bad input" in {
-  //   validateInput(allBad) should beFailing(NonEmptyList(keyNotFound("firstName"), keyNotFound("lastName"), keyNotFound("password")))
-  // }
-
-  // "password too short" in {
-  //   validateInput(passwordIsTooShort) should beFailing(NonEmptyList(passwordTooShort))
-  // }
 
   // "password too weak" in {
   //   validateInput(passwordNoNumbers) should beFailing(NonEmptyList(passwordTooWeak))
