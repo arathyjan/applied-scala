@@ -10,8 +10,7 @@ import cats.implicits._
 
 class MoviesService(moviesRepo: MoviesRepository, starRatingsRepo: StarRatingsRepository) extends MoviesServiceEffects {
 
-  // TODO: Extension - Handle no StarRating gracefully
-  override def get(movieId: MovieId): IO[EnrichedMovie] = {
+  override def get(movieId: MovieId): IO[Option[EnrichedMovie]] = {
 
     for {
       optMovie <- moviesRepo.getMovie(movieId)
@@ -20,8 +19,9 @@ class MoviesService(moviesRepo: MoviesRepository, starRatingsRepo: StarRatingsRe
         case None => IO(None)
       }
       enriched <- (optMovie, optStarRating) match {
-        case (Some(movie), Some(star)) => IO(EnrichedMovie(movie, star))
-        case _ => IO.raiseError(new Throwable(s"Cannot enrich movie: $movieId"))
+        case (Some(movie), Some(star)) => IO(Some(EnrichedMovie(movie, star)))
+        case (Some(movie), None) => IO.raiseError(new Throwable(s"Could not find star rating for ${movie.name}"))
+        case (None, _) => IO.pure(None)
       }
     } yield enriched
   }

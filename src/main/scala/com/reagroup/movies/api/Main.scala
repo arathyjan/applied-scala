@@ -19,7 +19,7 @@ object Main {
 
     val appRuntime = new AppRuntime()
 
-    val server = new AppServer(8080, appRuntime.routes).start()
+    val server = new AppServer(9200, appRuntime.routes).start()
 
     server.unsafeRunSync()
 
