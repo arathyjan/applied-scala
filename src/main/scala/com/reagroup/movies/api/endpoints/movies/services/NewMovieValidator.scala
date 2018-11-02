@@ -16,6 +16,6 @@ object NewMovieValidator {
     Validated.condNel(name.length > 0, name, MovieNameTooShort)
 
   private def validateMovieSynopsis(synopsis: String): ValidatedNel[InvalidNewMovieErr, String] =
-    Validated.condNel(synopsis.length > 100, synopsis, SynopsisTooShort)
+    Validated.condNel(synopsis.length > 10, synopsis, SynopsisTooShort)
 
 }

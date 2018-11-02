@@ -6,13 +6,13 @@ services:
     working_dir: /work
     command: support/dev/run
     environment:
-      PORT: 8080
+      PORT: 9200
       DATABASE_HOST: database
       DATABASE_NAME: moviedb
       DATABASE_USERNAME: moviedb
       DATABASE_PASSWORD: moviedb
     ports:
-      - "8080:8080"
+      - "9200:9200"
     volumes:
       - .:/work
       - ivy-cache:/root/.ivy2

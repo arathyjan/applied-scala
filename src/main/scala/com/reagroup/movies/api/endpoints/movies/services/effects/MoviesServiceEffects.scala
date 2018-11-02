@@ -7,7 +7,7 @@ import com.reagroup.movies.api.models._
 
 trait MoviesServiceEffects {
 
-  def get(movieId: MovieId): IO[EnrichedMovie]
+  def get(movieId: MovieId): IO[Option[EnrichedMovie]]
 
   def save(newMovieReq: NewMovie): IO[ValidatedNel[InvalidNewMovieErr, MovieId]]
 

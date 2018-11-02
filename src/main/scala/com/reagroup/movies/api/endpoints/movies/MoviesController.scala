@@ -17,7 +17,8 @@ class MoviesController(service: MoviesServiceEffects) extends Http4sDsl[IO] {
   def getMovie(movieId: Long): IO[Response[IO]] = for {
     errorOrMovie <- service.get(MovieId(movieId)).attempt
     resp <- errorOrMovie match {
-      case Right(enrichedMovie) => Ok(enrichedMovie.asJson)
+      case Right(Some(enrichedMovie)) => Ok(enrichedMovie.asJson)
+      case Right(None) => NotFound()
       case Left(e) => encodeError(e)
     }
   } yield resp
@@ -28,7 +29,7 @@ class MoviesController(service: MoviesServiceEffects) extends Http4sDsl[IO] {
       errorOrNewMovieId <- service.save(newMovieReq).attempt
       resp <- errorOrNewMovieId match {
         case Right(Valid(newMovieId)) => Created(newMovieId.asJson)
-        case Right(Invalid(errors)) => BadRequest(errors.asJson)
+        case Right(Invalid(errors)) => IO(println(errors)) >> BadRequest(errors.asJson)
         case Left(e) => encodeError(e)
       }
     } yield resp
@@ -41,7 +42,7 @@ class MoviesController(service: MoviesServiceEffects) extends Http4sDsl[IO] {
       resp <- errsOrIds match {
         case Ior.Left(errs) => BadRequest(errs.toList.asJson)
         case Ior.Right(ids) => Created(ids.toVector.asJson)
-        case Ior.Both(errs, ids) => IO(println(s"Found errors: ${errs.toList.asJson.noSpaces}")) >> Created(ids.toVector.asJson)
+        case Ior.Both(errs, ids) => Created(ids.toVector.asJson)
       }
     } yield resp
 
