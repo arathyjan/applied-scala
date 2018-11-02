@@ -20,8 +20,7 @@ class MoviesService(moviesRepo: MoviesRepository, starRatingsRepo: StarRatingsRe
         case None => IO(None)
       }
       enriched <- (optMovie, optStarRating) match {
-        case (Some(movie), Some(star)) => IO(Some(EnrichedMovie(movie, star)))
-        case (Some(movie), None) => IO.raiseError(new Throwable(s"Could not find star rating for ${movie.name}"))
+        case (Some(movie), optStar) => IO(Some(EnrichedMovie(movie, optStar)))
         case (None, _) => IO.pure(None)
       }
     } yield enriched
