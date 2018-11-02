@@ -13,6 +13,7 @@ class MoviesService(moviesRepo: MoviesRepository, starRatingsRepo: StarRatingsRe
   override def get(movieId: MovieId): IO[Option[EnrichedMovie]] = {
 
     for {
+      _ <- IO(println(s"Trying to find movie with id: $movieId"))
       optMovie <- moviesRepo.getMovie(movieId)
       optStarRating <- optMovie match {
         case Some(movie) => starRatingsRepo.getStarRating(movie.name)

@@ -22,9 +22,12 @@ class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository 
         SELECT m.name, m.synopsis, r.author, r.comment
         FROM movie m
         LEFT OUTER JOIN review r ON r.movie_id = m.id
+        WHERE m.id = ${movieId.value}
         ORDER BY m.id
       """.query[MovieRow].to[Vector].transact(transactor)
-    } yield toMovie(rows)
+      movie <- IO(toMovie(rows))
+      _ <- IO(println(s"Found movie with id $movieId: $movie"))
+    } yield movie
   }
 
   override def saveMovie(movie: NewMovie): IO[MovieId] = {

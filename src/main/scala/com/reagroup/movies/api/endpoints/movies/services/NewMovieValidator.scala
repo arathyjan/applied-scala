@@ -9,7 +9,7 @@ object NewMovieValidator {
   def validate(newMovie: NewMovie): ValidatedNel[InvalidNewMovieErr, NewMovie] = {
     val validateName = validateMovieName(newMovie.name)
     val validateSynopsis = validateMovieSynopsis(newMovie.synopsis)
-    /*_*/(validateName, validateSynopsis).mapN(NewMovie.apply)
+    /*_*/(validateName, validateSynopsis).mapN(NewMovie(_, _))
   }
 
   private def validateMovieName(name: String): ValidatedNel[InvalidNewMovieErr, String] =
