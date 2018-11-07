@@ -4,6 +4,9 @@ import cats.data.Validated
 import cats.data.ValidatedNel
 import cats.implicits._
 
+/**
+  * These exercises are repurposed from https://github.com/cwmyers/FunctionalTraining
+  */
 object ValidationExercises {
 
   case class Person(firstName: String, lastName: String, password: String)
