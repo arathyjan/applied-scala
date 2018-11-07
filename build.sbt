@@ -74,7 +74,6 @@ scalacOptions ++= Seq(
 
 scalacOptions in Test ++= Seq("-Yrangepos")
 
-//Allows doing: > testOnly *ExampleSpec -- -ex "this is example two"
 testFrameworks := Seq(TestFrameworks.ScalaTest)
 
 test in assembly := {}
