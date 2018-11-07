@@ -1,9 +1,10 @@
 package com.reagroup.movies.api.models
 
 import io.circe.Decoder.Result
-import io.circe.{Decoder, DecodingFailure, HCursor}
+import io.circe.{Decoder, DecodingFailure, Encoder, HCursor}
 
 import scala.util.Try
+import io.circe.syntax._
 
 sealed trait StarRating
 
@@ -27,6 +28,8 @@ object StarRating {
       case Two => "⭐️⭐️"
       case One => "⭐️"
     }
+
+  implicit val encoder: Encoder[StarRating] = (starRating: StarRating) => show(starRating).asJson
 
   implicit val decoder: Decoder[StarRating] =
     (c: HCursor) => c.get[String]("Metascore").flatMap(str => Try(str.toDouble).toOption match {
