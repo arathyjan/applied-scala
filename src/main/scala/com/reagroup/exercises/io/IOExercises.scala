@@ -13,7 +13,7 @@ import cats.effect.IO
 object IOExercises {
 
   /**
-    * Create an IO which returns the number 43.
+    * Create an IO which returns the number 43 and strictly evaluates the argument.
     *
     * Hint: You want to look for a function in IO with the type signature A => IO[A]
     */
@@ -33,6 +33,16 @@ object IOExercises {
     */
   def helloWorld(logger: String => Unit): IO[Unit] =
     IO(logger("hello world"))
+
+  /**
+    * Difference between `IO.apply` and `IO.pure`:
+    *
+    * You want to use `IO.apply` to wrap anything that is a side-effect. If you write `IO.pure(println("hello"))`, the print will occur
+    * immediately and you will have no control over when you want to run it. If the side-effect throws an exception, it terminates
+    * your program instead of being caught in the `IO`.
+    *
+    * Use `IO.pure` for values that are not side-effects.
+    */
 
   /**
     * Create an IO which always fails with an `Exception`
@@ -75,7 +85,7 @@ object IOExercises {
     * Create an IO which gets the current temperature in Celsius and if successful, converts it to Fahrenheit
     * using `cToF` defined above.
     */
-  def getCurrentTempInF(currentTemp: () => IO[Celsius]): IO[Fahrenheit] =
+  def getCurrentTempInF(currentTemp: IO[Celsius]): IO[Fahrenheit] =
     currentTemp().map(cToF)
 
   /**
@@ -88,7 +98,7 @@ object IOExercises {
     * Again, our remote service call is passed in as an input argument so we can easily unit test this function
     * without the need for a mocking framework.
     */
-  def getCurrentTempInFAgain(currentTemp: () => IO[Celsius], converter: Celsius => IO[Fahrenheit]): IO[Fahrenheit] =
+  def getCurrentTempInFAgain(currentTemp: IO[Celsius], converter: Celsius => IO[Fahrenheit]): IO[Fahrenheit] =
     for {
       c <- currentTemp()
       f <- converter(c)
@@ -102,7 +112,7 @@ object IOExercises {
     *
     * Hint: https://typelevel.org/cats-effect/datatypes/io.html#attempt
     */
-  def showCurrentTempInF(currentTemp: () => IO[Celsius], converter: Celsius => IO[Fahrenheit]): IO[String] =
+  def showCurrentTempInF(currentTemp: IO[Celsius], converter: Celsius => IO[Fahrenheit]): IO[String] =
     getCurrentTempInFAgain(currentTemp, converter).attempt.map {
       case Right(fahrenheit) => s"The temperature is $fahrenheit"
       case Left(throwable) => throwable.getMessage
