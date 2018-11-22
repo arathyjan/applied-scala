@@ -86,7 +86,7 @@ object IOExercises {
     * using `cToF` defined above.
     */
   def getCurrentTempInF(currentTemp: IO[Celsius]): IO[Fahrenheit] =
-    currentTemp().map(cToF)
+    currentTemp.map(cToF)
 
   /**
     * Suppose the Celsius to Fahrenheit conversion is complex so we have decided to refactor it out to a remote
@@ -100,7 +100,7 @@ object IOExercises {
     */
   def getCurrentTempInFAgain(currentTemp: IO[Celsius], converter: Celsius => IO[Fahrenheit]): IO[Fahrenheit] =
     for {
-      c <- currentTemp()
+      c <- currentTemp
       f <- converter(c)
     } yield f
 
