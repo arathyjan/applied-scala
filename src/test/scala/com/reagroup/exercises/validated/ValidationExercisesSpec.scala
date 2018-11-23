@@ -5,7 +5,7 @@ import ValidationExercises._
 import cats.data.NonEmptyList
 import cats.data.Validated._
 
-class ValidatedExercisesSpec extends FunSpec {
+class ValidationExercisesSpec extends FunSpec {
 
   describe("passwordLengthValidation") {
     it("should fail when the password is too short") {
