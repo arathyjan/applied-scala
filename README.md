@@ -16,6 +16,7 @@
     - Implicits
     - Manual codecs
     - Auto-derivation
+  - Validated
 - Http4s
   - Testing (teach as we go)
   - `GET movie/{id}`
