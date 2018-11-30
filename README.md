@@ -17,6 +17,9 @@
     - Manual codecs
     - Auto-derivation
   - Validated
+- Implicits
+  - Typeclass instances
+  - Extension methods
 - Http4s
   - Testing (teach as we go)
   - `GET movie/{id}`
