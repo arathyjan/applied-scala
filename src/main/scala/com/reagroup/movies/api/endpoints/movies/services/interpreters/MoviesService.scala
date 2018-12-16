@@ -10,6 +10,7 @@ import cats.implicits._
 
 class MoviesService(moviesRepo: MoviesRepository, starRatingsRepo: StarRatingsRepository) extends MoviesServiceEffects {
 
+
   override def get(movieId: MovieId): IO[Option[EnrichedMovie]] =
     for {
       optMovie <- moviesRepo.getMovie(movieId)
@@ -27,11 +28,18 @@ class MoviesService(moviesRepo: MoviesRepository, starRatingsRepo: StarRatingsRe
   override def save(newMovieReq: NewMovie): IO[ValidatedNel[InvalidNewMovieErr, MovieId]] =
     NewMovieValidator.validate(newMovieReq).traverse(moviesRepo.saveMovie)
 
-  override def saveReviews(movieId: MovieId, reviews: NonEmptyVector[Review]): IO[IorNel[InvalidReviewErr, NonEmptyVector[ReviewId]]] =
-    reviews.map(ReviewValidator.validate)
+
+
+  override def saveReviews(movieId: MovieId, reviews: NonEmptyVector[Review]): IO[IorNel[InvalidReviewErr, NonEmptyVector[ReviewId]]] = {
+    val r1: NonEmptyVector[ValidatedNel[InvalidReviewErr, Review]] = reviews.map(ReviewValidator.validate)
+    r1
       .map(_.map(NonEmptyVector.one))
       .map(_.toIor)
       .reduce
       .traverse(moviesRepo.saveReviews(movieId, _))
+  }
+
+  override def saveReview(movieId: MovieId, review: Review): IO[ValidatedNel[InvalidReviewErr, ReviewId]] =
+    ReviewValidator.validate(review).traverse(moviesRepo.saveReview(movieId, _))
 
 }

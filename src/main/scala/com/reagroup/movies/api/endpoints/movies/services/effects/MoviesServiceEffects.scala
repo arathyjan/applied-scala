@@ -13,4 +13,6 @@ trait MoviesServiceEffects {
 
   def saveReviews(movieId: MovieId, reviews: NonEmptyVector[Review]): IO[IorNel[InvalidReviewErr, NonEmptyVector[ReviewId]]]
 
+  def saveReview(movieId: MovieId, review: Review): IO[ValidatedNel[InvalidReviewErr, ReviewId]]
+
 }

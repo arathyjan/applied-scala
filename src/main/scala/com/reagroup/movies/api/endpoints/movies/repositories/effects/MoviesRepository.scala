@@ -11,5 +11,6 @@ trait MoviesRepository {
   def saveMovie(movie: NewMovie): IO[MovieId]
 
   def saveReviews(movieId: MovieId, reviews: NonEmptyVector[Review]): IO[NonEmptyVector[ReviewId]]
+  def saveReview(movieId: MovieId, review: Review): IO[ReviewId]
 
 }
