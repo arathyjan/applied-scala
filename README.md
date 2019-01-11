@@ -26,6 +26,8 @@
     - Build `GET movie/{id}` endpoint to get `Movie` <-- use semi-auto codecs
     - Doobie
     - Extend endpoint to get `EnrichedMovie` <-- use custom codecs
+  - `GET movies`
+    - No new concepts
   - `POST movie`
     - Validated exercises
     - Accept JSON body and decode into `NewMovieReq`
