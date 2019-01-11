@@ -16,7 +16,6 @@
     - Implicits
     - Manual codecs
     - Auto-derivation
-  - Validated
 - Implicits
   - Typeclass instances
   - Extension methods
@@ -28,11 +27,12 @@
     - Doobie
     - Extend endpoint to get `EnrichedMovie` <-- use custom codecs
   - `POST movie`
+    - Validated exercises
     - Accept JSON body and decode into `NewMovieReq`
     - Collect all errors using `IO[MovieId]` return type (if name is empty... if synopsis is empty... if both are empty...) 
     - Teach `Semigroup`, `Validated`, `Traverse` theory (using Exercises)
     - Implement using `ValidatedNel`
-  - `POST movie/{id}/reviews`
+  - `POST movie/{id}/review`
     - Probably nothing new here
 - Tagless Final
   - Motivation
