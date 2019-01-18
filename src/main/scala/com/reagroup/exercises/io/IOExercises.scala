@@ -114,7 +114,7 @@ object IOExercises {
     */
   def showCurrentTempInF(currentTemp: IO[Celsius], converter: Celsius => IO[Fahrenheit]): IO[String] =
     getCurrentTempInFAgain(currentTemp, converter).attempt.map {
-      case Right(fahrenheit) => s"The temperature is $fahrenheit"
+      case Right(Fahrenheit(value)) => s"The temperature is $value"
       case Left(throwable) => throwable.getMessage
     }
 
@@ -131,9 +131,9 @@ object IOExercises {
   /**
     * Use `mkUsername` to create a `Username` and if successful print the username, otherwise fail with an error.
     */
-  def mkUsernameThenPrint(username: String): IO[Unit] =
+  def mkUsernameThenPrint(username: String, logger: String => Unit): IO[Unit] =
     mkUsername(username) match {
-      case Right(Username(u)) => IO(println(u))
+      case Right(Username(u)) => IO(logger(u))
       case Left(UsernameError(msg)) => IO.raiseError(UsernameError(msg))
     }
 
