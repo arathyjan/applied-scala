@@ -6,9 +6,15 @@
 
 - Keynote (State of REA's Scala apps) (Jake)
 - Introduction
-  - Deployment to AWS (Luke)
-  - Use case. What are we building?
-  - Architecture and software components
+  - PSW Scala stencil (Luke)
+    - Demo the stencil
+    - Switch to Applied Scala app  
+  - Use case. What are we building? Architectural and software components? Design decisions?
+    - Why Http4s?
+    - Lightweight container, not heavily opinionated
+    - Allows us to write pure functional programs
+    - Not gonna do undeclared side-effects, writing RT software
+    - Single responsibility, module boundaries
 - Prerequisites
   - IO Exercises
     - map, flatMap, raiseError, attempt
