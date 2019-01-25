@@ -15,6 +15,7 @@
     - Allows us to write pure functional programs
     - Not gonna do undeclared side-effects, writing RT software
     - Single responsibility, module boundaries
+    - (Maybe) Motivation behind the Http4s DSL, how it works
 - Prerequisites
   - IO Exercises
     - map, flatMap, raiseError, attempt
