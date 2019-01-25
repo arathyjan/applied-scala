@@ -23,6 +23,8 @@ class MoviesServiceSpec extends FunSpec {
         override def saveMovie(movie: NewMovie): IO[MovieId] = IO.pure(MovieId(123))
 
         override def saveReviews(movieId: MovieId, reviews: NonEmptyVector[Review]): IO[NonEmptyVector[ReviewId]] = ???
+
+        override def saveReview(movieId: MovieId, review: Review): IO[ReviewId] = ???
       }
 
       val service = new MoviesService(repo, _ => ???)
@@ -49,6 +51,8 @@ class MoviesServiceSpec extends FunSpec {
         override def saveReviews(movieId: MovieId, reviews: NonEmptyVector[Review]): IO[NonEmptyVector[ReviewId]] = {
           IO.pure(expectedReviewIds)
         }
+
+        override def saveReview(movieId: MovieId, review: Review): IO[ReviewId] = ???
       }
 
       val service = new MoviesService(repo, _ => IO.pure(Some(Five)))

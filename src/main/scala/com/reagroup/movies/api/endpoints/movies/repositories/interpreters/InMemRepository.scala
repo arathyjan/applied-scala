@@ -15,4 +15,6 @@ class InMemRepository extends MoviesRepository {
 
   override def saveReviews(movieId: MovieId, reviews: NonEmptyVector[Review]): IO[NonEmptyVector[ReviewId]] =
     IO.pure(NonEmptyVector.one(ReviewId(999)))
+
+  override def saveReview(movieId: MovieId, review: Review): IO[ReviewId] = IO.pure(ReviewId(1000))
 }

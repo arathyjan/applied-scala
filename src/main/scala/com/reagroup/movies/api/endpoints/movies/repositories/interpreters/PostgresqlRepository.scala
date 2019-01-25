@@ -43,6 +43,8 @@ class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository 
   }
 
   override def saveReviews(movieId: MovieId, reviews: NonEmptyVector[Review]): IO[NonEmptyVector[ReviewId]] = ???
+
+  override def saveReview(movieId: MovieId, review: Review): IO[ReviewId] = ???
 }
 
 object PostgresqlRepository {
