@@ -22,8 +22,6 @@ class MoviesServiceSpec extends FunSpec {
 
         override def saveMovie(movie: NewMovie): IO[MovieId] = IO.pure(MovieId(123))
 
-        override def saveReviews(movieId: MovieId, reviews: NonEmptyVector[Review]): IO[NonEmptyVector[ReviewId]] = ???
-
         override def saveReview(movieId: MovieId, review: Review): IO[ReviewId] = ???
       }
 
@@ -37,31 +35,25 @@ class MoviesServiceSpec extends FunSpec {
 
   }
 
-  describe("saveReviews") {
+  describe("saveReview") {
 
-    it("should return errors AND review ids") {
-
-      val expectedReviewIds = NonEmptyVector.of(ReviewId(1), ReviewId(2), ReviewId(3))
+    it("should return errors") {
 
       val repo = new MoviesRepository {
         override def getMovie(movieId: MovieId): IO[Option[Movie]] = ???
 
         override def saveMovie(movie: NewMovie): IO[MovieId] = ???
 
-        override def saveReviews(movieId: MovieId, reviews: NonEmptyVector[Review]): IO[NonEmptyVector[ReviewId]] = {
-          IO.pure(expectedReviewIds)
-        }
-
         override def saveReview(movieId: MovieId, review: Review): IO[ReviewId] = ???
       }
 
-      val service = new MoviesService(repo, _ => IO.pure(Some(Five)))
+      val service = new MoviesService(repo, _ => ???)
 
-      val reviewsToSave = NonEmptyVector.of(Review("Author1", ""), Review("", "I liked it."), Review("Author3", "Great movie!"))
+      val reviewToSave = Review("", "")
 
-      val result = service.saveReviews(MovieId(12345), reviewsToSave)
+      val result = service.saveReview(MovieId(12345), reviewToSave)
 
-      assert(result.unsafeRunSync() == Both(NonEmptyList.of(CommentTooShort, AuthorTooShort), expectedReviewIds))
+      assert(result.unsafeRunSync() == NonEmptyList.of(AuthorTooShort, CommentTooShort).invalid)
 
     }
 

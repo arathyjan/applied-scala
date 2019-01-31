@@ -29,19 +29,7 @@ class MoviesController(service: MoviesServiceEffects) extends Http4sDsl[IO] {
       errorOrNewMovieId <- service.save(newMovieReq).attempt
       resp <- errorOrNewMovieId match {
         case Right(Valid(newMovieId)) => Created(newMovieId.asJson)
-        case Right(Invalid(errors)) => IO(println(errors)) >> BadRequest(errors.asJson)
-        case Left(e) => encodeError(e)
-      }
-    } yield resp
-
-  def saveReviews(movieId: Long, req: Request[IO]): IO[Response[IO]] =
-    for {
-      reviews <- req.as[NonEmptyVector[Review]]
-      errsOrIds <- service.saveReviews(MovieId(movieId), reviews).attempt
-      resp <- errsOrIds match {
-        case Right(Ior.Left(errs)) => BadRequest(errs.toList.asJson)
-        case Right(Ior.Right(ids)) => Created(ids.toVector.asJson)
-        case Right(Ior.Both(errs, ids)) => Created(ids.toVector.asJson)
+        case Right(Invalid(errors)) => BadRequest(errors.asJson)
         case Left(e) => encodeError(e)
       }
     } yield resp

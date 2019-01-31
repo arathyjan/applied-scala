@@ -26,7 +26,6 @@ class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository 
         ORDER BY m.id
       """.query[MovieRow].to[Vector].transact(transactor)
       movie <- IO(toMovie(rows))
-      _ <- IO(println(s"Found movie with id $movieId: $movie"))
     } yield movie
   }
 
@@ -41,8 +40,6 @@ class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository 
 
     insertMovie.transact(transactor)
   }
-
-  override def saveReviews(movieId: MovieId, reviews: NonEmptyVector[Review]): IO[NonEmptyVector[ReviewId]] = ???
 
   override def saveReview(movieId: MovieId, review: Review): IO[ReviewId] = ???
 }

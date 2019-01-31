@@ -10,7 +10,7 @@ class AppRoutes(controller: MoviesController) extends Http4sDsl[IO] {
   val openRoutes = HttpService[IO] {
     case GET -> Root / "movies" / LongVar(id) => controller.getMovie(id)
     case req@POST -> Root / "movies" => controller.saveMovie(req)
-    case req@POST -> Root / "movies" / LongVar(id) / "reviews" => controller.saveReviews(id, req)
+    case req@POST -> Root / "movies" / LongVar(id) / "review" => controller.saveReview(id, req)
   }
 
 }
