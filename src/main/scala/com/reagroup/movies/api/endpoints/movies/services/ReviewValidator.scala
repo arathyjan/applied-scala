@@ -6,8 +6,8 @@ import cats.implicits._
 
 object ReviewValidator {
 
-  def validate(review: Review): ValidatedNel[InvalidReviewErr, Review] =
-    (validateAuthor(review.author), validateComment(review.comment)).mapN(Review.apply)
+  def validate(review: Review): ValidatedNel[InvalidReviewErr, ReviewToSave] =
+    (validateAuthor(review.author), validateComment(review.comment)).mapN(ReviewToSave.apply)
 
   private def validateAuthor(author: String): ValidatedNel[InvalidReviewErr, String] =
     Validated.condNel(author.length > 0, author, AuthorTooShort)

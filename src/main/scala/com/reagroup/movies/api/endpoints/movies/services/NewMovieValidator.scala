@@ -2,14 +2,14 @@ package com.reagroup.movies.api.endpoints.movies.services
 
 import cats.implicits._
 import cats.data.{Validated, ValidatedNel}
-import com.reagroup.movies.api.models.NewMovie
+import com.reagroup.movies.api.models.{MovieToSave, NewMovie}
 
 object NewMovieValidator {
 
-  def validate(newMovie: NewMovie): ValidatedNel[InvalidNewMovieErr, NewMovie] = {
+  def validate(newMovie: NewMovie): ValidatedNel[InvalidNewMovieErr, MovieToSave] = {
     val validateName = validateMovieName(newMovie.name)
     val validateSynopsis = validateMovieSynopsis(newMovie.synopsis)
-    /*_*/(validateName, validateSynopsis).mapN(NewMovie(_, _))
+    (validateName, validateSynopsis).mapN(MovieToSave(_, _))
   }
 
   private def validateMovieName(name: String): ValidatedNel[InvalidNewMovieErr, String] =

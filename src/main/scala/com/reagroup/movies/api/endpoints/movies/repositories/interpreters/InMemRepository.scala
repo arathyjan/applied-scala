@@ -9,8 +9,8 @@ class InMemRepository extends MoviesRepository {
   override def getMovie(movieId: MovieId): IO[Option[Movie]] =
     IO.pure(Some(Movie("Batman Returns", "Best movie ever!", Vector.empty)))
 
-  override def saveMovie(movie: NewMovie): IO[MovieId] =
+  override def saveMovie(movie: MovieToSave): IO[MovieId] =
     IO.pure(MovieId(12345))
 
-  override def saveReview(movieId: MovieId, review: Review): IO[ReviewId] = IO.pure(ReviewId(1000))
+  override def saveReview(movieId: MovieId, review: ReviewToSave): IO[ReviewId] = IO.pure(ReviewId(1000))
 }

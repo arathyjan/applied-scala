@@ -29,7 +29,7 @@ class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository 
     } yield movie
   }
 
-  override def saveMovie(movie: NewMovie): IO[MovieId] = {
+  override def saveMovie(movie: MovieToSave): IO[MovieId] = {
     val insertMovie: ConnectionIO[MovieId] =
       for {
         movieId <- sql"""
@@ -41,7 +41,7 @@ class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository 
     insertMovie.transact(transactor)
   }
 
-  override def saveReview(movieId: MovieId, review: Review): IO[ReviewId] = ???
+  override def saveReview(movieId: MovieId, review: ReviewToSave): IO[ReviewId] = ???
 }
 
 object PostgresqlRepository {

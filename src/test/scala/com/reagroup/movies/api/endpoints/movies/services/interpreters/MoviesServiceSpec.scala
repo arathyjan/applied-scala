@@ -20,9 +20,9 @@ class MoviesServiceSpec extends FunSpec {
       val repo = new MoviesRepository {
         override def getMovie(movieId: MovieId): IO[Option[Movie]] = ???
 
-        override def saveMovie(movie: NewMovie): IO[MovieId] = IO.pure(MovieId(123))
+        override def saveMovie(movie: MovieToSave): IO[MovieId] = IO.pure(MovieId(123))
 
-        override def saveReview(movieId: MovieId, review: Review): IO[ReviewId] = ???
+        override def saveReview(movieId: MovieId, review: ReviewToSave): IO[ReviewId] = ???
       }
 
       val service = new MoviesService(repo, _ => ???)
@@ -42,9 +42,9 @@ class MoviesServiceSpec extends FunSpec {
       val repo = new MoviesRepository {
         override def getMovie(movieId: MovieId): IO[Option[Movie]] = ???
 
-        override def saveMovie(movie: NewMovie): IO[MovieId] = ???
+        override def saveMovie(movie: MovieToSave): IO[MovieId] = ???
 
-        override def saveReview(movieId: MovieId, review: Review): IO[ReviewId] = ???
+        override def saveReview(movieId: MovieId, review: ReviewToSave): IO[ReviewId] = ???
       }
 
       val service = new MoviesService(repo, _ => ???)

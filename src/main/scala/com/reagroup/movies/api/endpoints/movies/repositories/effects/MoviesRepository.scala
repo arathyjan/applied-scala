@@ -7,8 +7,8 @@ trait MoviesRepository {
 
   def getMovie(movieId: MovieId): IO[Option[Movie]]
 
-  def saveMovie(movie: NewMovie): IO[MovieId]
+  def saveMovie(movie: MovieToSave): IO[MovieId]
 
-  def saveReview(movieId: MovieId, review: Review): IO[ReviewId]
+  def saveReview(movieId: MovieId, review: ReviewToSave): IO[ReviewId]
 
 }
