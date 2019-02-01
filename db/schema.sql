@@ -5,6 +5,7 @@ CREATE TABLE movie (
 );
 
 CREATE TABLE review (
+  id SERIAL PRIMARY KEY,
   movie_id INT NOT NULL,
   author TEXT NOT NULL,
   comment TEXT NOT NULL,
