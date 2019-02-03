@@ -1,4 +1,4 @@
-package com.reagroup.appliedscala.urls.fetchmovie
+package com.reagroup.appliedscala.urls.fetchenrichedmovie
 
 import cats.effect.IO
 import com.reagroup.appliedscala.models.StarRating
