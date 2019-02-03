@@ -4,6 +4,7 @@ import cats.data.NonEmptyList
 import cats.effect.IO
 import cats.implicits._
 import com.reagroup.appliedscala.models._
+import com.reagroup.appliedscala.models.errors.{AuthorTooShort, CommentTooShort}
 import org.scalatest._
 
 class SaveReviewServiceSpec extends FunSpec {

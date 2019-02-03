@@ -2,6 +2,7 @@ package com.reagroup.appliedscala.urls.savemovie
 
 import cats.data.{Validated, ValidatedNel}
 import cats.implicits._
+import com.reagroup.appliedscala.models.errors.{InvalidNewMovieErr, MovieNameTooShort, SynopsisTooShort}
 import com.reagroup.appliedscala.models.{MovieToSave, NewMovieRequest}
 
 object NewMovieValidator {

@@ -2,6 +2,7 @@ package com.reagroup.appliedscala.urls.savereview
 
 import cats.data.{Validated, ValidatedNel}
 import cats.implicits._
+import com.reagroup.appliedscala.models.errors.{AuthorTooShort, CommentTooShort, InvalidReviewErr}
 import com.reagroup.appliedscala.models.{Review, ReviewToSave}
 
 object ReviewValidator {

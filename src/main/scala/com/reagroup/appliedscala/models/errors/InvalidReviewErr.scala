@@ -1,4 +1,4 @@
-package com.reagroup.appliedscala.urls.savereview
+package com.reagroup.appliedscala.models.errors
 
 import io.circe.Encoder
 

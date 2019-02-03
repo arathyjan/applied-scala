@@ -2,6 +2,7 @@ package com.reagroup.appliedscala.urls.savemovie
 
 import cats.data._
 import cats.implicits._
+import com.reagroup.appliedscala.models.errors.{MovieNameTooShort, SynopsisTooShort}
 import com.reagroup.appliedscala.models.{MovieToSave, NewMovieRequest}
 import org.scalatest.FunSpec
 

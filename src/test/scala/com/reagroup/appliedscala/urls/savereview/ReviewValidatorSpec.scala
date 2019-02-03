@@ -2,6 +2,7 @@ package com.reagroup.appliedscala.urls.savereview
 
 import cats.data._
 import cats.implicits._
+import com.reagroup.appliedscala.models.errors.{AuthorTooShort, CommentTooShort}
 import com.reagroup.appliedscala.models.{Review, ReviewToSave}
 import org.scalatest.FunSpec
 

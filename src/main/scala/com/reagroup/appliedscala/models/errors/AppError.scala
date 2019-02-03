@@ -1,4 +1,4 @@
-package com.reagroup.appliedscala.models
+package com.reagroup.appliedscala.models.errors
 
 import io.circe._
 import io.circe.syntax._
