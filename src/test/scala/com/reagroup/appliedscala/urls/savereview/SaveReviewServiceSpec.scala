@@ -19,7 +19,7 @@ class SaveReviewServiceSpec extends FunSpec {
 
       val service = new SaveReviewService(repo)
 
-      val reviewToSave = Review("", "")
+      val reviewToSave = NewReviewRequest("", "")
 
       val result = service.saveReview(MovieId(12345), reviewToSave)
 
@@ -35,7 +35,7 @@ class SaveReviewServiceSpec extends FunSpec {
 
       val service = new SaveReviewService(repo)
 
-      val reviewToSave = Review("bob", "good movie")
+      val reviewToSave = NewReviewRequest("bob", "good movie")
 
       val result = service.saveReview(MovieId(12345), reviewToSave)
 

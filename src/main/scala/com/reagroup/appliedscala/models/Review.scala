@@ -9,6 +9,4 @@ object Review {
 
   implicit val encoder: Encoder[Review] = deriveEncoder[Review]
 
-  implicit val decoder: Decoder[Review] = deriveDecoder[Review]
-
 }

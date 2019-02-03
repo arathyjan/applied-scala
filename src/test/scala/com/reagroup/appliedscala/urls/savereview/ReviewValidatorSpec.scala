@@ -3,14 +3,14 @@ package com.reagroup.appliedscala.urls.savereview
 import cats.data._
 import cats.implicits._
 import com.reagroup.appliedscala.models.errors.{AuthorTooShort, CommentTooShort}
-import com.reagroup.appliedscala.models.{Review, ReviewToSave}
+import com.reagroup.appliedscala.models.{NewReviewRequest, ReviewToSave}
 import org.scalatest.FunSpec
 
 class ReviewValidatorSpec extends FunSpec {
 
   describe("validate") {
     it("should return all errors if new review has no name and no synopsis") {
-      val review = Review("", "")
+      val review = NewReviewRequest("", "")
 
       val result = ReviewValidator.validate(review)
 
@@ -18,7 +18,7 @@ class ReviewValidatorSpec extends FunSpec {
     }
 
     it("should return NewMovie") {
-      val review = Review("bob", "cool movie")
+      val review = NewReviewRequest("bob", "cool movie")
 
       val result = ReviewValidator.validate(review)
 
