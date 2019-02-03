@@ -3,7 +3,7 @@ package com.reagroup.appliedscala.urls.savereview
 import cats.data.Validated._
 import cats.effect.IO
 import com.reagroup.appliedscala.models._
-import io.circe.Json
+import com.reagroup.appliedscala.urls.ErrorHandler
 import io.circe.syntax._
 import org.http4s._
 import org.http4s.circe.CirceEntityCodec._
@@ -18,11 +18,8 @@ class SaveReviewController(service: SaveReviewService) extends Http4sDsl[IO] {
       resp <- errsOrId match {
         case Right(Valid(reviewId)) => Created(reviewId.asJson)
         case Right(Invalid(errors)) => BadRequest(errors.asJson)
-        case Left(e) => encodeError(e)
+        case Left(e) => ErrorHandler(e)
       }
     } yield resp
-
-  private def encodeError(e: Throwable): IO[Response[IO]] =
-    InternalServerError(Json.obj("error" -> e.getMessage.asJson))
 
 }

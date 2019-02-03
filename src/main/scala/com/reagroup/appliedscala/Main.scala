@@ -21,6 +21,8 @@ object Main {
 
     val server = new AppServer(9200, appRuntime.routes).start()
 
+    println("Starting server")
+
     server.unsafeRunSync()
 
     ()

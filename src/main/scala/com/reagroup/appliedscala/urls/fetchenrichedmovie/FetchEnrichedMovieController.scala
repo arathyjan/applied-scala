@@ -2,7 +2,7 @@ package com.reagroup.appliedscala.urls.fetchenrichedmovie
 
 import cats.effect.IO
 import com.reagroup.appliedscala.models._
-import io.circe.Json
+import com.reagroup.appliedscala.urls.ErrorHandler
 import io.circe.syntax._
 import org.http4s._
 import org.http4s.circe.CirceEntityCodec._
@@ -15,11 +15,8 @@ class FetchEnrichedMovieController(service: FetchEnrichedMovieService) extends H
     resp <- errorOrMovie match {
       case Right(Some(enrichedMovie)) => Ok(enrichedMovie.asJson)
       case Right(None) => NotFound()
-      case Left(e) => encodeError(e)
+      case Left(e) => ErrorHandler(e)
     }
   } yield resp
-
-  private def encodeError(e: Throwable): IO[Response[IO]] =
-    InternalServerError(Json.obj("error" -> e.getMessage.asJson))
 
 }
