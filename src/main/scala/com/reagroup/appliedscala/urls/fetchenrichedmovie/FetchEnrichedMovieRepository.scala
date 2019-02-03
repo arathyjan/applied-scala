@@ -5,6 +5,6 @@ import com.reagroup.appliedscala.models._
 
 trait FetchEnrichedMovieRepository {
 
-  def fetchMovie(movieId: MovieId): IO[Option[Movie]]
+  def apply(movieId: MovieId): IO[Option[Movie]]
 
 }

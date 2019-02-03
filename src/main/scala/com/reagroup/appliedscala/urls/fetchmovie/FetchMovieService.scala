@@ -6,6 +6,6 @@ import com.reagroup.appliedscala.models._
 class FetchMovieService(repo: FetchMovieRepository) {
 
   def fetchMovie(movieId: MovieId): IO[Option[Movie]] =
-    repo.fetchMovie(movieId)
+    repo(movieId)
 
 }

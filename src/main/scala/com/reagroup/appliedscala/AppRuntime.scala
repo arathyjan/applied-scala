@@ -20,7 +20,7 @@ class AppRuntime() {
 
   private val fetchMovie = new FetchMovieController(new FetchMovieService(repository.fetchMovie))
 
-  private val fetchEnrichedMovie = new FetchEnrichedMovieController(new FetchEnrichedMovieService(repository.fetchMovie, ratingsRepo.fetchStarRating))
+  private val fetchEnrichedMovie = new FetchEnrichedMovieController(new FetchEnrichedMovieService(repository.fetchMovie, ratingsRepo.apply))
 
   private val saveMovie = new SaveMovieController(new SaveMovieService(repository.saveMovie))
 
