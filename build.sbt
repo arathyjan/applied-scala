@@ -16,7 +16,7 @@ mainClass in Compile := Some("com.reagroup.movies.api.Main")
 
 // When building to run locally/test
 // Overrides the "mainClass setting in the "Compile" configuration, only during the "run" task
-mainClass in(Compile, run) := Some("com.reagroup.movies.api.Main")
+mainClass in(Compile, run) := Some("com.reagroup.appliedscala.Main")
 
 //resolvers ++= Seq(
 //  "rea nexus release" at "http://rea-sonatype-nexus.services.delivery.realestate.com.au/nexus/content/repositories/releases"
