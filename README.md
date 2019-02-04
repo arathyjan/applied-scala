@@ -45,10 +45,16 @@
     - Probably nothing new here
 
 
+## How to start app
+
+```
+./auto/start-local
+```
+
 ## Test queries
 
 ```
-$ curl -H "Accept: application/json"  -X POST -d "{\"name\": \"\", \"synopsis\": \"\"}" http://localhost:8080/movies
-$ curl http://localhost:8080/movies/123
-$ curl -H "Accept: application/json"  -X POST -d "[{\"author\": \"Jack\", \"comment\": \"Great movie huh\"}, {\"author\": \"Bob\", \"comment\": \"\"}]" http://localhost:8080/movies/1/reviews
+$ curl -H "Accept: application/json"  -X POST -d "{\"name\": \"\", \"synopsis\": \"\"}" http://localhost:9200/movies
+$ curl http://localhost:9200/movies/1?enriched=true
+$ curl -H "Accept: application/json"  -X POST -d "[{\"author\": \"Jack\", \"comment\": \"Great movie huh\"}, {\"author\": \"Bob\", \"comment\": \"\"}]" http://localhost:9200/movies/1/reviews
 ```
