@@ -18,7 +18,7 @@ class AppRoutes(fetchMovie: FetchMovieController,
   val openRoutes = HttpService[IO] {
     case GET -> Root / "movies" / LongVar(id) :? OptionalBooleanMatcher(optEnriched) => if (optEnriched.contains(true)) fetchEnrichedMovie(id) else fetchMovie(id)
     case req@POST -> Root / "movies" => saveMovie(req)
-    case req@POST -> Root / "movies" / LongVar(id) / "review" => saveReview(id, req)
+    case req@POST -> Root / "movies" / LongVar(id) / "reviews" => saveReview(id, req)
   }
 
 }
