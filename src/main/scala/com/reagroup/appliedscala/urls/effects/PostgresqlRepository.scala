@@ -7,8 +7,10 @@ import doobie.implicits._
 import org.postgresql.ds.PGSimpleDataSource
 
 class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository {
+
+  case class MovieRow(name: String, synopsis: String, review: Option[Review])
+
   override def fetchMovie(movieId: MovieId): IO[Option[Movie]] = {
-    case class MovieRow(name: String, synopsis: String, review: Option[Review])
 
     def toMovie(rows: Vector[MovieRow]): Option[Movie] = rows.headOption.map {
       case MovieRow(name, synopsis, _) => Movie(name, synopsis, rows.flatMap(_.review))
@@ -22,8 +24,24 @@ class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository 
         WHERE m.id = ${movieId.value}
         ORDER BY m.id
       """.query[MovieRow].to[Vector].transact(transactor)
-      movie <- IO(toMovie(rows))
-    } yield movie
+    } yield toMovie(rows)
+  }
+
+  override def fetchAllMovies(): IO[Vector[Movie]] = {
+
+    def toMovies(rows: Vector[MovieRow]): Vector[Movie] = rows.groupBy(r => (r.name, r.synopsis)).map {
+      case ((name, synopsis), movieRows) => Movie(name, synopsis, movieRows.flatMap(_.review))
+    }.toVector
+
+    for {
+      rows <- sql"""
+                   SELECT m.name, m.synopsis, r.author, r.comment
+                   FROM movie m
+                   LEFT OUTER JOIN review r ON r.movie_id = m.id
+                   ORDER BY m.id
+                 """.query[MovieRow].to[Vector].transact(transactor)
+    } yield toMovies(rows)
+
   }
 
   override def saveMovie(movie: MovieToSave): IO[MovieId] = {
