@@ -6,11 +6,11 @@ import doobie._
 import doobie.implicits._
 import org.postgresql.ds.PGSimpleDataSource
 
-class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository {
+class PostgresqlRepository(transactor: Transactor[IO]) {
 
   case class MovieRow(name: String, synopsis: String, review: Option[Review])
 
-  override def fetchMovie(movieId: MovieId): IO[Option[Movie]] = {
+  def fetchMovie(movieId: MovieId): IO[Option[Movie]] = {
 
     def toMovie(rows: Vector[MovieRow]): Option[Movie] = rows.headOption.map {
       case MovieRow(name, synopsis, _) => Movie(name, synopsis, rows.flatMap(_.review))
@@ -27,7 +27,7 @@ class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository 
     } yield toMovie(rows)
   }
 
-  override def fetchAllMovies(): IO[Vector[Movie]] = {
+  def fetchAllMovies(): IO[Vector[Movie]] = {
 
     def toMovies(rows: Vector[MovieRow]): Vector[Movie] = rows.groupBy(r => (r.name, r.synopsis)).map {
       case ((name, synopsis), movieRows) => Movie(name, synopsis, movieRows.flatMap(_.review))
@@ -44,7 +44,7 @@ class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository 
 
   }
 
-  override def saveMovie(movie: MovieToSave): IO[MovieId] = {
+  def saveMovie(movie: MovieToSave): IO[MovieId] = {
     val insertMovie: ConnectionIO[MovieId] =
       for {
         movieId <- sql"""
@@ -56,7 +56,7 @@ class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository 
     insertMovie.transact(transactor)
   }
 
-  override def saveReview(movieId: MovieId, review: ReviewToSave): IO[ReviewId] = {
+  def saveReview(movieId: MovieId, review: ReviewToSave): IO[ReviewId] = {
     val insertMovie: ConnectionIO[ReviewId] =
       for {
         reviewId <- sql"""
@@ -70,7 +70,7 @@ class PostgresqlRepository(transactor: Transactor[IO]) extends MoviesRepository 
 }
 
 object PostgresqlRepository {
-  def apply(env: Map[String, String]): MoviesRepository = {
+  def apply(env: Map[String, String]): PostgresqlRepository = {
     val ds = new PGSimpleDataSource()
     ds.setServerName(env("DATABASE_HOST"))
     ds.setUser(env("DATABASE_USERNAME"))
