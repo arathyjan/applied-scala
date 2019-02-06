@@ -8,7 +8,7 @@ import io.circe.parser.decode
 import org.http4s.client.Client
 import org.http4s.client.blaze._
 
-class Http4sStarRatingsRepository extends StarRatingsRepository {
+class Http4sStarRatingsRepository {
 
   val httpClient: Client[IO] = Http1Client[IO]().unsafeRunSync
 

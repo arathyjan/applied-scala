@@ -15,9 +15,7 @@ class SaveMovieServiceSpec extends FunSpec {
 
       val newMovieReq = NewMovieRequest("", "")
 
-      val repo = new SaveMovieRepository {
-        override def apply(movie: MovieToSave): IO[MovieId] = ???
-      }
+      val repo = (movie: MovieToSave) => ???
 
       val service = new SaveMovieService(repo)
 
@@ -31,9 +29,7 @@ class SaveMovieServiceSpec extends FunSpec {
 
       val newMovieReq = NewMovieRequest("badman returns", "nananana badman")
 
-      val repo = new SaveMovieRepository {
-        override def apply(movie: MovieToSave): IO[MovieId] = IO.pure(MovieId(123))
-      }
+      val repo = (movie: MovieToSave) => IO.pure(MovieId(123))
 
       val service = new SaveMovieService(repo)
 

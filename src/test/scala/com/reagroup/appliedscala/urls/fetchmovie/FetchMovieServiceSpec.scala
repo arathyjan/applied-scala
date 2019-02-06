@@ -15,15 +15,11 @@ class FetchMovieServiceSpec extends FunSpec {
 
       val expectedMovie = Movie("badman", "nananana", Vector.empty[Review])
 
-      val repo = new FetchMovieRepository {
-        override def apply(movieId: MovieId): IO[Option[Movie]] = {
-          IO.pure(Some(expectedMovie))
-        }
-      }
+      val repo = (movieId: MovieId) => IO.pure(Some(expectedMovie))
 
       val service = new FetchMovieService(repo)
 
-      val actual = service.fetchMovie(MovieId(123))
+      val actual = service.fetch(MovieId(123))
 
       assert(actual.unsafeRunSync() == Some(expectedMovie))
 

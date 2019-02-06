@@ -11,7 +11,7 @@ import org.http4s.dsl.Http4sDsl
 class FetchMovieController(service: FetchMovieService) extends Http4sDsl[IO] {
 
   def apply(movieId: Long): IO[Response[IO]] = for {
-    errorOrMovie <- service.fetchMovie(MovieId(movieId)).attempt
+    errorOrMovie <- service.fetch(MovieId(movieId)).attempt
     resp <- errorOrMovie match {
       case Right(Some(movie)) => Ok(movie.asJson)
       case Right(None) => NotFound()

@@ -10,7 +10,7 @@ import org.http4s.dsl.Http4sDsl
 class FetchAllMoviesController(service: FetchAllMoviesService) extends Http4sDsl[IO] {
 
   def apply(): IO[Response[IO]] = for {
-    errorOrMovies <- service.fetchAllMovies().attempt
+    errorOrMovies <- service.fetchAll.attempt
     resp <- errorOrMovies match {
       case Right(movies) => Ok(movies.asJson)
       case Left(e) => ErrorHandler(e)
