@@ -17,8 +17,8 @@
 | 14.30 | Validated Theory + Exercises |
 | 14.50 | Validated Exercises |
 | 15.15 | Traverse Theory |
-| 15.30 | Endpoint 5: POST movie |
-| 16.00 | Endpoint 6: POST movie/id/review |
+| 15.30 | Endpoint 4: POST movie |
+| 16.00 | Endpoint 5: POST movie/id/review |
 | 16:30 | End |
 
 ### Day 1
