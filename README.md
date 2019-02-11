@@ -2,6 +2,25 @@
 
 ## Scope
 
+### Trial
+
+| Time | Topic/Exercise |
+| :---: | :---: | 
+| 10.00 | Intro to Applied Scala |
+| 10.30 | IO Exercises |
+| 11.00 | Circe Exercises |
+| 11.30 | Http4s overview |
+| 12.00 | Lunch |
+| 13.15 | Endpoint 1: Hello World |
+| 13.30 | Endpoint 2: GET movie |
+| 14.00 | Endpoint 3: GET movie?enriched=true |
+| 14.30 | Validated Theory + Exercises |
+| 14.50 | Validated Exercises |
+| 15.15 | Traverse Theory |
+| 15.30 | Endpoint 5: POST movie |
+| 16.00 | Endpoint 6: POST movie/id/review |
+| 16:30 | End |
+
 ### Day 1
 
 - Keynote (State of REA's Scala apps) (Jake)
