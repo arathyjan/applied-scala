@@ -4,13 +4,13 @@ import cats.effect.IO
 import com.reagroup.appliedscala.models._
 import com.reagroup.appliedscala.models.errors.EnrichmentFailure
 
-class FetchEnrichedMovieService(repo: FetchEnrichedMovieRepository, starRatingsRepo: StarRatingsRepository) {
+class FetchEnrichedMovieService(fetchMovie: MovieId => IO[Option[Movie]], fetchStarRating: String => IO[Option[StarRating]]) {
 
-  def fetchEnrichedMovie(movieId: MovieId): IO[Option[EnrichedMovie]] =
+  def fetch(movieId: MovieId): IO[Option[EnrichedMovie]] =
     for {
-      optMovie <- repo(movieId)
+      optMovie <- fetchMovie(movieId)
       optStar <- optMovie match {
-        case Some(movie) => starRatingsRepo(movie.name)
+        case Some(movie) => fetchStarRating(movie.name)
         case None => IO(None)
       }
       enriched <- (optMovie, optStar) match {

@@ -14,7 +14,7 @@ class SaveReviewController(service: SaveReviewService) extends Http4sDsl[IO] {
   def apply(movieId: Long, req: Request[IO]): IO[Response[IO]] =
     for {
       review <- req.as[NewReviewRequest]
-      errsOrId <- service.saveReview(MovieId(movieId), review).attempt
+      errsOrId <- service.save(MovieId(movieId), review).attempt
       resp <- errsOrId match {
         case Right(Valid(reviewId)) => Created(reviewId.asJson)
         case Right(Invalid(errors)) => BadRequest(errors.asJson)

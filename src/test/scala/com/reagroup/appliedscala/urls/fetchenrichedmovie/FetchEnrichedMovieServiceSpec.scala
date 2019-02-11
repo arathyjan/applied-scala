@@ -14,17 +14,13 @@ class FetchEnrichedMovieServiceSpec extends FunSpec {
       val expectedMovie = Movie("badman", "nananana", Vector.empty[Review])
       val expectedStarRating = One
 
-      val repo = new FetchEnrichedMovieRepository {
-        override def apply(movieId: MovieId): IO[Option[Movie]] = IO.pure(Some(expectedMovie))
-      }
+      val repo = (movieId: MovieId) => IO.pure(Some(expectedMovie))
 
-      val starRatingsRepo = new StarRatingsRepository {
-        override def apply(movieName: String): IO[Option[StarRating]] = IO.pure(Some(expectedStarRating))
-      }
+      val starRatingsRepo = (movieName: String) => IO.pure(Some(expectedStarRating))
 
       val service = new FetchEnrichedMovieService(repo, starRatingsRepo)
 
-      val actual = service.fetchEnrichedMovie(MovieId(123))
+      val actual = service.fetch(MovieId(123))
 
       assert(actual.unsafeRunSync() == Some(EnrichedMovie(expectedMovie, expectedStarRating)))
 
@@ -34,17 +30,13 @@ class FetchEnrichedMovieServiceSpec extends FunSpec {
 
       val movie = Movie("badman", "nananana", Vector.empty[Review])
 
-      val repo = new FetchEnrichedMovieRepository {
-        override def apply(movieId: MovieId): IO[Option[Movie]] = IO.pure(Some(movie))
-      }
+      val repo = (movieId: MovieId) => IO.pure(Some(movie))
 
-      val starRatingsRepo = new StarRatingsRepository {
-        override def apply(movieName: String): IO[Option[StarRating]] = IO.pure(None)
-      }
+      val starRatingsRepo = (movieName: String) => IO.pure(None)
 
       val service = new FetchEnrichedMovieService(repo, starRatingsRepo)
 
-      val actual = service.fetchEnrichedMovie(MovieId(123))
+      val actual = service.fetch(MovieId(123))
 
       assert(actual.attempt.unsafeRunSync() == Left(EnrichmentFailure(movie)))
 

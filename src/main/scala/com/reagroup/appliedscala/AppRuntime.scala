@@ -19,7 +19,7 @@ class AppRuntime() {
 
   private val fetchEnrichedMovie = new FetchEnrichedMovieController(new FetchEnrichedMovieService(pgsqlRepo.fetchMovie, ratingsRepo.apply))
 
-  private val fetchAllMovies = new FetchAllMoviesController(new FetchAllMoviesService(() => pgsqlRepo.fetchAllMovies()))
+  private val fetchAllMovies = new FetchAllMoviesController(new FetchAllMoviesService(pgsqlRepo.fetchAllMovies))
 
   private val saveMovie = new SaveMovieController(new SaveMovieService(pgsqlRepo.saveMovie))
 

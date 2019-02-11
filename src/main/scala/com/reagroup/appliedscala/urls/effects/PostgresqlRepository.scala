@@ -27,7 +27,7 @@ class PostgresqlRepository(transactor: Transactor[IO]) {
     } yield toMovie(rows)
   }
 
-  def fetchAllMovies(): IO[Vector[Movie]] = {
+  def fetchAllMovies: IO[Vector[Movie]] = {
 
     def toMovies(rows: Vector[MovieRow]): Vector[Movie] = rows.groupBy(r => (r.name, r.synopsis)).map {
       case ((name, synopsis), movieRows) => Movie(name, synopsis, movieRows.flatMap(_.review))

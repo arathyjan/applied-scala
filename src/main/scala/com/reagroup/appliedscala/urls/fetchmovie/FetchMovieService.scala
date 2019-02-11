@@ -3,9 +3,9 @@ package com.reagroup.appliedscala.urls.fetchmovie
 import cats.effect.IO
 import com.reagroup.appliedscala.models._
 
-class FetchMovieService(repo: FetchMovieRepository) {
+class FetchMovieService(fetchMovie: MovieId => IO[Option[Movie]]) {
 
-  def fetchMovie(movieId: MovieId): IO[Option[Movie]] =
-    repo(movieId)
+  def fetch(movieId: MovieId): IO[Option[Movie]] =
+    fetchMovie(movieId)
 
 }

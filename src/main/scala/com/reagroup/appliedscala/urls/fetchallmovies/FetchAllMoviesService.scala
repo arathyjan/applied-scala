@@ -3,9 +3,9 @@ package com.reagroup.appliedscala.urls.fetchallmovies
 import cats.effect.IO
 import com.reagroup.appliedscala.models._
 
-class FetchAllMoviesService(repo: FetchAllMoviesRepository) {
+class FetchAllMoviesService(fetchAllMovies: IO[Vector[Movie]]) {
 
-  def fetchAllMovies(): IO[Vector[Movie]] =
-    repo()
+  def fetchAll: IO[Vector[Movie]] =
+    fetchAllMovies
 
 }

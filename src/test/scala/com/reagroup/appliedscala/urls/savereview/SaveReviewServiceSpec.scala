@@ -13,15 +13,13 @@ class SaveReviewServiceSpec extends FunSpec {
 
     it("should return errors") {
 
-      val repo = new SaveReviewRepository {
-        override def apply(movieId: MovieId, review: ReviewToSave): IO[ReviewId] = ???
-      }
+      val repo = (movieId: MovieId, review: ReviewToSave) => ???
 
       val service = new SaveReviewService(repo)
 
       val reviewToSave = NewReviewRequest("", "")
 
-      val result = service.saveReview(MovieId(12345), reviewToSave)
+      val result = service.save(MovieId(12345), reviewToSave)
 
       assert(result.unsafeRunSync() == NonEmptyList.of(AuthorTooShort, CommentTooShort).invalid)
 
@@ -29,15 +27,13 @@ class SaveReviewServiceSpec extends FunSpec {
 
     it("should return saved reviewId") {
 
-      val repo = new SaveReviewRepository {
-        override def apply(movieId: MovieId, review: ReviewToSave): IO[ReviewId] = IO.pure(ReviewId(12345))
-      }
+      val repo = (movieId: MovieId, review: ReviewToSave) => IO.pure(ReviewId(12345))
 
       val service = new SaveReviewService(repo)
 
       val reviewToSave = NewReviewRequest("bob", "good movie")
 
-      val result = service.saveReview(MovieId(12345), reviewToSave)
+      val result = service.save(MovieId(12345), reviewToSave)
 
       assert(result.unsafeRunSync() == ReviewId(12345).valid)
 
