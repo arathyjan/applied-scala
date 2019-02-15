@@ -4,21 +4,20 @@
 
 ### Trial
 
-| Time | Topic/Exercise |
-| :---: | :---: | 
-| 10.00 | Intro to Applied Scala |
-| 10.30 | IO Exercises |
-| 11.00 | Circe Exercises |
-| 11.30 | Http4s Overview |
+| Time | Topic/Exercise | Presenter
+| :---: | :---: | :--:
+| 10.00 | Intro to Applied Scala | Chris
+| 10.30 | IO Exercises | Jack
+| 11.00 | Circe Exercises | Jack
+| 11.30 | Http4s Overview | Chris
 | 12.00 | Lunch |
-| 13.15 | Endpoint 1: Hello World |
-| 13.30 | Endpoint 2: GET movie |
-| 14.00 | Endpoint 3: GET movie?enriched=true |
-| 14.30 | Validated Theory + Exercises |
-| 14.50 | Validated Exercises |
-| 15.15 | Traverse Theory |
-| 15.30 | Endpoint 4: POST movie |
-| 16.00 | Endpoint 5: POST movie/id/review |
+| 13.15 | Endpoint 1: Hello World | Jack
+| 13.30 | Endpoint 2: GET movie | Jack
+| 14.00 | Endpoint 3: GET movie?enriched=true | Jack
+| 14.30 | Validated and Traverse Theory | Chris
+| 15.00 | Validated Exercises | Jack
+| 15.30 | Endpoint 4: POST movie | Jack
+| 16.00 | Endpoint 5: POST movie/id/review | Jack
 | 16:30 | End |
 
 #### Intro to Applied Scala
