@@ -22,11 +22,11 @@ object StarRating {
 
   def show(starRating: StarRating): String =
     starRating match {
-      case Five => "⭐️⭐️⭐️⭐️⭐️"
-      case Four => "⭐️⭐️⭐️⭐️"
-      case Three => "⭐️⭐️⭐️"
-      case Two => "⭐️⭐️"
-      case One => "⭐️"
+      case Five => "Five Stars"
+      case Four => "Four Stars"
+      case Three => "Three Stars"
+      case Two => "Two Stars"
+      case One => "One Star"
     }
 
   implicit val encoder: Encoder[StarRating] = (starRating: StarRating) => show(starRating).asJson
