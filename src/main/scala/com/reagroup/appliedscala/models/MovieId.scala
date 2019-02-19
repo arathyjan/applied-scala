@@ -6,6 +6,6 @@ case class MovieId(value: Long)
 
 object MovieId {
 
-  implicit val encoder: Encoder[MovieId] = Encoder.forProduct1("id")(_.value)
+  implicit val encoder: Encoder[MovieId] = ???
 
 }

@@ -7,7 +7,6 @@ import com.reagroup.appliedscala.models.{MovieId, NewReviewRequest, ReviewId, Re
 
 class SaveReviewService(saveReview: (MovieId, ReviewToSave) => IO[ReviewId]) {
 
-  def save(movieId: MovieId, review: NewReviewRequest): IO[ValidatedNel[InvalidReviewErr, ReviewId]] =
-    ReviewValidator.validate(review).traverse(saveReview.apply(movieId, _))
+  def save(movieId: MovieId, review: NewReviewRequest): IO[ValidatedNel[InvalidReviewErr, ReviewId]] = ???
 
 }

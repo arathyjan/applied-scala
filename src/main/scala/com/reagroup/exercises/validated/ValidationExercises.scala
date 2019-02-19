@@ -19,19 +19,14 @@ object ValidationExercises {
 
   case class NameIsEmpty(label: String) extends ValidationError
 
-  def nameValidation(name: String, label: String): ValidatedNel[ValidationError, String] =
-    Validated.condNel(name.trim.nonEmpty, name, NameIsEmpty(label))
+  def nameValidation(name: String, label: String): ValidatedNel[ValidationError, String] = ???
 
-  def passwordStrengthValidation(password: String): ValidatedNel[ValidationError, String] =
-    Validated.condNel(password.exists(Character.isDigit), password, PasswordTooWeak)
+  def passwordStrengthValidation(password: String): ValidatedNel[ValidationError, String] = ???
 
-  def passwordLengthValidation(password: String): ValidatedNel[ValidationError, String] =
-    Validated.condNel(password.length > 8, password, PasswordTooShort)
+  def passwordLengthValidation(password: String): ValidatedNel[ValidationError, String] = ???
 
-  def passwordValidation(password: String): ValidatedNel[ValidationError, String] =
-    passwordStrengthValidation(password) |+| passwordLengthValidation(password)
+  def passwordValidation(password: String): ValidatedNel[ValidationError, String] = ???
 
-  def validatePerson(firstName: String, lastName: String, password: String): ValidatedNel[ValidationError, Person] =
-    (nameValidation(firstName, "firstName"), nameValidation(lastName, "lastName"), passwordValidation(password)).mapN(Person(_, _, _))
+  def validatePerson(firstName: String, lastName: String, password: String): ValidatedNel[ValidationError, Person] = ???
 
 }

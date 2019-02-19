@@ -5,7 +5,6 @@ import com.reagroup.appliedscala.models._
 
 class FetchMovieService(fetchMovie: MovieId => IO[Option[Movie]]) {
 
-  def fetch(movieId: MovieId): IO[Option[Movie]] =
-    fetchMovie(movieId)
+  def fetch(movieId: MovieId): IO[Option[Movie]] = ???
 
 }

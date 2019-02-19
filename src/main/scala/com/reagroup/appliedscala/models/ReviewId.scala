@@ -6,6 +6,6 @@ case class ReviewId(value: Long)
 
 object ReviewId {
 
-  implicit val encoder: Encoder[ReviewId] = Encoder.forProduct1("id")(_.value)
+  implicit val encoder: Encoder[ReviewId] = ???
 
 }

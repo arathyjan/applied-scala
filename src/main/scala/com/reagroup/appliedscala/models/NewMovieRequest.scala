@@ -8,6 +8,6 @@ case class NewMovieRequest(name: String, synopsis: String)
 
 object NewMovieRequest {
 
-  implicit val decoder: Decoder[NewMovieRequest] = deriveDecoder[NewMovieRequest]
+  implicit val decoder: Decoder[NewMovieRequest] = ???
 
 }

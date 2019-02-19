@@ -18,10 +18,10 @@ class AppRoutes(fetchMovie: FetchMovieController,
   object OptionalBooleanMatcher extends OptionalQueryParamDecoderMatcher[Boolean]("enriched")
 
   val openRoutes = HttpService[IO] {
-    case GET -> Root / "movies" => fetchAllMovies()
-    case GET -> Root / "movies" / LongVar(id) :? OptionalBooleanMatcher(optEnriched) => if (optEnriched.contains(true)) fetchEnrichedMovie(id) else fetchMovie(id)
-    case req@POST -> Root / "movies" => saveMovie(req)
-    case req@POST -> Root / "movies" / LongVar(id) / "reviews" => saveReview(id, req)
+    case GET -> Root / "movies" => ???
+    case GET -> Root / "movies" / LongVar(id) :? OptionalBooleanMatcher(optEnriched) => ???
+    case req@POST -> Root / "movies" => ???
+    case req@POST -> Root / "movies" / LongVar(id) / "reviews" => ???
   }
 
 }

@@ -10,13 +10,8 @@ case object SynopsisTooShort extends InvalidNewMovieErr
 
 object InvalidNewMovieErr {
 
-  implicit val encoder: Encoder[InvalidNewMovieErr] =
-    Encoder.forProduct1("type")(show)
+  implicit val encoder: Encoder[InvalidNewMovieErr] = ???
 
-  def show(err: InvalidNewMovieErr): String =
-    err match {
-      case MovieNameTooShort => "MOVIE_NAME_TOO_SHORT"
-      case SynopsisTooShort => "SYNOPSIS_TOO_SHORT"
-    }
+  def show(err: InvalidNewMovieErr): String = ???
 
 }

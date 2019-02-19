@@ -7,13 +7,10 @@ import com.reagroup.appliedscala.models.{NewReviewRequest, ReviewToSave}
 
 object ReviewValidator {
 
-  def validate(review: NewReviewRequest): ValidatedNel[InvalidReviewErr, ReviewToSave] =
-    (validateAuthor(review.author), validateComment(review.comment)).mapN(ReviewToSave.apply)
+  def validate(review: NewReviewRequest): ValidatedNel[InvalidReviewErr, ReviewToSave] = ???
 
-  private def validateAuthor(author: String): ValidatedNel[InvalidReviewErr, String] =
-    Validated.condNel(author.length > 0, author, AuthorTooShort)
+  private def validateAuthor(author: String): ValidatedNel[InvalidReviewErr, String] = ???
 
-  private def validateComment(comment: String): ValidatedNel[InvalidReviewErr, String] =
-    Validated.condNel(comment.length > 5, comment, CommentTooShort)
+  private def validateComment(comment: String): ValidatedNel[InvalidReviewErr, String] = ???
 
 }

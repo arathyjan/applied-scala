@@ -7,6 +7,6 @@ case class Review(author: String, comment: String)
 
 object Review {
 
-  implicit val encoder: Encoder[Review] = deriveEncoder[Review]
+  implicit val encoder: Encoder[Review] = ???
 
 }

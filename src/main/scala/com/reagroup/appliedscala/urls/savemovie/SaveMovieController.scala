@@ -14,15 +14,6 @@ import org.http4s.dsl.Http4sDsl
 
 class SaveMovieController(saveNewMovie: NewMovieRequest => IO[ValidatedNel[InvalidNewMovieErr, MovieId]]) extends Http4sDsl[IO] {
 
-  def apply(req: Request[IO]): IO[Response[IO]] =
-    for {
-      newMovieReq <- req.as[NewMovieRequest]
-      errorOrNewMovieId <- saveNewMovie(newMovieReq).attempt
-      resp <- errorOrNewMovieId match {
-        case Right(Valid(newMovieId)) => Created(newMovieId.asJson)
-        case Right(Invalid(errors)) => BadRequest(Json.obj("errors" -> errors.asJson))
-        case Left(e) => ErrorHandler(e)
-      }
-    } yield resp
+  def apply(req: Request[IO]): IO[Response[IO]] = ???
 
 }

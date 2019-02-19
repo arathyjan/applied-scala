@@ -7,6 +7,6 @@ case class Movie(name: String, synopsis: String, reviews: Vector[Review])
 
 object Movie {
 
-  implicit val encoder: Encoder[Movie] = deriveEncoder[Movie]
+  implicit val encoder: Encoder[Movie] = ???
 
 }

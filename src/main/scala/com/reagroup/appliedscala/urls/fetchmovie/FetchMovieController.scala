@@ -10,13 +10,6 @@ import org.http4s.dsl.Http4sDsl
 
 class FetchMovieController(fetchMovie: MovieId => IO[Option[Movie]]) extends Http4sDsl[IO] {
 
-  def apply(movieId: Long): IO[Response[IO]] = for {
-    errorOrMovie <- fetchMovie(MovieId(movieId)).attempt
-    resp <- errorOrMovie match {
-      case Right(Some(movie)) => Ok(movie.asJson)
-      case Right(None) => NotFound()
-      case Left(e) => ErrorHandler(e)
-    }
-  } yield resp
+  def apply(movieId: Long): IO[Response[IO]] = ???
 
 }
