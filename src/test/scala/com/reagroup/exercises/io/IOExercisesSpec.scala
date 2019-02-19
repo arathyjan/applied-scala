@@ -2,112 +2,109 @@ package com.reagroup.exercises.io
 
 import cats.effect.IO
 import com.reagroup.exercises.io.IOExercises._
-import org.scalactic.TypeCheckedTripleEquals
-import org.scalatest.FunSpec
+import org.specs2.mutable.Specification
 
-class IOExercisesSpec extends FunSpec with TypeCheckedTripleEquals {
+class IOExercisesSpec extends Specification {
 
-  describe("immediatelyExecutingIO") {
-    it("should return an IO that would return number 43") {
+  "immediatelyExecutingIO" should {
+    "return an IO that would return number 43" in {
       val result = immediatelyExecutingIO()
 
-      assert(result.unsafeRunSync() === 43)
+      result.unsafeRunSync() === 43
     }
   }
 
-  describe("helloWorld") {
-    it("should return an IO that would log 'hello world' using the `logger` provided") {
+  "helloWorld" should {
+    "return an IO that would log 'hello world' using the `logger` provided" in {
       val logger = new TestLogger
       val result = helloWorld(logger)
 
-      assert(result.unsafeRunSync() === ())
-      assert(logger.loggedMessages.toList === List("hello world"))
+      result.unsafeRunSync() === () && logger.loggedMessages.toList === List("hello world")
     }
   }
 
-  describe("alwaysFailingTask") {
-    it("should return an IO containing an Exception") {
+  "alwaysFailingTask" should {
+    "return an IO containing an Exception" in {
       alwaysFailingTask().attempt.unsafeRunSync() match {
-        case Left(_: Exception) => succeed
-        case otherwise => fail(s"Expected a Left(Exception()) but received a $otherwise")
+        case Left(_: Exception) => ok
+        case otherwise => ko(s"Expected a Left(Exception()) but received a $otherwise")
       }
     }
   }
 
-  describe("logMessageOrFailIfEmpty") {
-    it("should run `logger` if `msg` is not empty") {
+  "logMessageOrFailIfEmpty" should {
+    "run `logger` if `msg` is not empty" in {
       val logger = new TestLogger
       val msg = "message"
       val result = logMessageOrFailIfEmpty(msg, logger)
 
-      assert(result.unsafeRunSync() === ())
-      assert(logger.loggedMessages.toList === List(msg))
+      result.unsafeRunSync() === () && logger.loggedMessages.toList === List(msg)
     }
 
-    it("should return AppException if `msg` is empty") {
+    "return AppException if `msg` is empty" should
+    {
       val logger = new TestLogger
       val msg = ""
       val result = logMessageOrFailIfEmpty(msg, logger)
 
-      assert(result.attempt.unsafeRunSync() === Left(AppException("Log must not be empty")))
-      assert(logger.loggedMessages.toList === List())
+      result.attempt.unsafeRunSync() === Left(AppException("Log must not be empty")) && logger.loggedMessages.toList === List()
     }
   }
 
-  describe("getCurrentTempInF") {
-    it("should convert the current temperature to Fahrenheit") {
+  "getCurrentTempInF" should {
+    "convert the current temperature to Fahrenheit" in {
       val currentTemp = IO.pure(Celsius(100))
       val result = getCurrentTempInF(currentTemp)
 
-      assert(result.unsafeRunSync() === Fahrenheit(212))
+      result.unsafeRunSync() === Fahrenheit(212)
     }
   }
 
-  describe("getCurrentTempInFAgain") {
-    it("should convert the current temperature to Fahrenheit using an external converter") {
+  "getCurrentTempInFAgain" should {
+    "convert the current temperature to Fahrenheit using an external converter" in {
       val currentTemp = IO.pure(Celsius(100))
-      val converter = (c: Celsius) => IO(Fahrenheit(c.value * 9 / 5 + 32))
+      val converter = (c: Celsius) => IO(Fahrenheit(c.value * 9 / 5 + 32)
+      )
       val result = getCurrentTempInFAgain(currentTemp, converter)
 
-      assert(result.unsafeRunSync() === Fahrenheit(212))
+      result.unsafeRunSync() === Fahrenheit(212)
     }
   }
 
-  describe("showCurrentTempInF") {
-    it("should return the current temperature in a sentence") {
+  "showCurrentTempInF" should {
+    "return the current temperature in a sentence" in {
       val currentTemp = IO.pure(Celsius(100))
       val converter = (c: Celsius) => IO(Fahrenheit(c.value * 9 / 5 + 32))
       val result = showCurrentTempInF(currentTemp, converter)
 
-      assert(result.unsafeRunSync() === "The temperature is 212")
+      result.unsafeRunSync() === "The temperature is 212"
     }
 
-    it("should return an error if the converter fails") {
+    "return an error if the converter fails" in {
       val currentTemp = IO.pure(Celsius(100))
       val error = new Throwable("error")
       val converter: Celsius => IO[Fahrenheit] = _ => IO.raiseError(error)
       val result = showCurrentTempInF(currentTemp, converter)
 
-      assert(result.unsafeRunSync() === error.getMessage)
+      result.unsafeRunSync() === error.getMessage
     }
   }
 
-  describe("mkUsernameThenPrint") {
-    it("should print a username if it is not empty") {
+  "mkUsernameThenPrint" should {
+    "print a username if it is not empty" in {
       val username = "scalauser"
       val logger = new TestLogger
       val result = mkUsernameThenPrint(username, logger)
 
-      assert(result.unsafeRunSync() === ())
-      assert(logger.loggedMessages.toList === List(username))
+      result.unsafeRunSync() === () && logger.loggedMessages.toList === List(username)
     }
 
-    it("should return UserNameError if the username is empty") {
+    "return UserNameError if the username is empty" in {
       val username = ""
       val logger = new TestLogger
       val result = mkUsernameThenPrint(username, logger)
-      
-      assert(result.attempt.unsafeRunSync() === Left(UsernameError("Username cannot be empty")))
+
+      result.attempt.unsafeRunSync() === Left(UsernameError("Username cannot be empty"))
     }
   }
 

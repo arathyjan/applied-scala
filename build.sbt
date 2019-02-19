@@ -25,13 +25,13 @@ mainClass in(Compile, run) := Some("com.reagroup.appliedscala.Main")
 val catsVersion = "1.1.0"
 val circeVersion = "0.9.3"
 val monixVersion = "2.3.3"
-val scalatestVersion = "3.0.5"
 val Http4sVersion = "0.18.15"
 val Http4sTimerVersion = "0.0.3"
 val reaScalaLoggingVersion = "1.0.0"
 val reaScalaDiagnosticsVersion = "1.0.1"
 val postgresqlVersion = "42.2.4"
 val doobieVersion = "0.5.3"
+val specs2Version = "4.3.6"
 
 libraryDependencies ++= Seq(
   "io.circe" %% "circe-core",
@@ -50,13 +50,16 @@ libraryDependencies ++= Seq(
   "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
   "org.http4s" %% "http4s-blaze-client" % Http4sVersion,
   "org.http4s" %% "http4s-circe" % Http4sVersion,
+  "org.http4s" %% "http4s-testing" % Http4sVersion,
   "org.http4s" %% "http4s-dsl" % Http4sVersion,
   "org.lyranthe" %% "http4s-timer-core" % Http4sTimerVersion,
   "org.lyranthe" %% "http4s-timer-newrelic" % Http4sTimerVersion,
   "org.postgresql" % "postgresql" % postgresqlVersion,
   "org.tpolecat" %% "doobie-core" % doobieVersion,
   "org.tpolecat" %% "doobie-postgres" % doobieVersion,
-  "org.scalatest" %% "scalatest" % scalatestVersion % Test
+  "org.specs2" %% "specs2-core" % specs2Version % "test",
+  "org.specs2" %% "specs2-matcher-extra" % specs2Version % "test",
+  "org.specs2" %% "specs2-scalacheck" % specs2Version % "test",
 )
 
 scalacOptions ++= Seq(
@@ -74,7 +77,7 @@ scalacOptions ++= Seq(
 
 scalacOptions in Test ++= Seq("-Yrangepos")
 
-testFrameworks := Seq(TestFrameworks.ScalaTest)
+testFrameworks := Seq(TestFrameworks.Specs2)
 
 test in assembly := {}
 

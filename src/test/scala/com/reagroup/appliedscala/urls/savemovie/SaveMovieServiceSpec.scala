@@ -5,13 +5,13 @@ import cats.effect.IO
 import cats.implicits._
 import com.reagroup.appliedscala.models._
 import com.reagroup.appliedscala.models.errors.{MovieNameTooShort, SynopsisTooShort}
-import org.scalatest._
+import org.specs2.mutable.Specification
 
-class SaveMovieServiceSpec extends FunSpec {
+class SaveMovieServiceSpec extends Specification {
 
-  describe("saveMovie") {
+  "saveMovie" should {
 
-    it("should return both errors") {
+    "return both errors" in {
 
       val newMovieReq = NewMovieRequest("", "")
 
@@ -21,11 +21,11 @@ class SaveMovieServiceSpec extends FunSpec {
 
       val actual = service.save(newMovieReq)
 
-      assert(actual.unsafeRunSync() == NonEmptyList.of(MovieNameTooShort, SynopsisTooShort).invalid)
+      actual.unsafeRunSync() == NonEmptyList.of(MovieNameTooShort, SynopsisTooShort).invalid
 
     }
 
-    it("should return saved movieId") {
+    "return saved movieId" in {
 
       val newMovieReq = NewMovieRequest("badman returns", "nananana badman")
 
@@ -35,7 +35,7 @@ class SaveMovieServiceSpec extends FunSpec {
 
       val actual = service.save(newMovieReq)
 
-      assert(actual.unsafeRunSync() == MovieId(123).valid)
+      actual.unsafeRunSync() == MovieId(123).valid
 
     }
 

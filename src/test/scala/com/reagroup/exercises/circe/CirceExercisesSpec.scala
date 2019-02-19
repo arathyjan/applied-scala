@@ -1,174 +1,174 @@
 package com.reagroup.exercises.circe
 
-import org.scalatest.FunSpec
+import org.specs2.mutable.Specification
 import CirceExercises._
 import io.circe.{DecodingFailure, Json, ParsingFailure}
 import io.circe.syntax._
 import io.circe.literal._
 
-class CirceExercisesSpec extends FunSpec {
+class CirceExercisesSpec extends Specification {
 
-  describe("strToJson") {
+  "strToJson" should {
 
-    it("should parse valid Json") {
+    "parse valid Json" in {
       val json = json"""{"name": "scala"}"""
       val errOrJson = strToJson(json.noSpaces)
-      assert(errOrJson == Right(json))
+      errOrJson == Right(json)
     }
 
-    it("should return error for invalid Json") {
+    "return error for invalid Json" in {
       val errOrJson = strToJson("""{"scala"}""")
-      assert(errOrJson.isLeft)
+      errOrJson.isLeft
     }
 
   }
 
-  describe("personToJson") {
+  "personToJson" should {
 
-    it("should convert Person to Json") {
+    "convert Person to Json" in {
       val person = Person("scala", 20)
       val actual = personToJson(person)
       val expected = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
 
-      assert(actual == expected)
+      actual == expected
     }
 
   }
 
-  describe("encodePerson") {
+  "encodePerson" should {
 
-    it("should convert Person to Json") {
+    "convert Person to Json" in {
       val person = Person("scala", 20)
       val actual = encodePerson(person)
       val expected = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
 
-      assert(actual == expected)
+      actual == expected
     }
 
   }
 
-  describe("encodePersonAgain") {
+  "encodePersonAgain" should {
 
-    it("should convert Person to Json") {
+    "convert Person to Json" in {
       val person = Person("scala", 20)
       val actual = encodePersonAgain(person)
       val expected = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
 
-      assert(actual == expected)
+      actual == expected
     }
 
   }
 
-  describe("encodePersonSemiAuto") {
+  "encodePersonSemiAuto" should {
 
-    it("should convert Person to Json") {
+    "convert Person to Json" in {
       val person = Person("scala", 20)
       val actual = encodePersonSemiAuto(person)
       val expected = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
 
-      assert(actual == expected)
+      actual == expected
     }
 
   }
 
-  describe("jsonToPerson") {
+  "jsonToPerson" should {
 
-    it("should convert valid Json to Person") {
+    "convert valid Json to Person" in {
       val json = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
       val errOrPerson = jsonToPerson(json)
 
-      assert(errOrPerson == Right(Person("scala", 20)))
+      errOrPerson == Right(Person("scala", 20))
     }
 
-    it("should convert invalid Json to error") {
+    "convert invalid Json to error" in {
       val json = Json.obj("foo" -> "bar".asJson)
       val errOrPerson = jsonToPerson(json)
 
-      assert(errOrPerson.isLeft)
+      errOrPerson.isLeft
     }
 
   }
 
-  describe("decodePerson") {
+  "decodePerson" should {
 
-    it("should convert valid Json to Person") {
+    "convert valid Json to Person" in {
       val json = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
       val errOrPerson = decodePerson(json)
 
-      assert(errOrPerson == Right(Person("scala", 20)))
+      errOrPerson == Right(Person("scala", 20))
     }
 
-    it("should convert invalid Json to error") {
+    "convert invalid Json to error" in {
       val json = Json.obj("foo" -> "bar".asJson)
       val errOrPerson = decodePerson(json)
 
-      assert(errOrPerson.isLeft)
+      errOrPerson.isLeft
     }
 
   }
 
-  describe("decodePersonAgain") {
+  "decodePersonAgain" should {
 
-    it("should convert valid Json to Person") {
+    "convert valid Json to Person" in {
       val json = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
       val errOrPerson = decodePersonAgain(json)
 
-      assert(errOrPerson == Right(Person("scala", 20)))
+      errOrPerson == Right(Person("scala", 20))
     }
 
-    it("should convert invalid Json to error") {
+    "convert invalid Json to error" in {
       val json = Json.obj("foo" -> "bar".asJson)
       val errOrPerson = decodePersonAgain(json)
 
-      assert(errOrPerson.isLeft)
+      errOrPerson.isLeft
     }
 
   }
 
-  describe("decodePersonSemiAuto") {
+  "decodePersonSemiAuto" should {
 
-    it("should convert valid Json to Person") {
+    "convert valid Json to Person" in {
       val json = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
       val errOrPerson = decodePersonSemiAuto(json)
 
-      assert(errOrPerson == Right(Person("scala", 20)))
+      errOrPerson == Right(Person("scala", 20))
     }
 
-    it("should convert invalid Json to error") {
+    "convert invalid Json to error" in {
       val json = Json.obj("foo" -> "bar".asJson)
       val errOrPerson = decodePersonSemiAuto(json)
 
-      assert(errOrPerson.isLeft)
+      errOrPerson.isLeft
     }
 
   }
 
-  describe("strToPerson") {
+  "strToPerson" should {
 
-    it("should convert valid Json String to Person") {
+    "convert valid Json String to Person" in {
       val jsonStr = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson).noSpaces
       val errOrPerson = strToPerson(jsonStr)
 
-      assert(errOrPerson == Right(Person("scala", 20)))
+      errOrPerson == Right(Person("scala", 20))
     }
 
-    it("should convert invalid Json String to ParsingFailure") {
+    "convert invalid Json String to ParsingFailure" in {
       val invalidJsonStr = "..."
       val errOrPerson = strToPerson(invalidJsonStr)
 
       errOrPerson match {
-        case Left(ParsingFailure(_, _)) => succeed
-        case other => fail(s"Expected ParsingFailure, but received: $other")
+        case Left(ParsingFailure(_, _)) => ok
+        case other => ko(s"Expected ParsingFailure, but received: $other")
       }
     }
 
-    it("should convert valid Json String that doesn't contain correct info to DecodingFailure") {
+    "convert valid Json String that doesn't contain correct info to DecodingFailure" in {
       val invalidJsonStr = """{"name": 12345}"""
       val errOrPerson = strToPerson(invalidJsonStr)
 
       errOrPerson match {
-        case Left(DecodingFailure(_, _)) => succeed
-        case other => fail(s"Expected DecodingFailure, but received: $other")
+        case Left(DecodingFailure(_, _)) => ok
+        case other => ko(s"Expected DecodingFailure, but received: $other")
       }
     }
 

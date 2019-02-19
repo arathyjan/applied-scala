@@ -4,25 +4,25 @@ import cats.data._
 import cats.implicits._
 import com.reagroup.appliedscala.models.errors.{AuthorTooShort, CommentTooShort}
 import com.reagroup.appliedscala.models.{NewReviewRequest, ReviewToSave}
-import org.scalatest.FunSpec
+import org.specs2.mutable.Specification
 
-class ReviewValidatorSpec extends FunSpec {
+class ReviewValidatorSpec extends Specification {
 
-  describe("validate") {
-    it("should return all errors if new review has no name and no synopsis") {
+  "validate" should {
+    "return all errors if new review has no name and no synopsis" in {
       val review = NewReviewRequest("", "")
 
       val result = ReviewValidator.validate(review)
 
-      assert(result == NonEmptyList.of(AuthorTooShort, CommentTooShort).invalid)
+      result == NonEmptyList.of(AuthorTooShort, CommentTooShort).invalid
     }
 
-    it("should return NewMovie") {
+    "return NewMovie" in {
       val review = NewReviewRequest("bob", "cool movie")
 
       val result = ReviewValidator.validate(review)
 
-      assert(result == ReviewToSave("bob", "cool movie").valid)
+      result == ReviewToSave("bob", "cool movie").valid
     }
   }
 

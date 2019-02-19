@@ -4,25 +4,25 @@ import cats.data._
 import cats.implicits._
 import com.reagroup.appliedscala.models.errors.{MovieNameTooShort, SynopsisTooShort}
 import com.reagroup.appliedscala.models.{MovieToSave, NewMovieRequest}
-import org.scalatest.FunSpec
+import org.specs2.mutable.Specification
 
-class NewMovieValidatorSpec extends FunSpec {
+class NewMovieValidatorSpec extends Specification {
 
-  describe("validate") {
-    it("should return all errors if new movie has no name and no synopsis") {
+  "validate" should {
+    "return all errors if new movie has no name and no synopsis" in {
       val newMovie = NewMovieRequest("", "")
 
       val result = NewMovieValidator.validate(newMovie)
 
-      assert(result == NonEmptyList.of(MovieNameTooShort, SynopsisTooShort).invalid)
+      result == NonEmptyList.of(MovieNameTooShort, SynopsisTooShort).invalid
     }
 
-    it("should return NewMovie") {
+    "return NewMovie" in {
       val newMovie = NewMovieRequest("badman returns", "nananana badman")
 
       val result = NewMovieValidator.validate(newMovie)
 
-      assert(result == MovieToSave(newMovie.name, newMovie.synopsis).valid)
+      result == MovieToSave(newMovie.name, newMovie.synopsis).valid
     }
   }
 

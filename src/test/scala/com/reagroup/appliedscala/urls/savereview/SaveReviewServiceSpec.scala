@@ -5,13 +5,13 @@ import cats.effect.IO
 import cats.implicits._
 import com.reagroup.appliedscala.models._
 import com.reagroup.appliedscala.models.errors.{AuthorTooShort, CommentTooShort}
-import org.scalatest._
+import org.specs2.mutable.Specification
 
-class SaveReviewServiceSpec extends FunSpec {
+class SaveReviewServiceSpec extends Specification {
 
-  describe("saveReview") {
+  "saveReview" should {
 
-    it("should return errors") {
+    "return errors" in {
 
       val repo = (movieId: MovieId, review: ReviewToSave) => ???
 
@@ -21,11 +21,11 @@ class SaveReviewServiceSpec extends FunSpec {
 
       val result = service.save(MovieId(12345), reviewToSave)
 
-      assert(result.unsafeRunSync() == NonEmptyList.of(AuthorTooShort, CommentTooShort).invalid)
+      result.unsafeRunSync() == NonEmptyList.of(AuthorTooShort, CommentTooShort).invalid
 
     }
 
-    it("should return saved reviewId") {
+    "return saved reviewId" in {
 
       val repo = (movieId: MovieId, review: ReviewToSave) => IO.pure(ReviewId(12345))
 
@@ -35,7 +35,7 @@ class SaveReviewServiceSpec extends FunSpec {
 
       val result = service.save(MovieId(12345), reviewToSave)
 
-      assert(result.unsafeRunSync() == ReviewId(12345).valid)
+      result.unsafeRunSync() == ReviewId(12345).valid
 
     }
 

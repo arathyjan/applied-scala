@@ -5,13 +5,13 @@ import cats.effect.IO
 import cats.implicits._
 import com.reagroup.appliedscala.models._
 import com.reagroup.appliedscala.models.errors.{MovieNameTooShort, SynopsisTooShort}
-import org.scalatest._
+import org.specs2.mutable.Specification
 
-class FetchMovieServiceSpec extends FunSpec {
+class FetchMovieServiceSpec extends Specification {
 
-  describe("fetchMovie") {
+  "fetchMovie" should {
 
-    it("should return movie") {
+    "return movie" in {
 
       val expectedMovie = Movie("badman", "nananana", Vector.empty[Review])
 
@@ -21,7 +21,7 @@ class FetchMovieServiceSpec extends FunSpec {
 
       val actual = service.fetch(MovieId(123))
 
-      assert(actual.unsafeRunSync() == Some(expectedMovie))
+      actual.unsafeRunSync() == Some(expectedMovie)
 
     }
 

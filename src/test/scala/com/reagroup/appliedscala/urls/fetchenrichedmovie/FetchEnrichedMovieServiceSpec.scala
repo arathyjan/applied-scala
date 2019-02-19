@@ -3,13 +3,13 @@ package com.reagroup.appliedscala.urls.fetchenrichedmovie
 import cats.effect.IO
 import com.reagroup.appliedscala.models._
 import com.reagroup.appliedscala.models.errors.EnrichmentFailure
-import org.scalatest._
+import org.specs2.mutable.Specification
 
-class FetchEnrichedMovieServiceSpec extends FunSpec {
+class FetchEnrichedMovieServiceSpec extends Specification {
 
-  describe("fetchEnrichedMovie") {
+  "fetchEnrichedMovie" should {
 
-    it("should return movie enriched with star rating") {
+    "return movie enriched with star rating" in {
 
       val expectedMovie = Movie("badman", "nananana", Vector.empty[Review])
       val expectedStarRating = One
@@ -22,11 +22,11 @@ class FetchEnrichedMovieServiceSpec extends FunSpec {
 
       val actual = service.fetch(MovieId(123))
 
-      assert(actual.unsafeRunSync() == Some(EnrichedMovie(expectedMovie, expectedStarRating)))
+      actual.unsafeRunSync() == Some(EnrichedMovie(expectedMovie, expectedStarRating))
 
     }
 
-    it("should return error if star rating does not exist") {
+    "return error if star rating does not exist" in {
 
       val movie = Movie("badman", "nananana", Vector.empty[Review])
 
@@ -38,7 +38,7 @@ class FetchEnrichedMovieServiceSpec extends FunSpec {
 
       val actual = service.fetch(MovieId(123))
 
-      assert(actual.attempt.unsafeRunSync() == Left(EnrichmentFailure(movie)))
+      actual.attempt.unsafeRunSync() == Left(EnrichmentFailure(movie))
 
     }
 
