@@ -2,8 +2,6 @@ package com.reagroup.appliedscala
 
 import java.util.concurrent.Executors
 
-import com.reagroup.infrastructure.AppServer
-
 import scala.concurrent.ExecutionContext
 
 object Main {

@@ -1,4 +1,4 @@
-package com.reagroup.infrastructure
+package com.reagroup.appliedscala
 
 import cats.effect.IO
 import fs2.StreamApp.ExitCode
