@@ -10,7 +10,7 @@ case object CommentTooShort extends InvalidReviewErr
 
 object InvalidReviewErr {
 
-  implicit val encoder: Encoder[InvalidReviewErr] = Encoder.forProduct1("error")(show)
+  implicit val encoder: Encoder[InvalidReviewErr] = Encoder.forProduct1("type")(show)
 
   def show(invalidReviewErr: InvalidReviewErr): String =
     invalidReviewErr match {

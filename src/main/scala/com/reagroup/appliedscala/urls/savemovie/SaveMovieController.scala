@@ -6,6 +6,7 @@ import cats.effect.IO
 import com.reagroup.appliedscala.models._
 import com.reagroup.appliedscala.models.errors.InvalidNewMovieErr
 import com.reagroup.appliedscala.urls.ErrorHandler
+import io.circe.Json
 import io.circe.syntax._
 import org.http4s._
 import org.http4s.circe.CirceEntityCodec._
@@ -19,7 +20,7 @@ class SaveMovieController(saveNewMovie: NewMovieRequest => IO[ValidatedNel[Inval
       errorOrNewMovieId <- saveNewMovie(newMovieReq).attempt
       resp <- errorOrNewMovieId match {
         case Right(Valid(newMovieId)) => Created(newMovieId.asJson)
-        case Right(Invalid(errors)) => BadRequest(errors.asJson)
+        case Right(Invalid(errors)) => BadRequest(Json.obj("errors" -> errors.asJson))
         case Left(e) => ErrorHandler(e)
       }
     } yield resp

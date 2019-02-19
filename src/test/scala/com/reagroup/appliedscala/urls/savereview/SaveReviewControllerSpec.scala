@@ -1,32 +1,32 @@
-package com.reagroup.appliedscala.urls.savemovie
+package com.reagroup.appliedscala.urls.savereview
 
-import cats.data.{NonEmptyList, Validated}
+import cats.data.NonEmptyList
 import cats.effect.IO
 import cats.implicits._
 import com.reagroup.appliedscala.models._
-import com.reagroup.appliedscala.models.errors.{MovieNameTooShort, SynopsisTooShort}
+import com.reagroup.appliedscala.models.errors._
 import io.circe.literal._
 import org.http4s._
 import org.http4s.testing.Http4sMatchers
 import org.specs2.mutable.Specification
 
-class SaveMovieControllerSpec extends Specification with Http4sMatchers {
+class SaveReviewControllerSpec extends Specification with Http4sMatchers {
 
-  "when saving a valid movie" should {
+  "when saving a valid review" should {
 
     val json =
       json"""
         {
-          "name": "Jurassic Park",
-          "synopsis": "Why does pterodactyl start with a p?"
+          "author": "Bob",
+          "comment": "This is a good movie"
         }
       """
 
     val request = Request[IO](method = Method.POST).withBody(json.noSpaces).unsafeRunSync()
 
-    val controller = new SaveMovieController((_: NewMovieRequest) => IO.pure(MovieId(1).valid))
+    val controller = new SaveReviewController((_: MovieId, _: NewReviewRequest) => IO.pure(ReviewId(1).valid))
 
-    val actual = controller(request).unsafeRunSync()
+    val actual = controller(100, request).unsafeRunSync()
 
     "return status code Created" in {
 
@@ -34,7 +34,7 @@ class SaveMovieControllerSpec extends Specification with Http4sMatchers {
 
     }
 
-    "return movieId in response body" in {
+    "return reviewId in response body" in {
 
       val expectedJson =
         json"""
@@ -46,23 +46,23 @@ class SaveMovieControllerSpec extends Specification with Http4sMatchers {
 
   }
 
-  "when saving an invalid movie" should {
+  "when saving an invalid review" should {
 
     val invalidJson =
       json"""
         {
-          "name": "",
-          "synopsis": ""
+          "author": "",
+          "comment": ""
         }
       """
 
     val request = Request[IO](method = Method.POST).withBody(invalidJson.noSpaces).unsafeRunSync()
 
-    val saveNewMovie = (_: NewMovieRequest) => IO.pure(NonEmptyList.of(MovieNameTooShort, SynopsisTooShort).invalid)
+    val saveNewReview = (_: MovieId, _: NewReviewRequest) => IO.pure(NonEmptyList.of(AuthorTooShort, CommentTooShort).invalid)
 
-    val controller = new SaveMovieController(saveNewMovie)
+    val controller = new SaveReviewController(saveNewReview)
 
-    val actual = controller(request).unsafeRunSync()
+    val actual = controller(100, request).unsafeRunSync()
 
     "return status code BadRequest" in {
 
@@ -74,7 +74,7 @@ class SaveMovieControllerSpec extends Specification with Http4sMatchers {
 
       val expectedJson =
         json"""
-          { "errors": [ { "type": "MOVIE_NAME_TOO_SHORT" }, { "type": "SYNOPSIS_TOO_SHORT"} ] }
+          { "errors": [ { "type": "AUTHOR_TOO_SHORT" }, { "type": "COMMENT_TOO_SHORT"} ] }
         """
       actual must haveBody(expectedJson.noSpaces)
 
