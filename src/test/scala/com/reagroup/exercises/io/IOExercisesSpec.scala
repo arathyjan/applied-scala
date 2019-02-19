@@ -41,8 +41,7 @@ class IOExercisesSpec extends Specification {
       result.unsafeRunSync() === () && logger.loggedMessages.toList === List(msg)
     }
 
-    "return AppException if `msg` is empty" should
-    {
+    "return AppException if `msg` is empty" in {
       val logger = new TestLogger
       val msg = ""
       val result = logMessageOrFailIfEmpty(msg, logger)
