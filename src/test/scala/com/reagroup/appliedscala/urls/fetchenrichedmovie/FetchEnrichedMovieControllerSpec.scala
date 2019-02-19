@@ -1,4 +1,4 @@
-package com.reagroup.appliedscala.urls.fetchmovie
+package com.reagroup.appliedscala.urls.fetchenrichedmovie
 
 import cats.effect.IO
 import com.reagroup.appliedscala.models._
@@ -7,13 +7,15 @@ import org.http4s._
 import org.http4s.testing.Http4sMatchers
 import org.specs2.mutable.Specification
 
-class FetchMovieControllerSpec extends Specification with Http4sMatchers {
+class FetchEnrichedMovieControllerSpec extends Specification with Http4sMatchers {
 
   "when fetching a movie that exists" should {
 
-    val expectedMovie = Movie("badman", "the first in the series", Vector(Review("bob", "great movie")))
+    val expectedMovie = EnrichedMovie(Movie("badman", "the first in the series", Vector.empty), Five)
 
-    val controller = new FetchMovieController((_: MovieId) => IO.pure(Some(expectedMovie)))
+    val fetchMovie = (_: MovieId) => IO.pure(Some(expectedMovie))
+
+    val controller = new FetchEnrichedMovieController(fetchMovie)
 
     val actual = controller(123).unsafeRunSync()
 
@@ -23,11 +25,16 @@ class FetchMovieControllerSpec extends Specification with Http4sMatchers {
 
     }
 
-    "return movie in response body" in {
+    "return enriched movie in response body" in {
 
       val expectedJson =
         json"""
-          {"name": "badman", "synopsis": "the first in the series", "reviews": [ { "author": "bob", "comment": "great movie" } ] }
+          {
+            "name": "badman",
+            "synopsis": "the first in the series",
+            "reviews": [],
+            "rating": "Five Stars"
+          }
         """
       actual must haveBody(expectedJson.noSpaces)
 
@@ -37,7 +44,9 @@ class FetchMovieControllerSpec extends Specification with Http4sMatchers {
 
   "when fetching a movie that does not exist" should {
 
-    val controller = new FetchMovieController((_: MovieId) => IO.pure(None))
+    val fetchEnrichedMovie = (_: MovieId) => IO.pure(None)
+
+    val controller = new FetchEnrichedMovieController(fetchEnrichedMovie)
 
     val actual = controller(123).unsafeRunSync()
 
@@ -51,7 +60,9 @@ class FetchMovieControllerSpec extends Specification with Http4sMatchers {
 
   "when encountered an error" should {
 
-    val controller = new FetchMovieController((_: MovieId) => IO.raiseError(new RuntimeException("unknown error")))
+    val fetchEnrichedMovie = (_: MovieId) => IO.raiseError(new RuntimeException("unknown error"))
+
+    val controller = new FetchEnrichedMovieController(fetchEnrichedMovie)
 
     val actual = controller(123).unsafeRunSync()
 

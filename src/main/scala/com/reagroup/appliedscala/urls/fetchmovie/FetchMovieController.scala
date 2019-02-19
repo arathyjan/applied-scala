@@ -8,10 +8,10 @@ import org.http4s._
 import org.http4s.circe.CirceEntityCodec._
 import org.http4s.dsl.Http4sDsl
 
-class FetchMovieController(service: FetchMovieService) extends Http4sDsl[IO] {
+class FetchMovieController(fetchMovie: MovieId => IO[Option[Movie]]) extends Http4sDsl[IO] {
 
   def apply(movieId: Long): IO[Response[IO]] = for {
-    errorOrMovie <- service.fetch(MovieId(movieId)).attempt
+    errorOrMovie <- fetchMovie(MovieId(movieId)).attempt
     resp <- errorOrMovie match {
       case Right(Some(movie)) => Ok(movie.asJson)
       case Right(None) => NotFound()

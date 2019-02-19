@@ -15,15 +15,15 @@ class AppRuntime() {
 
   private val ratingsRepo = new Http4sStarRatingsRepository
 
-  private val fetchMovie = new FetchMovieController(new FetchMovieService(pgsqlRepo.fetchMovie))
+  private val fetchMovie = new FetchMovieController(new FetchMovieService(pgsqlRepo.fetchMovie).fetch)
 
-  private val fetchEnrichedMovie = new FetchEnrichedMovieController(new FetchEnrichedMovieService(pgsqlRepo.fetchMovie, ratingsRepo.apply))
+  private val fetchEnrichedMovie = new FetchEnrichedMovieController(new FetchEnrichedMovieService(pgsqlRepo.fetchMovie, ratingsRepo.apply).fetch)
 
-  private val fetchAllMovies = new FetchAllMoviesController(new FetchAllMoviesService(pgsqlRepo.fetchAllMovies))
+  private val fetchAllMovies = new FetchAllMoviesController(new FetchAllMoviesService(pgsqlRepo.fetchAllMovies).fetchAll)
 
-  private val saveMovie = new SaveMovieController(new SaveMovieService(pgsqlRepo.saveMovie))
+  private val saveMovie = new SaveMovieController(new SaveMovieService(pgsqlRepo.saveMovie).save)
 
-  private val saveReview = new SaveReviewController(new SaveReviewService(pgsqlRepo.saveReview))
+  private val saveReview = new SaveReviewController(new SaveReviewService(pgsqlRepo.saveReview).save)
 
   private val appRoutes = new AppRoutes(fetchMovie, fetchEnrichedMovie, fetchAllMovies, saveMovie, saveReview)
 
