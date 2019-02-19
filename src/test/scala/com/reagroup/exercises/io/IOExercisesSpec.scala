@@ -10,7 +10,7 @@ class IOExercisesSpec extends Specification {
     "return an IO that would return number 43" in {
       val result = immediatelyExecutingIO()
 
-      result.unsafeRunSync() === 43
+      result.unsafeRunSync === 43
     }
   }
 
@@ -19,13 +19,15 @@ class IOExercisesSpec extends Specification {
       val logger = new TestLogger
       val result = helloWorld(logger)
 
-      result.unsafeRunSync() === () && logger.loggedMessages.toList === List("hello world")
+      result.unsafeRunSync
+
+      logger.loggedMessages.toList === List("hello world")
     }
   }
 
   "alwaysFailingTask" should {
     "return an IO containing an Exception" in {
-      alwaysFailingTask().attempt.unsafeRunSync() match {
+      alwaysFailingTask().attempt.unsafeRunSync match {
         case Left(_: Exception) => ok
         case otherwise => ko(s"Expected a Left(Exception()) but received a $otherwise")
       }
@@ -36,26 +38,27 @@ class IOExercisesSpec extends Specification {
     "run `logger` if `msg` is not empty" in {
       val logger = new TestLogger
       val msg = "message"
-      val result = logMessageOrFailIfEmpty(msg, logger)
+      logMessageOrFailIfEmpty(msg, logger).unsafeRunSync
 
-      result.unsafeRunSync() === () && logger.loggedMessages.toList === List(msg)
+      logger.loggedMessages.toList === List(msg)
+
     }
 
     "return AppException if `msg` is empty" in {
       val logger = new TestLogger
       val msg = ""
-      val result = logMessageOrFailIfEmpty(msg, logger)
+      val result = logMessageOrFailIfEmpty(msg, logger).attempt.unsafeRunSync
 
-      result.attempt.unsafeRunSync() === Left(AppException("Log must not be empty")) && logger.loggedMessages.toList === List()
+      result === Left(AppException("Log must not be empty")) && logger.loggedMessages.toList === List()
     }
   }
 
   "getCurrentTempInF" should {
     "convert the current temperature to Fahrenheit" in {
       val currentTemp = IO.pure(Celsius(100))
-      val result = getCurrentTempInF(currentTemp)
+      val result = getCurrentTempInF(currentTemp).unsafeRunSync
 
-      result.unsafeRunSync() === Fahrenheit(212)
+      result === Fahrenheit(212)
     }
   }
 
@@ -64,9 +67,9 @@ class IOExercisesSpec extends Specification {
       val currentTemp = IO.pure(Celsius(100))
       val converter = (c: Celsius) => IO(Fahrenheit(c.value * 9 / 5 + 32)
       )
-      val result = getCurrentTempInFAgain(currentTemp, converter)
+      val result = getCurrentTempInFAgain(currentTemp, converter).unsafeRunSync
 
-      result.unsafeRunSync() === Fahrenheit(212)
+      result === Fahrenheit(212)
     }
   }
 
@@ -74,18 +77,18 @@ class IOExercisesSpec extends Specification {
     "return the current temperature in a sentence" in {
       val currentTemp = IO.pure(Celsius(100))
       val converter = (c: Celsius) => IO(Fahrenheit(c.value * 9 / 5 + 32))
-      val result = showCurrentTempInF(currentTemp, converter)
+      val result = showCurrentTempInF(currentTemp, converter).unsafeRunSync
 
-      result.unsafeRunSync() === "The temperature is 212"
+      result === "The temperature is 212"
     }
 
     "return an error if the converter fails" in {
       val currentTemp = IO.pure(Celsius(100))
       val error = new Throwable("error")
       val converter: Celsius => IO[Fahrenheit] = _ => IO.raiseError(error)
-      val result = showCurrentTempInF(currentTemp, converter)
+      val result = showCurrentTempInF(currentTemp, converter).unsafeRunSync
 
-      result.unsafeRunSync() === error.getMessage
+      result === error.getMessage
     }
   }
 
@@ -93,17 +96,19 @@ class IOExercisesSpec extends Specification {
     "print a username if it is not empty" in {
       val username = "scalauser"
       val logger = new TestLogger
-      val result = mkUsernameThenPrint(username, logger)
 
-      result.unsafeRunSync() === () && logger.loggedMessages.toList === List(username)
+      mkUsernameThenPrint(username, logger).unsafeRunSync
+
+      logger.loggedMessages.toList === List(username)
     }
 
     "return UserNameError if the username is empty" in {
       val username = ""
       val logger = new TestLogger
-      val result = mkUsernameThenPrint(username, logger)
 
-      result.attempt.unsafeRunSync() === Left(UsernameError("Username cannot be empty"))
+      val result = mkUsernameThenPrint(username, logger).attempt.unsafeRunSync
+
+      result === Left(UsernameError("Username cannot be empty"))
     }
   }
 

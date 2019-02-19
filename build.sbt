@@ -63,15 +63,14 @@ libraryDependencies ++= Seq(
 )
 
 scalacOptions ++= Seq(
-  //  "-unchecked",
-  //  "-deprecation",
-  //  "-feature",
-  //  "-Xlint",
-  //  "-Xfatal-warnings",
-  //  "-Ywarn-dead-code",
-  //  "-Ywarn-numeric-widen",
-  //  "-Ywarn-value-discard",
-  //  "-language:higherKinds",
+  "-unchecked",
+  "-deprecation",
+  "-feature",
+  "-Xlint",
+  "-Ywarn-dead-code",
+  "-Ywarn-numeric-widen",
+  "-Ywarn-value-discard",
+  "-language:higherKinds",
   "-Ypartial-unification"
 )
 
