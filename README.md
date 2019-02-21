@@ -1,5 +1,17 @@
 # applied-scala
 
+## Open up SBT
+
+```
+./auto/sbt
+```
+
+## Run test
+
+```
+./auto/test
+```
+
 ## How to start app
 
 ```
