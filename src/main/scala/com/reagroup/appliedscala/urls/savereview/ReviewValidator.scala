@@ -10,7 +10,7 @@ object ReviewValidator {
   /**
     * How do we combine two validations together? Refer to `ValidationExercises` for a refresher!
     *
-    * Hint: `Validated` has an Applicativec instance.
+    * Hint: `Validated` has an Applicative instance.
     */
   def validate(review: NewReviewRequest): ValidatedNel[InvalidReviewErr, ReviewToSave] = ???
 

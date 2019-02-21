@@ -10,7 +10,7 @@ object NewMovieValidator {
   /**
     * How do we combine two validations together? Refer to `ValidationExercises` for a refresher!
     *
-    * Hint: `Validated` has an Applicativec instance.
+    * Hint: `Validated` has an Applicative instance.
     */
   def validate(newMovie: NewMovieRequest): ValidatedNel[InvalidNewMovieErr, MovieToSave] = ???
 
