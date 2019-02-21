@@ -22,7 +22,7 @@ class FetchEnrichedMovieServiceSpec extends Specification {
 
       val actual = service.fetch(MovieId(123))
 
-      actual.unsafeRunSync() == Some(EnrichedMovie(expectedMovie, expectedStarRating))
+      actual.unsafeRunSync() must_=== Some(EnrichedMovie(expectedMovie, expectedStarRating))
 
     }
 
@@ -38,7 +38,7 @@ class FetchEnrichedMovieServiceSpec extends Specification {
 
       val actual = service.fetch(MovieId(123))
 
-      actual.attempt.unsafeRunSync() == Left(EnrichmentFailure(movie))
+      actual.attempt.unsafeRunSync() must_=== Left(EnrichmentFailure(movie))
 
     }
 

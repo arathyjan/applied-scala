@@ -21,7 +21,7 @@ class SaveMovieServiceSpec extends Specification {
 
       val actual = service.save(newMovieReq)
 
-      actual.unsafeRunSync() == NonEmptyList.of(MovieNameTooShort, SynopsisTooShort).invalid
+      actual.unsafeRunSync() must_=== NonEmptyList.of(MovieNameTooShort, SynopsisTooShort).invalid
 
     }
 
@@ -35,7 +35,7 @@ class SaveMovieServiceSpec extends Specification {
 
       val actual = service.save(newMovieReq)
 
-      actual.unsafeRunSync() == MovieId(123).valid
+      actual.unsafeRunSync() must_=== MovieId(123).valid
 
     }
 

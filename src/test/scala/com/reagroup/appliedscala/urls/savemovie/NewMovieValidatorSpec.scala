@@ -14,7 +14,7 @@ class NewMovieValidatorSpec extends Specification {
 
       val result = NewMovieValidator.validate(newMovie)
 
-      result == NonEmptyList.of(MovieNameTooShort, SynopsisTooShort).invalid
+      result must_=== NonEmptyList.of(MovieNameTooShort, SynopsisTooShort).invalid
     }
 
     "return NewMovie" in {
@@ -22,7 +22,7 @@ class NewMovieValidatorSpec extends Specification {
 
       val result = NewMovieValidator.validate(newMovie)
 
-      result == MovieToSave(newMovie.name, newMovie.synopsis).valid
+      result must_=== MovieToSave(newMovie.name, newMovie.synopsis).valid
     }
   }
 

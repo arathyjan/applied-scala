@@ -20,7 +20,7 @@ class FetchAllMoviesServiceSpec extends Specification {
 
       val actual = service.fetchAll
 
-      actual.unsafeRunSync() == allMovies
+      actual.unsafeRunSync() must_=== allMovies
 
     }
 

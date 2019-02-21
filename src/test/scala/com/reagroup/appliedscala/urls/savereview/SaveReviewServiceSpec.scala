@@ -21,7 +21,7 @@ class SaveReviewServiceSpec extends Specification {
 
       val result = service.save(MovieId(12345), reviewToSave)
 
-      result.unsafeRunSync() == NonEmptyList.of(AuthorTooShort, CommentTooShort).invalid
+      result.unsafeRunSync() must_=== NonEmptyList.of(AuthorTooShort, CommentTooShort).invalid
 
     }
 
@@ -35,7 +35,7 @@ class SaveReviewServiceSpec extends Specification {
 
       val result = service.save(MovieId(12345), reviewToSave)
 
-      result.unsafeRunSync() == ReviewId(12345).valid
+      result.unsafeRunSync() must_=== ReviewId(12345).valid
 
     }
 

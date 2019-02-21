@@ -29,4 +29,6 @@ object ValidationExercises {
 
   def validatePerson(firstName: String, lastName: String, password: String): ValidatedNel[ValidationError, Person] = ???
 
+  def validatePeople(inputs: List[(String, String, String)]): ValidatedNel[ValidationError, List[Person]] = ???
+
 }

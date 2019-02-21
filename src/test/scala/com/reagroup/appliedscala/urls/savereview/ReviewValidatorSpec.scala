@@ -14,7 +14,7 @@ class ReviewValidatorSpec extends Specification {
 
       val result = ReviewValidator.validate(review)
 
-      result == NonEmptyList.of(AuthorTooShort, CommentTooShort).invalid
+      result must_=== NonEmptyList.of(AuthorTooShort, CommentTooShort).invalid
     }
 
     "return NewMovie" in {
@@ -22,7 +22,7 @@ class ReviewValidatorSpec extends Specification {
 
       val result = ReviewValidator.validate(review)
 
-      result == ReviewToSave("bob", "cool movie").valid
+      result must_=== ReviewToSave("bob", "cool movie").valid
     }
   }
 

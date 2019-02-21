@@ -13,7 +13,7 @@ class CirceExercisesSpec extends Specification {
     "parse valid Json" in {
       val json = json"""{"name": "scala"}"""
       val errOrJson = strToJson(json.noSpaces)
-      errOrJson == Right(json)
+      errOrJson must_=== Right(json)
     }
 
     "return error for invalid Json" in {
@@ -30,7 +30,7 @@ class CirceExercisesSpec extends Specification {
       val actual = personToJson(person)
       val expected = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
 
-      actual == expected
+      actual must_=== expected
     }
 
   }
@@ -42,7 +42,7 @@ class CirceExercisesSpec extends Specification {
       val actual = encodePerson(person)
       val expected = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
 
-      actual == expected
+      actual must_=== expected
     }
 
   }
@@ -54,7 +54,7 @@ class CirceExercisesSpec extends Specification {
       val actual = encodePersonAgain(person)
       val expected = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
 
-      actual == expected
+      actual must_=== expected
     }
 
   }
@@ -66,7 +66,7 @@ class CirceExercisesSpec extends Specification {
       val actual = encodePersonSemiAuto(person)
       val expected = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
 
-      actual == expected
+      actual must_=== expected
     }
 
   }
@@ -77,7 +77,7 @@ class CirceExercisesSpec extends Specification {
       val json = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
       val errOrPerson = jsonToPerson(json)
 
-      errOrPerson == Right(Person("scala", 20))
+      errOrPerson must_=== Right(Person("scala", 20))
     }
 
     "convert invalid Json to error" in {
@@ -95,7 +95,7 @@ class CirceExercisesSpec extends Specification {
       val json = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
       val errOrPerson = decodePerson(json)
 
-      errOrPerson == Right(Person("scala", 20))
+      errOrPerson must_=== Right(Person("scala", 20))
     }
 
     "convert invalid Json to error" in {
@@ -113,7 +113,7 @@ class CirceExercisesSpec extends Specification {
       val json = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
       val errOrPerson = decodePersonAgain(json)
 
-      errOrPerson == Right(Person("scala", 20))
+      errOrPerson must_=== Right(Person("scala", 20))
     }
 
     "convert invalid Json to error" in {
@@ -131,7 +131,7 @@ class CirceExercisesSpec extends Specification {
       val json = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson)
       val errOrPerson = decodePersonSemiAuto(json)
 
-      errOrPerson == Right(Person("scala", 20))
+      errOrPerson must_=== Right(Person("scala", 20))
     }
 
     "convert invalid Json to error" in {
@@ -149,7 +149,7 @@ class CirceExercisesSpec extends Specification {
       val jsonStr = Json.obj("name" -> "scala".asJson, "age" -> 20.asJson).noSpaces
       val errOrPerson = strToPerson(jsonStr)
 
-      errOrPerson == Right(Person("scala", 20))
+      errOrPerson must_=== Right(Person("scala", 20))
     }
 
     "convert invalid Json String to ParsingFailure" in {
