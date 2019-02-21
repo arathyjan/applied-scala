@@ -1,5 +1,11 @@
 # applied-scala
 
+## How to start app
+
+```
+./auto/start-local
+```
+
 ## Scope
 
 ### Trial
@@ -43,7 +49,7 @@
 - `AppRoutes` to explain routing
 - `Controller`, `Service` and `AppRuntime`
 
-#### GET movie
+#### GET movies/id
 
 - Handhold through exercise
 - Show `PostgresRepository`
@@ -52,7 +58,7 @@
 - Complete semi-auto encoders
 - Wire everything up in `AppRuntime`
 
-#### GET movie?enriched=true
+#### GET movies/id/?enriched=true
 
 - Handwave query param matcher
 - Show OMDB API
@@ -60,54 +66,16 @@
 - Get them to complete the rest
 - Cover custom encoders
 
-### Day 1
+#### POST movies
 
-- Keynote (State of REA's Scala apps) (Jake)
-- Introduction
-  - PSW Scala stencil (Luke)
-    - Demo the stencil
-    - Switch to Applied Scala app  
-  - Use case. What are we building? Architectural and software components? Design decisions?
-    - Why Http4s?
-    - Lightweight container, not heavily opinionated
-    - Allows us to write pure functional programs
-    - Not gonna do undeclared side-effects, writing RT software
-    - Single responsibility, module boundaries
-    - (Maybe) Motivation behind the Http4s DSL, how it works
-- Prerequisites
-  - IO Exercises
-    - map, flatMap, raiseError, attempt
-  - Circe Exercises
-    - Implicits
-    - Manual codecs
-    - Auto-derivation
-- Implicits
-  - Typeclass instances
-  - Extension methods
-- Http4s
-  - Testing (teach as we go)
-  - `GET movie/{id}`
-    - Show `AppRoutes` to explain routing
-    - Build `GET movie/{id}` endpoint to get `Movie` <-- use semi-auto codecs
-    - Doobie
-    - Extend endpoint to get `EnrichedMovie` <-- use custom codecs
-  - `GET movies`
-    - No new concepts
-  - `POST movie`
-    - Validated exercises
-    - Accept JSON body and decode into `NewMovieReq`
-    - Collect all errors using `IO[MovieId]` return type (if name is empty... if synopsis is empty... if both are empty...) 
-    - Teach `Semigroup`, `Validated`, `Traverse` theory (using Exercises)
-    - Implement using `ValidatedNel`
-  - `POST movie/{id}/review`
-    - Probably nothing new here
+- Complete `NewMovieValidator`
+- Complete `SaveMovieService` using `Validated` and `Traverse`
+- Show how to decode request in `SaveMovieController`
+- Custom encoder for `MovieId`
 
+#### POST movies/id/review
 
-## How to start app
-
-```
-./auto/start-local
-```
+- Similar to above
 
 ## Test queries
 
