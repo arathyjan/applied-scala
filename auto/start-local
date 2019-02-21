@@ -1,1 +1,1 @@
-docker-compose up --rm dev
+docker-compose up --remove-orphans dev

@@ -3,7 +3,7 @@
 ## Open up SBT
 
 ```
-./auto/sbt
+./auto/dev-environment sbt
 ```
 
 ## Run test
