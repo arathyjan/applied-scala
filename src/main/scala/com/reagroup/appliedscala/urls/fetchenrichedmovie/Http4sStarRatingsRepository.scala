@@ -12,6 +12,9 @@ class Http4sStarRatingsRepository {
 
   val httpClient: Client[IO] = Http1Client[IO]().unsafeRunSync
 
+  /**
+    * For the purpose of this exercise, we return a `None` if we are unable to decode a `StarRating` out of the response from OMDB.
+    */
   def apply(movieName: String): IO[Option[StarRating]] = ???
 
 }

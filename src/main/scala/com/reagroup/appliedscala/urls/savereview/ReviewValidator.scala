@@ -7,6 +7,11 @@ import com.reagroup.appliedscala.models.{NewReviewRequest, ReviewToSave}
 
 object ReviewValidator {
 
+  /**
+    * How do we combine two validations together? Refer to `ValidationExercises` for a refresher!
+    *
+    * Hint: `Validated` has an Applicativec instance.
+    */
   def validate(review: NewReviewRequest): ValidatedNel[InvalidReviewErr, ReviewToSave] = ???
 
   private def validateAuthor(author: String): ValidatedNel[InvalidReviewErr, String] = ???
