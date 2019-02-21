@@ -45,7 +45,10 @@ object CirceExercises {
   /**
     * Hint: Use `Encoder.forProduct2`
     */
-  def encodePersonAgain(person: Person): Json = ???
+  def encodePersonAgain(person: Person): Json = {
+    val personEncoder: Encoder[Person] = ???
+    person.asJson(???)
+  }
 
   /**
     * Hint: Use `deriveEncoder`
@@ -75,7 +78,10 @@ object CirceExercises {
   /**
     * Hint: Use `Decoder.forProduct2`
     */
-  def decodePersonAgain(json: Json): Either[DecodingFailure, Person] = ???
+  def decodePersonAgain(json: Json): Either[DecodingFailure, Person] = {
+    val personDecoder: Decoder[Person] = ???
+    json.as[Person](???)
+  }
 
   /**
     * Hint: Use deriveDecoder
