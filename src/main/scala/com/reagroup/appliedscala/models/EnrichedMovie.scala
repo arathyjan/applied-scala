@@ -7,6 +7,8 @@ case class EnrichedMovie(movie: Movie, starRating: StarRating)
 
 object EnrichedMovie {
 
-  implicit val encoder: Encoder[EnrichedMovie] = ???
+  /**
+    * Add an Encoder instance here
+    */
 
 }

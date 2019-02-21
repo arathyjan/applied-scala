@@ -5,6 +5,6 @@ import com.reagroup.appliedscala.models._
 
 class FetchAllMoviesService(fetchAllMovies: IO[Vector[Movie]]) {
 
-  def fetchAll: IO[Vector[Movie]] = ???
+  def fetchAll: IO[Vector[Movie]] = fetchAllMovies
 
 }

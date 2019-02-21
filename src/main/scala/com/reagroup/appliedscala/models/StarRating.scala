@@ -22,7 +22,11 @@ object StarRating {
 
   def show(starRating: StarRating): String = ???
 
-  implicit val encoder: Encoder[StarRating] = ???
+  /**
+    * Add an Encoder instance here
+    */
 
-  implicit val decoder: Decoder[StarRating] = ???
+  /**
+    * Add a Decoder instance here
+    */
 }

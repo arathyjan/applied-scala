@@ -1,1 +1,1 @@
-docker-compose up dev
+docker-compose up --rm dev

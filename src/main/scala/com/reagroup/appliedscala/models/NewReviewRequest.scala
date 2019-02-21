@@ -7,6 +7,8 @@ case class NewReviewRequest(author: String, comment: String)
 
 object NewReviewRequest {
 
-  implicit val decoder: Decoder[NewReviewRequest] = ???
+  /**
+    * Add an Decoder instance here
+    */
 
 }

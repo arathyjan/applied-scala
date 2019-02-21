@@ -8,6 +8,8 @@ case class NewMovieRequest(name: String, synopsis: String)
 
 object NewMovieRequest {
 
-  implicit val decoder: Decoder[NewMovieRequest] = ???
+  /**
+    * Add a Decoder instance here
+    */
 
 }

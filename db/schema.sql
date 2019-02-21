@@ -11,3 +11,7 @@ CREATE TABLE review (
   comment TEXT NOT NULL,
   CONSTRAINT fk_movie_id FOREIGN KEY (movie_id) REFERENCES movie (id)
 );
+
+INSERT INTO MOVIE ("Titanic", "This is not going to end well");
+
+INSERT INTO review (1, "The Snarky Reviewer", "Instant classic");

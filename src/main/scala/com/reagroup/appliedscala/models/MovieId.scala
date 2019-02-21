@@ -6,6 +6,8 @@ case class MovieId(value: Long)
 
 object MovieId {
 
-  implicit val encoder: Encoder[MovieId] = ???
+  /**
+    * Add an Encoder instance here
+    */
 
 }

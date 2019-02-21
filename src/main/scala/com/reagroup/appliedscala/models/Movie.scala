@@ -7,6 +7,8 @@ case class Movie(name: String, synopsis: String, reviews: Vector[Review])
 
 object Movie {
 
-  implicit val encoder: Encoder[Movie] = ???
+  /**
+    * Add an Encoder instance here
+    */
 
 }

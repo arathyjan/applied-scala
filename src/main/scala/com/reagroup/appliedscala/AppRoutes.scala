@@ -9,17 +9,11 @@ import com.reagroup.appliedscala.urls.savereview.SaveReviewController
 import org.http4s.HttpService
 import org.http4s.dsl.Http4sDsl
 
-class AppRoutes(fetchMovie: FetchMovieController,
-                fetchEnrichedMovie: FetchEnrichedMovieController,
-                fetchAllMovies: FetchAllMoviesController,
-                saveMovie: SaveMovieController,
-                saveReview: SaveReviewController) extends Http4sDsl[IO] {
-
-  object OptionalBooleanMatcher extends OptionalQueryParamDecoderMatcher[Boolean]("enriched")
+class AppRoutes(fetchAllMovies: FetchAllMoviesController) extends Http4sDsl[IO] {
 
   val openRoutes = HttpService[IO] {
-    case GET -> Root / "movies" => ???
-    case GET -> Root / "movies" / LongVar(id) :? OptionalBooleanMatcher(optEnriched) => ???
+    case GET -> Root / "movies" => fetchAllMovies()
+    case GET -> Root / "movies" / LongVar(id) => ???
     case req@POST -> Root / "movies" => ???
     case req@POST -> Root / "movies" / LongVar(id) / "reviews" => ???
   }

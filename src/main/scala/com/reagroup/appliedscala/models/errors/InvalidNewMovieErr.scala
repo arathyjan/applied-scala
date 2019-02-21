@@ -10,7 +10,9 @@ case object SynopsisTooShort extends InvalidNewMovieErr
 
 object InvalidNewMovieErr {
 
-  implicit val encoder: Encoder[InvalidNewMovieErr] = ???
+  /**
+    * Add an Encoder instance here
+    */
 
   def show(err: InvalidNewMovieErr): String = ???
 

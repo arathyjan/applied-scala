@@ -7,6 +7,8 @@ case class Review(author: String, comment: String)
 
 object Review {
 
-  implicit val encoder: Encoder[Review] = ???
+  /**
+    * Add an Encoder instance here
+    */
 
 }

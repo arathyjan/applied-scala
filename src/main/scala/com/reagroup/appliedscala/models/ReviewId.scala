@@ -6,6 +6,8 @@ case class ReviewId(value: Long)
 
 object ReviewId {
 
-  implicit val encoder: Encoder[ReviewId] = ???
+  /**
+    * Add an Encoder instance here
+    */
 
 }
