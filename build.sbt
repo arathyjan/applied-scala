@@ -64,6 +64,7 @@ scalacOptions ++= Seq(
   "-Ypartial-unification"
 )
 
+scalacOptions in (Compile, console) := Seq("without -Ywarn-unused-imports")
 scalacOptions in Test ++= Seq("-Yrangepos")
 
 testFrameworks := Seq(TestFrameworks.Specs2)
