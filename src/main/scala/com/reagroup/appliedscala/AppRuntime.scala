@@ -18,7 +18,12 @@ class AppRuntime() {
     new FetchAllMoviesController(fetchAllMoviesService.fetchAll)
   }
 
-  private val appRoutes = new AppRoutes(fetchAllMoviesController)
+  private val fetchMovieController: FetchMovieController = {
+    val service: FetchMovieService = new FetchMovieService(pgsqlRepo.fetchMovie)
+    new FetchMovieController(service.fetch)
+  }
+
+  private val appRoutes = new AppRoutes(fetchAllMoviesController, fetchMovieController)
 
   val routes: HttpService[IO] = appRoutes.openRoutes
 

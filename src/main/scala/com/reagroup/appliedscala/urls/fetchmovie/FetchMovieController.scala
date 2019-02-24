@@ -10,6 +10,14 @@ import org.http4s.dsl.Http4sDsl
 
 class FetchMovieController(fetchMovie: MovieId => IO[Option[Movie]]) extends Http4sDsl[IO] {
 
-  def apply(movieId: Long): IO[Response[IO]] = ???
+  def apply(movieId: Long): IO[Response[IO]] = {
+    val ioOptMovie: IO[Option[Movie]] = fetchMovie(MovieId(movieId))
+    val ioErrOrOptMovie: IO[Either[Throwable, Option[Movie]]] = ioOptMovie.attempt
+    ioErrOrOptMovie.flatMap {
+      case Right(Some(movie)) => Ok(movie.asJson)
+      case Right(None) => NotFound()
+      case Left(throwable) => ErrorHandler(throwable)
+    }
+  }
 
 }

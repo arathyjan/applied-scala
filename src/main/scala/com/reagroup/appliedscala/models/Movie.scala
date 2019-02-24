@@ -11,4 +11,6 @@ object Movie {
     * Add an Encoder instance here
     */
 
+  implicit val encoder: Encoder[Movie] = deriveEncoder[Movie]
+
 }

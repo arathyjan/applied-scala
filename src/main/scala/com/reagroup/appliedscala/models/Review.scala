@@ -10,5 +10,6 @@ object Review {
   /**
     * Add an Encoder instance here
     */
+  implicit val encoder: Encoder[Review] = deriveEncoder[Review]
 
 }

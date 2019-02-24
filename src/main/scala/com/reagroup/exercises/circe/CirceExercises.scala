@@ -94,13 +94,12 @@ object CirceExercises {
     } yield Person(name, age)
   }
 
-  // Typeclass coherence
+  // TODO Typeclass coherence
   def decodePerson(json: Json): Either[DecodingFailure, Person] = {
+    import cats.implicits._
+
     implicit val personDecoder: Decoder[Person] = (c: HCursor) =>
-      for {
-        name <- c.get[String]("name")
-        age <- c.get[Int]("age")
-      } yield Person(name, age)
+      (c.get[String]("name"), c.get[Int]("age")).mapN(Person.apply)
 
     json.as[Person]
   }

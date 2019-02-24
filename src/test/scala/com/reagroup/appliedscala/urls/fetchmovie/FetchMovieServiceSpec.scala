@@ -21,7 +21,7 @@ class FetchMovieServiceSpec extends Specification {
 
       val actual = service.fetch(MovieId(123))
 
-      actual.unsafeRunSync() must_=== Some(expectedMovie)
+      actual.unsafeRunSync() must beSome(expectedMovie)
 
     }
 
