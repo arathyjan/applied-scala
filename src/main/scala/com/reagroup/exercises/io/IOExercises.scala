@@ -17,7 +17,7 @@ object IOExercises {
     *
     * Hint: You want to look for a function in IO with the type signature A => IO[A]
     */
-  def immediatelyExecutingIO(): IO[Int] = IO.pure(43)
+  def immediatelyExecutingIO(): IO[Int] = ???
 
   /**
     * Create an IO which when executed logs “hello world” (using `logger`)
@@ -30,8 +30,7 @@ object IOExercises {
     * Note: By "injecting" `logger` as a dependency to this function, we are able to use a test logger in our unit test
     * instead of relying on a mocking framework.
     */
-  def helloWorld(logger: String => Unit): IO[Unit] =
-    IO(logger("hello world"))
+  def helloWorld(logger: String => Unit): IO[Unit] = ???
 
   /**
     * Difference between `IO.apply` and `IO.pure`:
@@ -44,13 +43,13 @@ object IOExercises {
     */
 
   /**
-    * Create an IO which always fails with an `Exception`
+    * Create an IO which always fails with a `new Exception`
     *
     * Do NOT use `throw`
     *
     * Hint: https://typelevel.org/cats-effect/datatypes/io.html#raiseerror
     */
-  def alwaysFailingTask(): IO[Unit] = IO.raiseError(new Exception)
+  def alwaysFailingTask(): IO[Unit] = ???
 
   /**
     * This is a data type that represents an exception in our program.
@@ -62,14 +61,8 @@ object IOExercises {
     * `AppException("Log must not be empty")`
     *
     * If `msg` is not empty, log out the message using the `logger`
-    *
-    * Otherwise, log the message using `logger`
     */
-  def logMessageOrFailIfEmpty(msg: String, logger: String => Unit): IO[Unit] =
-    if (msg.nonEmpty)
-      IO(logger(msg))
-    else
-      IO.raiseError(AppException("Log must not be empty"))
+  def logMessageOrFailIfEmpty(msg: String, logger: String => Unit): IO[Unit] = ???
 
   /**
     * We're going to work with temperature next. We start off by creating tiny types for `Fahrenheit` and `Celsius`.
@@ -82,14 +75,13 @@ object IOExercises {
   /**
     * You're gonna need this for the next exercise.
     */
-  private def cToF(c: Celsius): Fahrenheit = Fahrenheit(c.value * 9 / 5 + 32)
+  private def cToF(c: Celsius): Fahrenheit = ???
 
   /**
     * Create an IO which gets the current temperature in Celsius and if successful, converts it to Fahrenheit
     * using `cToF` defined above.
     */
-  def getCurrentTempInF(getCurrentTemp: IO[Celsius]): IO[Fahrenheit] =
-    getCurrentTemp.map(c => cToF(c))
+  def getCurrentTempInF(getCurrentTemp: IO[Celsius]): IO[Fahrenheit] = ???
 
   /**
     * Suppose the Celsius to Fahrenheit conversion is complex so we have decided to refactor it out to a remote
@@ -101,13 +93,7 @@ object IOExercises {
     * Again, our remote service call is passed in as an input argument so we can easily unit test this function
     * without the need for a mocking framework.
     */
-  def getCurrentTempInFAgain(getCurrentTemp: IO[Celsius], converter: Celsius => IO[Fahrenheit]): IO[Fahrenheit] = {
-    getCurrentTemp.flatMap(celsius => converter(celsius))
-    for {
-      celsius <- getCurrentTemp
-      fahrenheit <- converter(celsius)
-    } yield fahrenheit
-  }
+  def getCurrentTempInFAgain(getCurrentTemp: IO[Celsius], converter: Celsius => IO[Fahrenheit]): IO[Fahrenheit] = ???
 
   /**
     * Using what we just wrote above, we will convert the result into a `String` describing the temperature,
@@ -117,15 +103,13 @@ object IOExercises {
     * Try defer error handling until the very end of your program (here!).
     * We want to convert this IO into an IO containing an Either.
     *
-    * // TODO Hint on what output should be
+    * If successful, this program should return `"The temperature is xyz"`
+    *
+    * If unsuccessful, this program should return the error's message (use .getMessage`).
     *
     * Hint: https://typelevel.org/cats-effect/datatypes/io.html#attempt
     */
-  def showCurrentTempInF(currentTemp: IO[Celsius], converter: Celsius => IO[Fahrenheit]): IO[String] =
-    getCurrentTempInFAgain(currentTemp, converter).attempt.flatMap {
-      case Right(fahrenheit) => IO.pure(s"The temperature is ${fahrenheit.value}")
-      case Left(err) => IO.pure(err.getMessage)
-    }
+  def showCurrentTempInF(currentTemp: IO[Celsius], converter: Celsius => IO[Fahrenheit]): IO[String] = ???
 
   /**
     * `UsernameError` and `Username` are tiny types we are going to use for the next exercise.
@@ -134,7 +118,11 @@ object IOExercises {
 
   case class Username(value: String)
 
-  private def mkUsername(username: String): Either[UsernameError, Username] = ???
+  /**
+    * You will need this function in the next exercise
+    */
+  private def mkUsername(username: String): Either[UsernameError, Username] =
+    if (username.nonEmpty) Right(Username(username)) else Left(UsernameError("Username cannot be empty"))
 
   /**
     * Use `mkUsername` to create a `Username` and if successful print the username, otherwise fail with an error.
@@ -147,6 +135,6 @@ object IOExercises {
     *
     * Hint: https://typelevel.org/cats-effect/datatypes/io.html#unsaferunsync
     */
-  def execute[A](io: IO[A]): A = io.unsafeRunSync()
+  def execute[A](io: IO[A]): A = ???
 
 }

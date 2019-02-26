@@ -19,6 +19,11 @@ class FetchAllMoviesController(fetchAll: IO[Vector[Movie]]) extends Http4sDsl[IO
     }
   } yield resp
 
+  /**
+    * The reason we aren't using an `Encoder` instance for this conversion here is because
+    * we want you to write your own `Encoder` instance for the `GET movie/id` endpoint.
+    * Don't want to giveaway the answer :)
+    */
   def movieToJson(movie: Movie): Json =
     Json.obj("name" -> movie.name.asJson)
 

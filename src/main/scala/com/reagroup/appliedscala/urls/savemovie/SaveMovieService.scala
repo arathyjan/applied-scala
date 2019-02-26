@@ -6,7 +6,7 @@ import cats.effect.IO
 import com.reagroup.appliedscala.models._
 import com.reagroup.appliedscala.models.errors.InvalidNewMovieErr
 
-class SaveMovieService(saveMovie: MovieToSave => IO[MovieId]) {
+class SaveMovieService(saveMovie: ValidatedMovie => IO[MovieId]) {
 
   /**
     * Before saving a `NewMovieRequest`, we want to validate the request in order to get a `MovieToSave`.

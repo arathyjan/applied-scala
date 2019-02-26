@@ -5,6 +5,13 @@ import io.circe._
 import io.circe.generic.semiauto.deriveEncoder
 import io.circe.syntax._
 
+/**
+  * There are 3 parts to these exercises.
+  *
+  * 1. Parsing (`String => Json`)
+  * 2. Encoding (`A => Json`)
+  * 3. Decoding (`Json => A`)
+  */
 object CirceExercises {
 
   /**
@@ -46,33 +53,42 @@ object CirceExercises {
     """
   }
 
-  // TODO Add hints!
-  // A method to construct an Encoder
+  /**
+    * Create an `Encoder` instance for `Person` by implementing a function
+    * `Person => Json`
+    *
+    * Make `personEncoder` an `implicit` to avoid having to pass the `Encoder` instance
+    * into `asJson` explicitly.
+    */
   def encodePerson(person: Person): Json = {
-    implicit val personEncoder: Encoder[Person] = (person: Person) => Json.obj(
-      "name" -> person.name.asJson,
-      "age" -> person.age.asJson
-    )
-    person.asJson
+    val personEncoder: Encoder[Person] = (person: Person) => ???
+    person.asJson(personEncoder)
   }
 
   /**
-    * // TODO Why should we use forProduct2 instead?
-    * Hint: Use `Encoder.forProduct2`
+    * There is an alternate way to construct an `Encoder` instance,
+    * by using `Encoder.forProduct2`.
+    *
+    * This may sometimes be simpler than using `Json.obj`.
     */
   def encodePersonAgain(person: Person): Json = {
-    implicit val personEncoder: Encoder[Person] =
-      Encoder.forProduct2("name", "age")(p => (p.name, p.age))
+    implicit val personEncoder: Encoder[Person] = ???
     person.asJson
   }
 
   /**
+    * Sick of writing custom encoders? You can use "semiauto derivation"
+    * to create an `Encoder` instance for you using a Scala feature called macros.
+    *
+    * The downside to this is the keys of your `Json` are now tightly coupled with
+    * how you have named the fields inside `Person`
+    *
     * Hint: Use `deriveEncoder`
     */
   def encodePersonSemiAuto(person: Person): Json = {
     import io.circe.generic.semiauto._
 
-    implicit val personEncoder: Encoder[Person] = deriveEncoder[Person]
+    implicit val personEncoder: Encoder[Person] = ???
     person.asJson
   }
 
@@ -83,33 +99,36 @@ object CirceExercises {
   /**
     * Why is the return type an `Either`?
     */
-  def jsonToPerson(json: Json): Result[Person] = {
-    val cursor = json.hcursor
-    val errorOrName: Result[String] = cursor.get[String]("name")
-    val errorOrAge: Result[Int] = cursor.get[Int]("age")
+  def jsonToPerson(json: Json): Either[DecodingFailure, Person] = ???
 
-    for {
-      name <- errorOrName
-      age <- errorOrAge
-    } yield Person(name, age)
-  }
-
-  // TODO Typeclass coherence
+  /**
+    * Construct a `Decoder` instance for `Person` by navigating through
+    * the `Json` using an `HCursor`.
+    *
+    * Hint: Use `c.downField("name")` to navigate to the `"name"` field.
+    * `c.downField("name").as[Int]` will navigate to the `"name"` field
+    * and attempt to decode the value as an `Int`.
+    *
+    * Alternatively, you can use `c.get[Int]("name")` to do the same thing.
+    *
+    * Once you have retrieved the `name` and `age`, construct a `Person`!
+    */
   def decodePerson(json: Json): Either[DecodingFailure, Person] = {
     import cats.implicits._
 
-    implicit val personDecoder: Decoder[Person] = (c: HCursor) =>
-      (c.get[String]("name"), c.get[Int]("age")).mapN(Person.apply)
+    implicit val personDecoder: Decoder[Person] = (c: HCursor) => ???
 
+    // This says "Turn this Json to a Person"
     json.as[Person]
   }
 
   /**
-    * Hint: Use `Decoder.forProduct2`
+    * Use `Decoder.forProduct2` to construct a `Decoder` instance
+    * for `Person`.
     */
   def decodePersonAgain(json: Json): Either[DecodingFailure, Person] = {
-    implicit val personDecoder: Decoder[Person] =
-      Decoder.forProduct2("name", "age")(Person.apply)
+    implicit val personDecoder: Decoder[Person] = ???
+
     json.as[Person]
   }
 
@@ -120,26 +139,25 @@ object CirceExercises {
     import io.circe.generic.semiauto._
 
     implicit val personDecoder: Decoder[Person] = deriveDecoder[Person]
+
     json.as[Person]
   }
 
   /**
     * Parse and then decode
+    *
+    * Hint: Use `parse` and then `as[Person]`.
+    *
+    * Alternatively, use `decode`, which does both at the same time.
     */
 
   def strToPerson(str: String): Either[Error, Person] = {
     import io.circe.parser._
     import io.circe.generic.semiauto._
 
-    implicit val personDecoder: Decoder[Person] = deriveDecoder[Person]
+    implicit val personDecoder: Decoder[Person] = ???
 
-    for {
-      json <- parse(str)
-      person <- json.as[Person]
-    } yield person
-
-    decode[Person](str)
-
+    ???
   }
 
 }

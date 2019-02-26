@@ -3,6 +3,7 @@ package com.reagroup.appliedscala.urls.fetchenrichedmovie
 import cats.effect.IO
 import com.reagroup.appliedscala.models._
 import com.reagroup.appliedscala.models.errors.EnrichmentFailure
+import cats.implicits._
 
 class FetchEnrichedMovieService(fetchMovie: MovieId => IO[Option[Movie]],
                                 fetchStarRating: String => IO[Option[StarRating]]) {
@@ -17,13 +18,13 @@ class FetchEnrichedMovieService(fetchMovie: MovieId => IO[Option[Movie]],
     for {
       optMovie <- fetchMovie(movieId)
       optStarRating <- optMovie match {
-        case Some(Movie(name, _, _)) => fetchStarRating(name)
+        case Some(movie) => fetchStarRating(movie.name)
         case None => IO.pure(None)
       }
-      enrichedMovie <- (optMovie, optStarRating) match {
-        case (Some(movie), Some(rating)) => IO.pure(Some(EnrichedMovie(movie, rating)))
-        case (Some(movie), None) => IO.raiseError(EnrichmentFailure(movie))
-        case (None, _) => IO.pure(None)
+      starRating <- optStarRating match {
+        case Some(rating) => IO.pure(rating)
+        case None => IO.raiseError(EnrichmentFailure(movieId))
       }
-    } yield enrichedMovie
+    } yield optMovie.map(m => EnrichedMovie(m, starRating))
+
 }

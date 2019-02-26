@@ -1,4 +1,4 @@
-package com.reagroup.appliedscala.urls.fetchenrichedmovie
+package com.reagroup.appliedscala.urls.effects
 
 import java.net.URLEncoder
 

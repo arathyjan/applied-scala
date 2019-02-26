@@ -15,7 +15,7 @@ class SaveMovieServiceSpec extends Specification {
 
       val newMovieReq = NewMovieRequest("", "")
 
-      val repo = (movie: MovieToSave) => ???
+      val repo = (movie: ValidatedMovie) => ???
 
       val service = new SaveMovieService(repo)
 
@@ -29,7 +29,7 @@ class SaveMovieServiceSpec extends Specification {
 
       val newMovieReq = NewMovieRequest("badman returns", "nananana badman")
 
-      val repo = (movie: MovieToSave) => IO.pure(MovieId(123))
+      val repo = (movie: ValidatedMovie) => IO.pure(MovieId(123))
 
       val service = new SaveMovieService(repo)
 

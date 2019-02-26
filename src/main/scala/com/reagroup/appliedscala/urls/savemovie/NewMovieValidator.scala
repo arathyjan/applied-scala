@@ -4,7 +4,7 @@ import cats.data.Validated._
 import cats.data.{NonEmptyList, Validated, ValidatedNel}
 import cats.implicits._
 import com.reagroup.appliedscala.models.errors.{InvalidNewMovieErr, MovieNameTooShort, SynopsisTooShort}
-import com.reagroup.appliedscala.models.{MovieToSave, NewMovieRequest}
+import com.reagroup.appliedscala.models.{ValidatedMovie, NewMovieRequest}
 
 object NewMovieValidator {
 
@@ -13,14 +13,14 @@ object NewMovieValidator {
     *
     * Hint: `Validated` has an Applicative instance.
     */
-  def validate(newMovie: NewMovieRequest): ValidatedNel[InvalidNewMovieErr, MovieToSave] = {
+  def validate(newMovie: NewMovieRequest): ValidatedNel[InvalidNewMovieErr, ValidatedMovie] = {
     val name = newMovie.name
     val synopsis = newMovie.synopsis
 
     val validatedName: ValidatedNel[InvalidNewMovieErr, String] = validateMovieName(name)
     val validatedSynopsis: ValidatedNel[InvalidNewMovieErr, String] = validateMovieSynopsis(synopsis)
 
-    (validatedName, validatedSynopsis).mapN(MovieToSave.apply)
+    (validatedName, validatedSynopsis).mapN(ValidatedMovie.apply)
   }
 
   private def validateMovieName(name: String): ValidatedNel[InvalidNewMovieErr, String] =

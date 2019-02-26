@@ -19,16 +19,51 @@ object ValidationExercises {
 
   case class NameIsEmpty(label: String) extends ValidationError
 
+  /**
+    * If the `name` is empty, return a `NameIsEmpty(label)` in an `Invalid(NonEmptyList(...)`.
+    *
+    * `label` will be something like `firstName` or `lastName`.
+    *
+    * If the `name` is not empty, return it in a `Valid`.
+    *
+    * Hint: Use the `.invalidNel` and `.validNel` combinators
+    */
   def nameValidation(name: String, label: String): ValidatedNel[ValidationError, String] = ???
 
+  /**
+    * If the `password` does not contain a numeric character, return a `PasswordTooWeak`.
+    *
+    * Otherwise, return the `password`.
+    *
+    * Hint: Use `password.exists(Character.isDigit)`
+    */
   def passwordStrengthValidation(password: String): ValidatedNel[ValidationError, String] = ???
 
+  /**
+    * If the `password` length is not greater than 8 characters, return `PasswordTooShort`.
+    *
+    * Otherwise, return the `password`.
+    */
   def passwordLengthValidation(password: String): ValidatedNel[ValidationError, String] = ???
 
+  /**
+    * Compose `passwordStrengthValidation` and `passwordLengthValidation` using Applicative `mapN`
+    * to construct a larger `passwordValidation`.
+    */
   def passwordValidation(password: String): ValidatedNel[ValidationError, String] = ???
 
+  /**
+    * Compose `nameValidation` and `passwordValidation` to construct a function to `validatePerson`.
+    */
   def validatePerson(firstName: String, lastName: String, password: String): ValidatedNel[ValidationError, Person] = ???
 
-  def validatePeople(inputs: List[(String, String, String)]): ValidatedNel[ValidationError, List[Person]] = ???
+  /**
+    * Given a list of `(firstName, lastName, password)`, return either a `List[Person]` or
+    * all the `ValidationErrors` if there are any.
+    */
+  type FirstName = String
+  type LastName = String
+  type Password = String
+  def validatePeople(inputs: List[(FirstName, LastName, Password)]): ValidatedNel[ValidationError, List[Person]] = ???
 
 }

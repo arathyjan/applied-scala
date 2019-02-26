@@ -10,7 +10,16 @@ object EnrichedMovie {
   /**
     * Add an Encoder instance here
     *
-    * // TODO specify how the Json needs to look
+    * We want the Json to look like:
+    *
+    * {
+    *   "name": "Batman",
+    *   "synopsis": "Great movie for the family",
+    *   "reviews": []
+    *   "rating": "Five Star"
+    * }
+    *
+    * Hint: You will need to create a custom encoder.
     */
 
   implicit val encoder: Encoder[EnrichedMovie] =

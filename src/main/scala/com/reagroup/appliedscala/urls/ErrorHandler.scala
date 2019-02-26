@@ -18,7 +18,7 @@ object ErrorHandler extends Http4sDsl[IO] {
 
   private def encodeAppError(appError: AppError): IO[Response[IO]] =
     appError match {
-      case EnrichmentFailure(movie) => InternalServerError(Json.obj("error" -> s"Failed to enrich movie: ${movie.name}".asJson))
+      case EnrichmentFailure(movieId) => InternalServerError(Json.obj("error" -> s"Failed to enrich movieId: ${movieId.value}".asJson))
     }
 
 }
