@@ -18,6 +18,10 @@ mainClass in Compile := Some("com.reagroup.appliedscala.Main")
 // Overrides the "mainClass setting in the "Compile" configuration, only during the "run" task
 mainClass in(Compile, run) := Some("com.reagroup.appliedscala.Main")
 
+resolvers ++= Seq(
+  "rea nexus release" at "http://rea-sonatype-nexus.services.delivery.realestate.com.au/nexus/content/repositories/releases"
+)
+
 val catsVersion = "1.1.0"
 val circeVersion = "0.9.3"
 val monixVersion = "2.3.3"
@@ -26,6 +30,7 @@ val Http4sTimerVersion = "0.0.3"
 val postgresqlVersion = "42.2.4"
 val doobieVersion = "0.5.3"
 val specs2Version = "4.3.6"
+val reaScalaLoggingVersion = "1.0.0"
 
 libraryDependencies ++= Seq(
   "io.circe" %% "circe-core",
@@ -37,7 +42,7 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-literal"
 ).map(_ % circeVersion)
 
-libraryDependencies ++= Seq(
+libraryDependencies ++= Seq(  "com.rea-group"               %% "rea-scala-logging"                % reaScalaLoggingVersion,
   "org.typelevel" %% "cats-core" % catsVersion,
   "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
   "org.http4s" %% "http4s-blaze-client" % Http4sVersion,
