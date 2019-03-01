@@ -4,7 +4,6 @@ import cats.data.NonEmptyList
 import cats.effect.IO
 import cats.implicits._
 import com.reagroup.appliedscala.models._
-import com.reagroup.appliedscala.models.errors.{MovieNameTooShort, MovieSynopsisTooShort}
 import org.specs2.mutable.Specification
 
 class SaveMovieServiceSpec extends Specification {

@@ -4,7 +4,6 @@ import cats.data.NonEmptyList
 import cats.effect.IO
 import cats.implicits._
 import com.reagroup.appliedscala.models._
-import com.reagroup.appliedscala.models.errors._
 import io.circe.literal._
 import org.http4s._
 import org.http4s.testing.Http4sMatchers

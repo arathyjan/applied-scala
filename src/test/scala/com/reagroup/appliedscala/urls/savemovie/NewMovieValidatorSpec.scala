@@ -2,7 +2,6 @@ package com.reagroup.appliedscala.urls.savemovie
 
 import cats.data._
 import cats.implicits._
-import com.reagroup.appliedscala.models.errors.{MovieNameTooShort, MovieSynopsisTooShort}
 import org.specs2.mutable.Specification
 
 class NewMovieValidatorSpec extends Specification {
