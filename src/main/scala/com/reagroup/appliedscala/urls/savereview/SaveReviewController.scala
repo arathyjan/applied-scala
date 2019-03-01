@@ -11,7 +11,7 @@ import org.http4s._
 import org.http4s.circe.CirceEntityCodec._
 import org.http4s.dsl.Http4sDsl
 
-class SaveReviewController(saveNewReview: (MovieId, NewReviewRequest) => IO[ValidatedNel[InvalidNewReviewErr, ReviewId]]) extends Http4sDsl[IO] {
+class SaveReviewController(saveNewReview: (MovieId, NewReviewRequest) => IO[ValidatedNel[ReviewValidationError, ReviewId]]) extends Http4sDsl[IO] {
 
   def apply(movieId: Long, req: Request[IO]): IO[Response[IO]] = ???
 

@@ -1,20 +1,20 @@
 package com.reagroup.appliedscala.urls.savereview
 
-sealed trait InvalidNewReviewErr
+sealed trait ReviewValidationError
 
-case object ReviewAuthorTooShort extends InvalidNewReviewErr
+case object ReviewAuthorTooShort extends ReviewValidationError
 
-case object ReviewCommentTooShort extends InvalidNewReviewErr
+case object ReviewCommentTooShort extends ReviewValidationError
 
-object InvalidNewReviewErr {
+object ReviewValidationError {
 
   /**
-    * Write a function that turns an `InvalidNewReviewErr` to a `String`.
+    * Write a function that turns an `ReviewValidationError` to a `String`.
     * This will be used in our `Encoder`.
     *
     * Hint: Use pattern matching
     */
-  def show(invalidReviewErr: InvalidNewReviewErr): String = ???
+  def show(invalidReviewErr: ReviewValidationError): String = ???
 
   /**
     * Add an Encoder instance here
