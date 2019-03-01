@@ -4,8 +4,6 @@ import io.circe.{Decoder, DecodingFailure, Encoder, HCursor}
 
 sealed trait StarRating
 
-case object Five extends StarRating
-
 case object Four extends StarRating
 
 case object Three extends StarRating
@@ -16,28 +14,24 @@ case object One extends StarRating
 
 object StarRating {
 
-  // TODO unit test
   /**
     * Write a function that turns a score to an `Option[StarRating]`
     *
     * If the score is
-    * >=0 and <20, return `One`
-    * >=20 and <40, return `Two`
-    * >=40 and <60, return `Three`
-    * >=60 and <80, return `Four`
-    * >=80 and <=100, return `Five`
+    * >=0 and <25, return `One`
+    * >=25 and <50, return `Two`
+    * >=50 and <75, return `Three`
+    * >=75 and <=100, return `Four`
     *
     * If the score is out of range, return `None`
     */
   def fromScore(score: Int): Option[StarRating] =
-    if (score >= 0 && score < 20) Some(One)
-    else if (score >= 20 && score < 40) Some(Two)
-    else if (score >= 40 && score < 60) Some(Three)
-    else if (score >= 60 && score < 80) Some(Four)
-    else if (score >= 80 && score <= 100) Some(Five)
+    if (score >= 0 && score < 25) Some(One)
+    else if (score >= 25 && score < 50) Some(Two)
+    else if (score >= 50 && score < 75) Some(Three)
+    else if (score >= 75 && score <= 100) Some(Four)
     else None
 
-  // TODO unit test
   /**
     * Write a function that turns a `StarRating` to a `String`.
     * We will use this in our `Encoder`.
@@ -52,11 +46,12 @@ object StarRating {
     case Two => "Two Stars"
     case Three => "Three Stars"
     case Four => "Four Stars"
-    case Five => "Five Stars"
   }
 
   /**
     * Add an Encoder instance here
+    *
+    * Hint: Use `show`
     */
 
   implicit val encoder: Encoder[StarRating] = Encoder.forProduct1("rating")(StarRating.show)

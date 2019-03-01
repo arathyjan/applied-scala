@@ -11,7 +11,7 @@ class FetchEnrichedMovieControllerSpec extends Specification with Http4sMatchers
 
   "when fetching a movie that exists" should {
 
-    val expectedMovie = EnrichedMovie(Movie("badman", "the first in the series", Vector.empty), Five)
+    val expectedMovie = EnrichedMovie(Movie("badman", "the first in the series", Vector.empty), Four)
 
     val fetchMovie = (_: MovieId) => IO.pure(Some(expectedMovie))
 
@@ -33,7 +33,7 @@ class FetchEnrichedMovieControllerSpec extends Specification with Http4sMatchers
             "name": "badman",
             "synopsis": "the first in the series",
             "reviews": [],
-            "rating": "Five Stars"
+            "rating": "Four Stars"
           }
         """
       actual must haveBody(expectedJson.noSpaces)
