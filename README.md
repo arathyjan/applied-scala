@@ -24,8 +24,8 @@
 
 | Time | Topic/Exercise | Presenter | Helper(s)
 | :---: | :---: | :--: | :--: |
-|  9.15 | Day 1 Keynote | Chris |
-|  9.45 | Introduction to Cats | Chris | 
+|  9.15 | Day 1 Keynote | Chris | Jack
+|  9.45 | Introduction to Cats | Chris | Felipe, Jack
 | 10.15 | Morning tea | 
 | 10.30 | IO Exercises | Felipe | Chris, Jack
 | 11.15 | Http4s overview + Endpoint 1: Hello World | Felipe | Chris, Jack
@@ -41,7 +41,7 @@
 
 | Time | Topic/Exercise | Presenter | Helper(s)
 | :---: | :---: | :--: | :-:
-|  9.15 | Day 2 Keynote | Jake
+|  9.15 | Day 2 Keynote | Jake | Jack
 |  9.45 | Endpoint 3: GET movie?enriched=true | Jack | Adam, Chris
 | 10.45 | Morning tea | 
 | 11.00 | Validated and Traverse Theory | Chris | Jack, Adam
