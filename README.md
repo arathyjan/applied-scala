@@ -22,35 +22,36 @@
 
 ### Day 1 (28/3)
 
-| Time | Topic/Exercise | Presenter | Helper(s)
-| :---: | :---: | :--: | :--: |
-|  9.15 | Day 1 Keynote | Chris | Jack
-|  9.45 | Introduction to Cats | Chris | Felipe, Jack
+| Time | Topic/Exercise | 
+| :---: | :---: | 
+|  9.15 | Day 1 Keynote | 
+|  9.45 | Introduction to Cats |
 | 10.15 | Morning tea | 
-| 10.30 | IO Exercises | Felipe | Chris, Jack
-| 11.15 | Http4s overview + Endpoint 1: Hello World | Felipe | Chris, Jack
+| 10.30 | IO Exercises |
+| 11.15 | Http4s overview + Endpoint 1: Hello World |
 | 12.15 | Lunch | 
-| 13.30 | Circe Exercises | Stili | Felipe, Adam
-| 14.15 | Endpoint 2: GET movie | Stili | Felipe, Adam
-| 15.15 | Afternoon tea |
-| 15.30 | Endpoint 3: Diagnostics | Adam | Stili, Jack
-| 16.00 | Deploy to AWS | Adam | Stili, Jack
+| 13.30 | Circe Exercises | 
+| 14.15 | Code walkthrough: GET all movies (no exercises) |
+| 14.45 | Endpoint 2: GET movie |
+| 15.45 | Afternoon tea |
+| 16.00 | Endpoint 3: Diagnostics | 
+| 16.30 | Deploy to AWS | 
 | 17.00 | End |
 
 ### Day 2 (29/3)
 
-| Time | Topic/Exercise | Presenter | Helper(s)
-| :---: | :---: | :--: | :-:
-|  9.15 | Day 2 Keynote | Jake | Jack
-|  9.45 | Endpoint 3: GET movie?enriched=true | Jack | Adam, Chris
+| Time | Topic/Exercise |
+| :---: | :---: | 
+|  9.15 | Day 2 Keynote | 
+|  9.45 | Endpoint 4: GET movie?enriched=true |
 | 10.45 | Morning tea | 
-| 11.00 | Validated and Traverse Theory | Chris | Jack, Adam
-| 11.45 | Validated Exercises | Chris | Jack, Adam
+| 11.00 | Validated and Traverse Theory |
+| 11.45 | Validated Exercises | 
 | 12.30 | Lunch |
-| 13.45 | Endpoint 4: POST movie | Jake | Chris, Jack
+| 13.45 | Endpoint 5: POST movie |
 | 14.30 | Afternoon tea | 
-| 15.00 | Endpoint 5: POST movie/id/review | Jake | Chris, Jack
-| 16:00 | Wrap-up | Jake
+| 15.00 | Endpoint 6: POST movie/id/review |
+| 16:00 | Wrap-up | 
 | 16:30 | End |
 
 ## Test queries
