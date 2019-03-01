@@ -20,74 +20,38 @@
 
 ## Scope
 
-### Trial
+### Day 1
 
-| Time | Topic/Exercise | Presenter
-| :---: | :---: | :--:
-| 10.00 | Intro to Applied Scala | Chris
-| 10.30 | IO Exercises | Jack
-| 11.00 | Circe Exercises | Jack
-| 11.30 | Http4s Overview | Chris
-| 12.00 | Lunch |
-| 13.15 | Endpoint 1: Hello World | Jack
-| 13.30 | Endpoint 2: GET movie | Jack
-| 14.00 | Endpoint 3: GET movie?enriched=true | Jack
-| 14.30 | Validated and Traverse Theory | Chris
-| 15.00 | Validated Exercises | Jack
-| 15.30 | Endpoint 4: POST movie | Jack
-| 16.00 | Endpoint 5: POST movie/id/review | Jack
+| Time | Topic/Exercise | Presenter | Helper(s)
+| :---: | :---: | :--: | :--: |
+|  9.15 | Day 1 Keynote | Chris |
+|  9.45 | Introduction to Cats | Chris | 
+| 10.15 | Morning tea | 
+| 10.30 | IO Exercises | Felipe | Chris, Jack
+| 11.15 | Http4s overview + Endpoint 1: Hello World | Felipe | Chris, Jack
+| 12.15 | Lunch | 
+| 13.30 | Circe Exercises | Stili | Felipe, Adam
+| 14.15 | Endpoint 2: GET movie | Stili | Felipe, Adam
+| 15.15 | Afternoon tea |
+| 15.30 | Endpoint 3: Diagnostics | Adam | Stili, Jack
+| 16.00 | Deploy to AWS | Adam | Stili, Jack
+| 17.00 | End |
+
+### Day 2 
+
+| Time | Topic/Exercise | Presenter | Helper(s)
+| :---: | :---: | :--: | :-:
+|  9.15 | Day 2 Keynote | Jake
+|  9.45 | Endpoint 3: GET movie?enriched=true | Jack | Adam, Chris
+| 10.45 | Morning tea | 
+| 11.00 | Validated and Traverse Theory | Chris | Jack, Adam
+| 11.45 | Validated Exercises | Chris | Jack, Adam
+| 12.30 | Lunch |
+| 13.45 | Endpoint 4: POST movie | Jake | Chris, Jack
+| 14.30 | Afternoon tea | 
+| 15.00 | Endpoint 5: POST movie/id/review | Jake | Chris, Jack
+| 16:00 | Wrap-up | Jake
 | 16:30 | End |
-
-#### Intro to Applied Scala
-
-- What are we building?
-- Architectural and software components
-- Design decisions
-- We want to write pure functional programs
-- No undeclared side-effects
-- Referentially transparent programs
-- Single responsiblity, module boundaries
-
-#### Http4s Overview
-
-- Why Http4s?
-- Lightweight container, not heavily opinionated
-- (Maybe) Motivation behind the Http4s DSL, how it works
-
-
-#### Hello World
-
-- `AppServer`
-- `AppRoutes` to explain routing
-- `Controller`, `Service` and `AppRuntime`
-
-#### GET movies/id
-
-- Handhold through exercise
-- Show `PostgresRepository`
-- Complete `GetMovieService` to pass test
-- Complete `GetMovieController`
-- Complete semi-auto encoders
-- Wire everything up in `AppRuntime`
-
-#### GET movies/id/?enriched=true
-
-- Handwave query param matcher
-- Show OMDB API
-- Handhold implementation of `Http4sStarRatingRepository`
-- Get them to complete the rest
-- Cover custom encoders
-
-#### POST movies
-
-- Complete `NewMovieValidator`
-- Complete `SaveMovieService` using `Validated` and `Traverse`
-- Show how to decode request in `SaveMovieController`
-- Custom encoder for `MovieId`
-
-#### POST movies/id/review
-
-- Similar to above
 
 ## Test queries
 
