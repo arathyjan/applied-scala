@@ -4,7 +4,7 @@ import cats.data.NonEmptyList
 import cats.effect.IO
 import cats.implicits._
 import com.reagroup.appliedscala.models._
-import com.reagroup.appliedscala.models.errors.{AuthorTooShort, CommentTooShort}
+import com.reagroup.appliedscala.models.errors.{ReviewAuthorTooShort, ReviewCommentTooShort}
 import org.specs2.mutable.Specification
 
 class SaveReviewServiceSpec extends Specification {
@@ -21,7 +21,7 @@ class SaveReviewServiceSpec extends Specification {
 
       val result = service.save(MovieId(12345), reviewToSave)
 
-      result.unsafeRunSync() must_=== NonEmptyList.of(AuthorTooShort, CommentTooShort).invalid
+      result.unsafeRunSync() must_=== NonEmptyList.of(ReviewAuthorTooShort, ReviewCommentTooShort).invalid
 
     }
 

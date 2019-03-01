@@ -21,6 +21,18 @@ case object One extends StarRating
 object StarRating {
 
   // TODO unit test
+  /**
+    * Write a function that turns a score to an `Option[StarRating]`
+    *
+    * If the score is
+    * >=0 and <20, return `One`
+    * >=20 and <40, return `Two`
+    * >=40 and <60, return `Three`
+    * >=60 and <80, return `Four`
+    * >=80 and <=100, return `Five`
+    *
+    * If the score is out of range, return `None`
+    */
   def fromScore(score: Int): Option[StarRating] =
     if (score >= 0 && score < 20) Some(One)
     else if (score >= 20 && score < 40) Some(Two)
@@ -30,12 +42,21 @@ object StarRating {
     else None
 
   // TODO unit test
+  /**
+    * Write a function that turns a `StarRating` to a `String`.
+    * We will use this in our `Encoder`.
+    *
+    * One -> "One Star"
+    * Two -> "Two Stars"
+    * Three -> "Three Stars"
+    * etc.
+    */
   def show(starRating: StarRating): String = starRating match {
     case One => "One Star"
-    case Two => "Two Star"
-    case Three => "Three Star"
-    case Four => "Four Star"
-    case Five => "Five Star"
+    case Two => "Two Stars"
+    case Three => "Three Stars"
+    case Four => "Four Stars"
+    case Five => "Five Stars"
   }
 
   /**

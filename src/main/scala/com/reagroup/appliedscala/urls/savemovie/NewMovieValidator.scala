@@ -3,7 +3,7 @@ package com.reagroup.appliedscala.urls.savemovie
 import cats.data.Validated._
 import cats.data.{NonEmptyList, Validated, ValidatedNel}
 import cats.implicits._
-import com.reagroup.appliedscala.models.errors.{InvalidNewMovieErr, MovieNameTooShort, SynopsisTooShort}
+import com.reagroup.appliedscala.models.errors.{InvalidNewMovieErr, MovieNameTooShort, MovieSynopsisTooShort}
 import com.reagroup.appliedscala.models.{ValidatedMovie, NewMovieRequest}
 
 object NewMovieValidator {
@@ -29,6 +29,6 @@ object NewMovieValidator {
 
   private def validateMovieSynopsis(synopsis: String): ValidatedNel[InvalidNewMovieErr, String] =
     if (synopsis.nonEmpty) synopsis.valid
-    else SynopsisTooShort.invalidNel
+    else MovieSynopsisTooShort.invalidNel
 
 }

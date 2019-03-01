@@ -58,7 +58,7 @@ class SaveReviewControllerSpec extends Specification with Http4sMatchers {
 
     val request = Request[IO](method = Method.POST).withBody(invalidJson.noSpaces).unsafeRunSync()
 
-    val saveNewReview = (_: MovieId, _: NewReviewRequest) => IO.pure(NonEmptyList.of(AuthorTooShort, CommentTooShort).invalid)
+    val saveNewReview = (_: MovieId, _: NewReviewRequest) => IO.pure(NonEmptyList.of(ReviewAuthorTooShort, ReviewCommentTooShort).invalid)
 
     val controller = new SaveReviewController(saveNewReview)
 

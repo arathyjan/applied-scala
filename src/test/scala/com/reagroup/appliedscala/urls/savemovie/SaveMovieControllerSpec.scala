@@ -4,7 +4,7 @@ import cats.data.{NonEmptyList, Validated}
 import cats.effect.IO
 import cats.implicits._
 import com.reagroup.appliedscala.models._
-import com.reagroup.appliedscala.models.errors.{MovieNameTooShort, SynopsisTooShort}
+import com.reagroup.appliedscala.models.errors.{MovieNameTooShort, MovieSynopsisTooShort}
 import io.circe.literal._
 import org.http4s._
 import org.http4s.testing.Http4sMatchers
@@ -58,7 +58,7 @@ class SaveMovieControllerSpec extends Specification with Http4sMatchers {
 
     val request = Request[IO](method = Method.POST).withBody(invalidJson.noSpaces).unsafeRunSync()
 
-    val saveNewMovie = (_: NewMovieRequest) => IO.pure(NonEmptyList.of(MovieNameTooShort, SynopsisTooShort).invalid)
+    val saveNewMovie = (_: NewMovieRequest) => IO.pure(NonEmptyList.of(MovieNameTooShort, MovieSynopsisTooShort).invalid)
 
     val controller = new SaveMovieController(saveNewMovie)
 
