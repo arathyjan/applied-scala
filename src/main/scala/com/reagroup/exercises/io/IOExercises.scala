@@ -9,6 +9,9 @@ import cats.effect.IO
   * that needs to be carried out before you may or may not get a value of type `A`.
   *
   * Unfortunately, by looking at the type signature alone you do not know precisely what side-effect will be carried out.
+  *
+  * Here is some comprehensive documentation on `IO`:
+  * https://typelevel.org/cats-effect/datatypes/io.html
   */
 object IOExercises {
 

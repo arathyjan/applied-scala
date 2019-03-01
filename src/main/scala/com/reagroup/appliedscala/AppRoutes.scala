@@ -17,7 +17,7 @@ import org.http4s.dsl.Http4sDsl
 class AppRoutes(fetchAllMovies: FetchAllMoviesController, fetchMovie: FetchMovieController) extends Http4sDsl[IO] {
 
   val openRoutes = HttpService[IO] {
-    case GET -> Root / "hello" => Ok(Json.obj("message" -> "Hello world".asJson))
+    case GET -> Root / "hello" => Ok("Hello world")
     case GET -> Root / "movies" => fetchAllMovies()
     case GET -> Root / "movies" / LongVar(id) => fetchMovie(id)
     case req @ POST -> Root / "movies" => ???

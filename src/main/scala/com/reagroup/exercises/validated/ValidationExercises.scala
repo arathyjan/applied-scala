@@ -6,6 +6,15 @@ import cats.implicits._
 
 /**
   * These exercises are repurposed from https://github.com/cwmyers/FunctionalTraining
+  *
+  * For further reading: Refer to Cats docs below. You can replace all references of `ValidatedNec` with `ValidatedNel`.
+  * `Nec` stands for `NonEmptyChain`, which is very similar to `NonEmptyList`.
+  * Cats implemented their own version of Scala's `List` called `Chain`, and `NonEmptyChain` is the `NonEmptyList` equivalent.
+  *
+  * https://typelevel.org/cats/datatypes/validated.html
+  *
+  * Here's an REA tech blog post on the same topic, but using Scalaz instead of Cats:
+  * https://www.rea-group.com/blog/feeling-validated-a-different-way-to-validate-your-input
   */
 object ValidationExercises {
 

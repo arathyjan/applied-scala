@@ -11,8 +11,15 @@ import org.http4s._
 
 class AppRuntime() {
 
+  /**
+    * This is the real repository that talks to Postgresql
+    */
   private val pgsqlRepo = PostgresqlRepository(sys.env)
 
+  /**
+    * This is where we instantiate our `Service` and `Controller` for each endpoint.
+    * We will need to write a similar block for each endpoint we write.
+    */
   private val fetchAllMoviesController: FetchAllMoviesController = {
     val fetchAllMoviesService: FetchAllMoviesService = new FetchAllMoviesService(pgsqlRepo.fetchAllMovies)
     new FetchAllMoviesController(fetchAllMoviesService.fetchAll)
