@@ -13,7 +13,7 @@ class SaveReviewServiceSpec extends Specification {
 
     "return errors" in {
 
-      val repo = (movieId: MovieId, review: ReviewToSave) => ???
+      val repo = (movieId: MovieId, review: ValidatedReview) => ???
 
       val service = new SaveReviewService(repo)
 
@@ -27,7 +27,7 @@ class SaveReviewServiceSpec extends Specification {
 
     "return saved reviewId" in {
 
-      val repo = (movieId: MovieId, review: ReviewToSave) => IO.pure(ReviewId(12345))
+      val repo = (movieId: MovieId, review: ValidatedReview) => IO.pure(ReviewId(12345))
 
       val service = new SaveReviewService(repo)
 

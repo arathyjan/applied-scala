@@ -56,7 +56,7 @@ class PostgresqlRepository(transactor: Transactor[IO]) {
     insertMovie.transact(transactor)
   }
 
-  def saveReview(movieId: MovieId, review: ReviewToSave): IO[ReviewId] = {
+  def saveReview(movieId: MovieId, review: ValidatedReview): IO[ReviewId] = {
     val insertMovie: ConnectionIO[ReviewId] =
       for {
         reviewId <- sql"""
