@@ -19,6 +19,19 @@ object EnrichedMovie {
     *   "rating": "Five Star"
     * }
     *
+    * not:
+    *
+    * {
+    *   "movie": {
+    *     "name": "Batman",
+    *     "synopsis": "Great movie for the family",
+    *     "reviews": []
+    *   },
+    *   "starRating": "Five Star"
+    * }
+    *
+    * which is what we would get if we used `deriveEncoder[EnrichedMovie]`
+    *
     * Hint: You will need to create a custom encoder.
     */
 

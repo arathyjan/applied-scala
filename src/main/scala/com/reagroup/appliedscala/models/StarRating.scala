@@ -20,6 +20,16 @@ case object One extends StarRating
 
 object StarRating {
 
+  // TODO unit test
+  def fromScore(score: Int): Option[StarRating] =
+    if (score >= 0 && score < 20) Some(One)
+    else if (score >= 20 && score < 40) Some(Two)
+    else if (score >= 40 && score < 60) Some(Three)
+    else if (score >= 60 && score < 80) Some(Four)
+    else if (score >= 80 && score <= 100) Some(Five)
+    else None
+
+  // TODO unit test
   def show(starRating: StarRating): String = starRating match {
     case One => "One Star"
     case Two => "Two Star"
@@ -36,16 +46,12 @@ object StarRating {
 
   /**
     * Add a Decoder instance here
+    *
+    * Hint: Use `.toRight(DecodingFailure("Score is out of range: 0-100", c.history))` to convert an `Option` to an `Either`
     */
 
   implicit val decoder: Decoder[StarRating] = (c: HCursor) => {
-    c.get[Int]("Metascore").map(num => {
-      if (num >= 0 && num < 20) One
-      else if (num >= 20 && num < 40) Two
-      else if (num >= 40 && num < 60) Three
-      else if (num >= 60 && num < 80) Four
-      else Five
-    })
+    c.get[Int]("Metascore").flatMap(score => fromScore(score).toRight(DecodingFailure("Score is out of range: 0-100", c.history)))
   }
 
 }
