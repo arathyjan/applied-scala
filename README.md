@@ -18,9 +18,9 @@
 ./auto/start-local
 ```
 
-## Scope
+## Schedule
 
-### Day 1
+### Day 1 (28/3)
 
 | Time | Topic/Exercise | Presenter | Helper(s)
 | :---: | :---: | :--: | :--: |
@@ -37,7 +37,7 @@
 | 16.00 | Deploy to AWS | Adam | Stili, Jack
 | 17.00 | End |
 
-### Day 2 
+### Day 2 (29/3)
 
 | Time | Topic/Exercise | Presenter | Helper(s)
 | :---: | :---: | :--: | :-:
