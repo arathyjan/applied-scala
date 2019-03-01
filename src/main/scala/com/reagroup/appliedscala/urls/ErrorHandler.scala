@@ -1,7 +1,7 @@
 package com.reagroup.appliedscala.urls
 
 import cats.effect.IO
-import com.reagroup.appliedscala.models.errors.{AppError, EnrichmentFailure}
+import com.reagroup.appliedscala.models._
 import io.circe.Json
 import io.circe.syntax._
 import org.http4s.Response

@@ -1,7 +1,8 @@
-package com.reagroup.appliedscala.models
+package com.reagroup.appliedscala.urls.fetchenrichedmovie
 
-import io.circe.{Encoder, Json}
+import com.reagroup.appliedscala.models.Movie
 import io.circe.syntax._
+import io.circe.{Encoder, Json}
 
 case class EnrichedMovie(movie: Movie, starRating: StarRating)
 

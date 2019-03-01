@@ -1,6 +1,4 @@
-package com.reagroup.appliedscala.models.errors
-
-import com.reagroup.appliedscala.models.MovieId
+package com.reagroup.appliedscala.models
 
 sealed trait AppError extends Throwable
 

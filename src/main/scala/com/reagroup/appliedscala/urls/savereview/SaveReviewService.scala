@@ -2,8 +2,7 @@ package com.reagroup.appliedscala.urls.savereview
 
 import cats.data.ValidatedNel
 import cats.effect.IO
-import com.reagroup.appliedscala.models.errors.InvalidNewReviewErr
-import com.reagroup.appliedscala.models.{MovieId, NewReviewRequest, ReviewId, ValidatedReview}
+import com.reagroup.appliedscala.models.MovieId
 
 class SaveReviewService(saveReview: (MovieId, ValidatedReview) => IO[ReviewId]) {
 

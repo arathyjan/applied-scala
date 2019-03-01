@@ -1,7 +1,4 @@
-package com.reagroup.appliedscala.models
-
-import io.circe.Decoder
-import io.circe.generic.semiauto._
+package com.reagroup.appliedscala.urls.savereview
 
 case class NewReviewRequest(author: String, comment: String)
 

@@ -1,10 +1,6 @@
-package com.reagroup.appliedscala.models
+package com.reagroup.appliedscala.urls.fetchenrichedmovie
 
-import io.circe.Decoder.Result
 import io.circe.{Decoder, DecodingFailure, Encoder, HCursor}
-
-import scala.util.Try
-import io.circe.syntax._
 
 sealed trait StarRating
 

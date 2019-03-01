@@ -1,7 +1,7 @@
 package com.reagroup.appliedscala
 
 import cats.effect.IO
-import com.reagroup.appliedscala.urls.effects.PostgresqlRepository
+import com.reagroup.appliedscala.urls.repositories.PostgresqlRepository
 import com.reagroup.appliedscala.urls.fetchallmovies.{FetchAllMoviesController, FetchAllMoviesService}
 import com.reagroup.appliedscala.urls.fetchenrichedmovie.{FetchEnrichedMovieController, FetchEnrichedMovieService}
 import com.reagroup.appliedscala.urls.fetchmovie.{FetchMovieController, FetchMovieService}

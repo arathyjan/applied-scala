@@ -1,6 +1,4 @@
-package com.reagroup.appliedscala.models
-
-import io.circe.Encoder
+package com.reagroup.appliedscala.urls.savereview
 
 case class ReviewId(value: Long)
 

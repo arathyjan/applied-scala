@@ -2,7 +2,6 @@ package com.reagroup.appliedscala.urls.fetchenrichedmovie
 
 import cats.effect.IO
 import com.reagroup.appliedscala.models._
-import com.reagroup.appliedscala.models.errors.EnrichmentFailure
 import org.specs2.mutable.Specification
 
 class FetchEnrichedMovieServiceSpec extends Specification {

@@ -1,7 +1,9 @@
-package com.reagroup.appliedscala.urls.effects
+package com.reagroup.appliedscala.urls.repositories
 
 import cats.effect.IO
 import com.reagroup.appliedscala.models._
+import com.reagroup.appliedscala.urls.savemovie.ValidatedMovie
+import com.reagroup.appliedscala.urls.savereview.{ReviewId, ValidatedReview}
 import doobie._
 import doobie.implicits._
 import org.postgresql.ds.PGSimpleDataSource

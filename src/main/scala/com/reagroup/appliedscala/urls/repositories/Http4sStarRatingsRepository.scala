@@ -1,9 +1,10 @@
-package com.reagroup.appliedscala.urls.effects
+package com.reagroup.appliedscala.urls.repositories
 
 import java.net.URLEncoder
 
 import cats.effect.IO
 import com.reagroup.appliedscala.models._
+import com.reagroup.appliedscala.urls.fetchenrichedmovie.StarRating
 import io.circe.parser.decode
 import org.http4s.client.Client
 import org.http4s.client.blaze._

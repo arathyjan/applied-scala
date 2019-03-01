@@ -4,7 +4,6 @@ import cats.data.Validated._
 import cats.data.{NonEmptyList, Validated, ValidatedNel}
 import cats.implicits._
 import com.reagroup.appliedscala.models.errors.{InvalidNewMovieErr, MovieNameTooShort, MovieSynopsisTooShort}
-import com.reagroup.appliedscala.models.{ValidatedMovie, NewMovieRequest}
 
 object NewMovieValidator {
 

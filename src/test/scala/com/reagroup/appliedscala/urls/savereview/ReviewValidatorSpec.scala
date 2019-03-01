@@ -2,8 +2,6 @@ package com.reagroup.appliedscala.urls.savereview
 
 import cats.data._
 import cats.implicits._
-import com.reagroup.appliedscala.models.errors.{ReviewAuthorTooShort, ReviewCommentTooShort}
-import com.reagroup.appliedscala.models.{NewReviewRequest, ValidatedReview}
 import org.specs2.mutable.Specification
 
 class ReviewValidatorSpec extends Specification {

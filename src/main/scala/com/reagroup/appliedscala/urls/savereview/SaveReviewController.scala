@@ -4,7 +4,6 @@ import cats.data.Validated._
 import cats.data.ValidatedNel
 import cats.effect.IO
 import com.reagroup.appliedscala.models._
-import com.reagroup.appliedscala.models.errors.InvalidNewReviewErr
 import com.reagroup.appliedscala.urls.ErrorHandler
 import io.circe.Json
 import io.circe.syntax._

@@ -8,7 +8,7 @@ import com.reagroup.appliedscala.urls.savemovie.SaveMovieController
 import com.reagroup.appliedscala.urls.savereview.SaveReviewController
 import io.circe.syntax._
 import org.http4s._
-import org.http4s.circe.CirceEntityCodec._
+//import org.http4s.circe.CirceEntityCodec._
 import io.circe.Json
 
 import org.http4s.HttpService

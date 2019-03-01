@@ -1,6 +1,4 @@
-package com.reagroup.appliedscala.models.errors
-
-import io.circe.Encoder
+package com.reagroup.appliedscala.urls.savereview
 
 sealed trait InvalidNewReviewErr
 
