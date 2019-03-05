@@ -15,12 +15,18 @@ class IOExercisesSpec extends Specification {
   }
 
   "helloWorld" should {
+    "not execute immediately" in {
+      val logger = new TestLogger
+      helloWorld(logger)
+
+      logger.loggedMessages === List.empty
+    }
+
     "return an IO that would log 'hello world' using the `logger` provided" in {
       val logger = new TestLogger
       val result = helloWorld(logger)
 
       result.unsafeRunSync
-
       logger.loggedMessages.toList === List("hello world")
     }
   }
