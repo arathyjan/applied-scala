@@ -1,7 +1,7 @@
 package com.reagroup.appliedscala
 
 import cats.effect.IO
-import com.reagroup.appliedscala.urls.repositories.PostgresqlRepository
+import com.reagroup.appliedscala.urls.repositories.{Http4sStarRatingsRepository, PostgresqlRepository}
 import com.reagroup.appliedscala.urls.fetchallmovies.{FetchAllMoviesController, FetchAllMoviesService}
 import com.reagroup.appliedscala.urls.fetchenrichedmovie.{FetchEnrichedMovieController, FetchEnrichedMovieService}
 import com.reagroup.appliedscala.urls.fetchmovie.{FetchMovieController, FetchMovieService}
@@ -30,7 +30,13 @@ class AppRuntime() {
     new FetchMovieController(service.fetch)
   }
 
-  private val appRoutes = new AppRoutes(fetchAllMoviesController, fetchMovieController)
+  private val fetchEnrichedMovieController: FetchEnrichedMovieController = {
+    val http4sStarRatingsRepository = new Http4sStarRatingsRepository
+    val service: FetchEnrichedMovieService = new FetchEnrichedMovieService(pgsqlRepo.fetchMovie, http4sStarRatingsRepository.apply)
+    new FetchEnrichedMovieController(service.fetch)
+  }
+
+  private val appRoutes = new AppRoutes(fetchAllMoviesController, fetchMovieController, fetchEnrichedMovieController)
 
   val routes: HttpService[IO] = appRoutes.openRoutes
 

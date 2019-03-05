@@ -12,6 +12,8 @@ class FetchEnrichedMovieService(fetchMovie: MovieId => IO[Option[Movie]],
     * We can do so using the functions that are passed in as dependencies.
     *
     * For the purpose of this exercise, let's raise an `EnrichmentFailure` if the `StarRating` does not exist.
+    *
+    * Hint: Pattern match on `Option` if you're stuck!
     */
   def fetch(movieId: MovieId): IO[Option[EnrichedMovie]] =
     for {

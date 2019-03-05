@@ -17,7 +17,7 @@ object EnrichedMovie {
     *   "name": "Batman",
     *   "synopsis": "Great movie for the family",
     *   "reviews": []
-    *   "rating": "Five Star"
+    *   "rating": "Five Stars"
     * }
     *
     * not:
@@ -28,12 +28,12 @@ object EnrichedMovie {
     *     "synopsis": "Great movie for the family",
     *     "reviews": []
     *   },
-    *   "starRating": "Five Star"
+    *   "starRating": "Five Stars"
     * }
     *
     * which is what we would get if we used `deriveEncoder[EnrichedMovie]`
     *
-    * Hint: You will need to create a custom encoder.
+    * Hint: You will need to create a custom encoder. Also use `StarRating.show`
     */
 
   implicit val encoder: Encoder[EnrichedMovie] =
@@ -41,6 +41,6 @@ object EnrichedMovie {
       "name" -> a.movie.name.asJson,
       "synopsis" -> a.movie.synopsis.asJson,
       "reviews" -> a.movie.reviews.asJson,
-      "rating" -> a.starRating.asJson
+      "rating" -> StarRating.show(a.starRating).asJson
     )
 }

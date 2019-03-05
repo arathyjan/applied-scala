@@ -49,14 +49,6 @@ object StarRating {
   }
 
   /**
-    * Add an Encoder instance here
-    *
-    * Hint: Use `show`
-    */
-
-  implicit val encoder: Encoder[StarRating] = Encoder.forProduct1("rating")(StarRating.show)
-
-  /**
     * Add a Decoder instance here
     *
     * Hint: Use `.toRight(DecodingFailure("Score is out of range: 0-100", c.history))` to convert an `Option` to an `Either`
