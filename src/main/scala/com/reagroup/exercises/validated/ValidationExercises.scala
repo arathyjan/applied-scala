@@ -38,7 +38,7 @@ object ValidationExercises {
     * Hint: Use the `.invalidNel` and `.validNel` combinators
     */
   def nameValidation(name: String, label: String): ValidatedNel[ValidationError, String] =
-    Validated.condNel(name.trim.nonEmpty, name, NameIsEmpty(label))
+    ???
 
   /**
     * If the `password` does not contain a numeric character, return a `PasswordTooWeak`.
@@ -48,7 +48,7 @@ object ValidationExercises {
     * Hint: Use `password.exists(Character.isDigit)`
     */
   def passwordStrengthValidation(password: String): ValidatedNel[ValidationError, String] =
-    Validated.condNel(password.exists(Character.isDigit), password, PasswordTooWeak)
+    ???
 
   /**
     * If the `password` length is not greater than 8 characters, return `PasswordTooShort`.
@@ -56,20 +56,20 @@ object ValidationExercises {
     * Otherwise, return the `password`.
     */
   def passwordLengthValidation(password: String): ValidatedNel[ValidationError, String] =
-    Validated.condNel(password.length > 8, password, PasswordTooShort)
+    ???
 
   /**
     * Compose `passwordStrengthValidation` and `passwordLengthValidation` using Applicative `mapN`
     * to construct a larger `passwordValidation`.
     */
   def passwordValidation(password: String): ValidatedNel[ValidationError, String] =
-    (passwordStrengthValidation(password), passwordLengthValidation(password)).mapN((p1, p2) => p2)
+    ???
 
   /**
     * Compose `nameValidation` and `passwordValidation` to construct a function to `validatePerson`.
     */
   def validatePerson(firstName: String, lastName: String, password: String): ValidatedNel[ValidationError, Person] =
-    (nameValidation(firstName, "firstName"), nameValidation(lastName, "lastName"), passwordValidation(password)).mapN(Person(_, _, _))
+    ???
 
 
   /**
@@ -80,6 +80,6 @@ object ValidationExercises {
   type LastName = String
   type Password = String
   def validatePeople(inputs: List[(FirstName, LastName, Password)]): ValidatedNel[ValidationError, List[Person]] =
-    inputs.traverse { case (x, y, z) => validatePerson(x, y, z) }
+    ???
 
 }

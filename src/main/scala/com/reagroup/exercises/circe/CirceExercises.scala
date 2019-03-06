@@ -31,7 +31,7 @@ object CirceExercises {
     */
   def strToJson(str: String): Either[ParsingFailure, Json] = {
     import io.circe.parser._
-    parse(str)
+    ???
   }
 
   case class Person(name: String, age: Int)
@@ -41,10 +41,7 @@ object CirceExercises {
     */
 
   def personToJson(person: Person): Json =
-    Json.obj(
-      "name" -> person.name.asJson,
-      "age" -> person.age.asJson
-    )
+    ???
 
   /**
     * Try make a syntax error in the following Json document and compile.
@@ -69,8 +66,8 @@ object CirceExercises {
     * into `asJson` explicitly.
     */
   def encodePerson(person: Person): Json = {
-    val personEncoder: Encoder[Person] = (a: Person) => personToJson(a)
-    person.asJson(personEncoder)
+    val personEncoder: Encoder[Person] = (a: Person) => ???
+    person.asJson(???)
   }
 
   /**
@@ -80,8 +77,8 @@ object CirceExercises {
     * This may sometimes be simpler than using `Json.obj`.
     */
   def encodePersonAgain(person: Person): Json = {
-    implicit val personEncoder: Encoder[Person] = Encoder.forProduct2("name", "age")(p => (p.name, p.age))
-    person.asJson
+    val personEncoder: Encoder[Person] = ???
+    person.asJson(???)
   }
 
   /**
@@ -96,8 +93,8 @@ object CirceExercises {
   def encodePersonSemiAuto(person: Person): Json = {
     import io.circe.generic.semiauto._
 
-    implicit val personEncoder: Encoder[Person] = deriveEncoder[Person]
-    person.asJson
+    val personEncoder: Encoder[Person] = ???
+    person.asJson(???)
   }
 
   /**
@@ -109,10 +106,7 @@ object CirceExercises {
     */
   def jsonToPerson(json: Json): Either[DecodingFailure, Person] = {
     val cursor = json.hcursor
-    for {
-      name <- cursor.get[String]("name")
-      age <- cursor.get[Int]("age")
-    } yield Person(name, age)
+    ???
   }
 
   /**
@@ -130,13 +124,10 @@ object CirceExercises {
   def decodePerson(json: Json): Either[DecodingFailure, Person] = {
     import cats.implicits._
 
-    implicit val personDecoder: Decoder[Person] = (c: HCursor) => for {
-      name <- c.get[String]("name")
-      age <- c.get[Int]("age")
-    } yield Person(name, age)
+    val personDecoder: Decoder[Person] = ???
 
     // This says "Turn this Json to a Person"
-    json.as[Person]
+    json.as[Person](???)
   }
 
   /**
@@ -144,9 +135,9 @@ object CirceExercises {
     * for `Person`.
     */
   def decodePersonAgain(json: Json): Either[DecodingFailure, Person] = {
-    implicit val personDecoder: Decoder[Person] = Decoder.forProduct2("name", "age")((name, age) => Person(name, age))
+    val personDecoder: Decoder[Person] = ???
 
-    json.as[Person]
+    json.as[Person](???)
   }
 
   /**
@@ -155,9 +146,9 @@ object CirceExercises {
   def decodePersonSemiAuto(json: Json): Either[DecodingFailure, Person] = {
     import io.circe.generic.semiauto._
 
-    implicit val personDecoder: Decoder[Person] = deriveDecoder[Person]
+    val personDecoder: Decoder[Person] = ???
 
-    json.as[Person]
+    json.as[Person](???)
   }
 
   /**
@@ -172,9 +163,9 @@ object CirceExercises {
     import io.circe.parser._
     import io.circe.generic.semiauto._
 
-    implicit val personDecoder: Decoder[Person] = deriveDecoder[Person]
+    val personDecoder: Decoder[Person] = ???
 
-    decode[Person](str)
+    decode[Person](str)(???)
   }
 
 }
