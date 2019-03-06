@@ -73,7 +73,7 @@ class SaveReviewControllerSpec extends Specification with Http4sMatchers {
 
       val expectedJson =
         json"""
-          { "errors": [ { "type": "AUTHOR_TOO_SHORT" }, { "type": "COMMENT_TOO_SHORT"} ] }
+          { "errors": [ { "type": "REVIEW_AUTHOR_TOO_SHORT" }, { "type": "REVIEW_COMMENT_TOO_SHORT"} ] }
         """
       actual must haveBody(expectedJson.noSpaces)
 
