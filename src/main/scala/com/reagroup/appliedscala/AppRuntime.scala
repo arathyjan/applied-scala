@@ -41,7 +41,12 @@ class AppRuntime() {
     new SaveMovieController(service.save)
   }
 
-  private val appRoutes = new AppRoutes(fetchAllMoviesController, fetchMovieController, fetchEnrichedMovieController, saveMovieController)
+  private val saveReviewController: SaveReviewController = {
+    val service: SaveReviewService = new SaveReviewService(pgsqlRepo.saveReview)
+    new SaveReviewController(service.save)
+  }
+
+  private val appRoutes = new AppRoutes(fetchAllMoviesController, fetchMovieController, fetchEnrichedMovieController, saveMovieController, saveReviewController)
 
   val routes: HttpService[IO] = appRoutes.openRoutes
 

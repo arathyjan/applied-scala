@@ -16,7 +16,8 @@ import org.http4s.dsl.Http4sDsl
 class AppRoutes(fetchAllMovies: FetchAllMoviesController,
                 fetchMovie: FetchMovieController,
                 fetchEnrichedMovie: FetchEnrichedMovieController,
-                saveMovie: SaveMovieController) extends Http4sDsl[IO] {
+                saveMovie: SaveMovieController,
+                saveReview: SaveReviewController) extends Http4sDsl[IO] {
 
   object OptionalBooleanMatcher extends OptionalQueryParamDecoderMatcher[Boolean]("enriched")
 
@@ -25,7 +26,7 @@ class AppRoutes(fetchAllMovies: FetchAllMoviesController,
     case GET -> Root / "movies" => fetchAllMovies()
     case GET -> Root / "movies" / LongVar(id) :? OptionalBooleanMatcher(optEnriched) => if (optEnriched.contains(true)) fetchEnrichedMovie(id) else fetchMovie(id)
     case req @ POST -> Root / "movies" => saveMovie(req)
-    case req @ POST -> Root / "movies" / LongVar(id) / "reviews" => ???
+    case req @ POST -> Root / "movies" / LongVar(id) / "reviews" => saveReview(id, req)
   }
 
 }
