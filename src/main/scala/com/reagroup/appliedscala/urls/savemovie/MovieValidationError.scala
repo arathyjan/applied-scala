@@ -20,8 +20,8 @@ object MovieValidationError {
     *
     * Hint: Use pattern matching
     */
-  def show(err: MovieValidationError): String =
-    err match {
+  def show(error: MovieValidationError): String =
+    error match {
       case MovieNameTooShort => "MOVIE_NAME_TOO_SHORT"
       case MovieSynopsisTooShort => "MOVIE_SYNOPSIS_TOO_SHORT"
     }
