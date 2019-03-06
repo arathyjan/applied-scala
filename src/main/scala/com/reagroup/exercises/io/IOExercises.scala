@@ -133,7 +133,7 @@ object IOExercises {
     * You will need this function in the next exercise
     */
   private def mkUsername(username: String): Either[UsernameError, Username] =
-    ???
+    if (username.nonEmpty) Right(Username(username)) else Left(UsernameError("Username cannot be empty"))
 
   /**
     * Use `mkUsername` to create a `Username` and if successful print the username, otherwise fail with an error.
