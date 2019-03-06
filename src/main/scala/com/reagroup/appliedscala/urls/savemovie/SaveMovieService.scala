@@ -11,8 +11,7 @@ class SaveMovieService(saveMovie: ValidatedMovie => IO[MovieId]) {
     * Before saving a `NewMovieRequest`, we want to validate the request in order to get a `MovieToSave`.
     * Complete `NewMovieValidator`, then use it here before calling `saveMovie`.
     */
-  def save(newMovieReq: NewMovieRequest): IO[ValidatedNel[MovieValidationError, MovieId]] = {
-    NewMovieValidator.validate(newMovieReq).traverse(saveMovie)
-  }
+  def save(newMovieReq: NewMovieRequest): IO[ValidatedNel[MovieValidationError, MovieId]] =
+    ???
 
 }

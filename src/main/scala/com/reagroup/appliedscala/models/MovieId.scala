@@ -17,6 +17,4 @@ object MovieId {
     *
     * Hint: You don't want to use `deriveEncoder` here
     */
-
-  implicit val encoder: Encoder[MovieId] = Encoder.forProduct1("id")(_.value)
 }

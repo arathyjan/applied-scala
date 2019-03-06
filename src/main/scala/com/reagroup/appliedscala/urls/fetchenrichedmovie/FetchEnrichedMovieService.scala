@@ -16,16 +16,6 @@ class FetchEnrichedMovieService(fetchMovie: MovieId => IO[Option[Movie]],
     * Hint: Pattern match on `Option` if you're stuck!
     */
   def fetch(movieId: MovieId): IO[Option[EnrichedMovie]] =
-    for {
-      optMovie <- fetchMovie(movieId)
-      optStarRating <- optMovie match {
-        case Some(movie) => fetchStarRating(movie.name)
-        case None => IO.pure(None)
-      }
-      starRating <- optStarRating match {
-        case Some(rating) => IO.pure(rating)
-        case None => IO.raiseError(EnrichmentFailure(movieId))
-      }
-    } yield optMovie.map(m => EnrichedMovie(m, starRating))
+    ???
 
 }

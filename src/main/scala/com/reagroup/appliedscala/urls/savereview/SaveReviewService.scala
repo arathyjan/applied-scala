@@ -11,6 +11,6 @@ class SaveReviewService(saveReview: (MovieId, ValidatedReview) => IO[ReviewId]) 
     * Complete `NewReviewValidator`, then use it here before calling `saveReview`.
     */
   def save(movieId: MovieId, review: NewReviewRequest): IO[ValidatedNel[ReviewValidationError, ReviewId]] =
-    NewReviewValidator.validate(review).traverse(saveReview.apply(movieId, _))
+    ???
 
 }

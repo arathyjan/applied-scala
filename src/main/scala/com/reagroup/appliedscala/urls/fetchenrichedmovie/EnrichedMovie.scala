@@ -36,11 +36,4 @@ object EnrichedMovie {
     * Hint: You will need to create a custom encoder. Also use `StarRating.show`
     */
 
-  implicit val encoder: Encoder[EnrichedMovie] =
-    (a: EnrichedMovie) => Json.obj(
-      "name" -> a.movie.name.asJson,
-      "synopsis" -> a.movie.synopsis.asJson,
-      "reviews" -> a.movie.reviews.asJson,
-      "rating" -> StarRating.show(a.starRating).asJson
-    )
 }

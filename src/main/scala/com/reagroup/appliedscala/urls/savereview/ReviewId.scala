@@ -15,6 +15,5 @@ object ReviewId {
     *   "id": 1
     * }
     */
-  implicit val encoder: Encoder[ReviewId] = Encoder.forProduct1("id")(_.value)
 
 }

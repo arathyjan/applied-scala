@@ -15,6 +15,5 @@ object NewReviewRequest {
     *   "comment": "I liked this a lot"
     * }
     */
-  implicit val decoder: Decoder[NewReviewRequest] = deriveDecoder[NewReviewRequest]
 
 }

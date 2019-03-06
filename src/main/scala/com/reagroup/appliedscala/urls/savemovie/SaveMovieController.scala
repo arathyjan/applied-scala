@@ -30,13 +30,6 @@ class SaveMovieController(saveNewMovie: NewMovieRequest => IO[ValidatedNel[Movie
     * Hint: You can use the `BadRequest(...)` constructor to return a 403 response when there are errors.
     */
   def apply(req: Request[IO]): IO[Response[IO]] =
-    for {
-      newMovieRequest <- req.as[NewMovieRequest]
-      errorsOrMovieId <- saveNewMovie(newMovieRequest)
-      resp <- errorsOrMovieId match {
-        case Valid(movieId) => Created(movieId.asJson)
-        case Invalid(errors) => BadRequest(Json.obj("errors" -> errors.toList.asJson))
-      }
-    } yield resp
+    ???
 
 }

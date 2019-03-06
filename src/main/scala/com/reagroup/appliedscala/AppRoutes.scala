@@ -13,20 +13,12 @@ import io.circe.Json
 import org.http4s.HttpService
 import org.http4s.dsl.Http4sDsl
 
-class AppRoutes(fetchAllMovies: FetchAllMoviesController,
-                fetchMovie: FetchMovieController,
-                fetchEnrichedMovie: FetchEnrichedMovieController,
-                saveMovie: SaveMovieController,
-                saveReview: SaveReviewController) extends Http4sDsl[IO] {
-
-  object OptionalBooleanMatcher extends OptionalQueryParamDecoderMatcher[Boolean]("enriched")
+class AppRoutes(fetchAllMovies: FetchAllMoviesController) extends Http4sDsl[IO] {
 
   val openRoutes = HttpService[IO] {
-    case GET -> Root / "hello" => Ok("Hello world")
     case GET -> Root / "movies" => fetchAllMovies()
-    case GET -> Root / "movies" / LongVar(id) :? OptionalBooleanMatcher(optEnriched) => if (optEnriched.contains(true)) fetchEnrichedMovie(id) else fetchMovie(id)
-    case req @ POST -> Root / "movies" => saveMovie(req)
-    case req @ POST -> Root / "movies" / LongVar(id) / "reviews" => saveReview(id, req)
+    case req @ POST -> Root / "movies" => ???
+    case req @ POST -> Root / "movies" / LongVar(id) / "reviews" => ???
   }
 
 }

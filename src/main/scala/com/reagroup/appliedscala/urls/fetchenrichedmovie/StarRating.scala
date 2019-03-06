@@ -26,11 +26,7 @@ object StarRating {
     * If the score is out of range, return `None`
     */
   def fromScore(score: Int): Option[StarRating] =
-    if (score >= 0 && score < 25) Some(One)
-    else if (score >= 25 && score < 50) Some(Two)
-    else if (score >= 50 && score < 75) Some(Three)
-    else if (score >= 75 && score <= 100) Some(Four)
-    else None
+    ???
 
   /**
     * Write a function that turns a `StarRating` to a `String`.
@@ -41,21 +37,13 @@ object StarRating {
     * Three -> "Three Stars"
     * etc.
     */
-  def show(starRating: StarRating): String = starRating match {
-    case One => "One Star"
-    case Two => "Two Stars"
-    case Three => "Three Stars"
-    case Four => "Four Stars"
-  }
+  def show(starRating: StarRating): String =
+    ???
 
   /**
     * Add a Decoder instance here
     *
     * Hint: Use `.toRight(DecodingFailure("Score is out of range: 0-100", c.history))` to convert an `Option` to an `Either`
     */
-
-  implicit val decoder: Decoder[StarRating] = (c: HCursor) => {
-    c.get[Int]("Metascore").flatMap(score => fromScore(score).toRight(DecodingFailure("Score is out of range: 0-100", c.history)))
-  }
 
 }
