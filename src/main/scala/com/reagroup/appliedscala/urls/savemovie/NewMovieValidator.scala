@@ -21,10 +21,22 @@ object NewMovieValidator {
     (validatedName, validatedSynopsis).mapN(ValidatedMovie.apply)
   }
 
+  /**
+    * If `name` is empty, return an `InvalidNel` containing `MovieNameTooShort`,
+    * else return a `Valid` containing the `name`.
+    *
+    * Hint: You can use `.isEmpty` or `.nonEmpty` on `String`
+    */
   private def validateMovieName(name: String): ValidatedNel[MovieValidationError, String] =
     if (name.nonEmpty) name.valid
     else MovieNameTooShort.invalidNel
 
+  /**
+    * If `synopsis` is empty, return an `InvalidNel` containing `MovieSynopsisTooShort`,
+    * else return a `Valid` containing the `synopsis`.
+    *
+    * Hint: You can use `.isEmpty` or `.nonEmpty` on `String`
+    */
   private def validateMovieSynopsis(synopsis: String): ValidatedNel[MovieValidationError, String] =
     if (synopsis.nonEmpty) synopsis.valid
     else MovieSynopsisTooShort.invalidNel

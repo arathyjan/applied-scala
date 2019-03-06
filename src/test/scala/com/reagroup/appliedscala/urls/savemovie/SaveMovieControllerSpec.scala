@@ -73,7 +73,7 @@ class SaveMovieControllerSpec extends Specification with Http4sMatchers {
 
       val expectedJson =
         json"""
-          { "errors": [ { "type": "MOVIE_NAME_TOO_SHORT" }, { "type": "SYNOPSIS_TOO_SHORT"} ] }
+          { "errors": [ { "type": "MOVIE_NAME_TOO_SHORT" }, { "type": "MOVIE_SYNOPSIS_TOO_SHORT"} ] }
         """
       actual must haveBody(expectedJson.noSpaces)
 

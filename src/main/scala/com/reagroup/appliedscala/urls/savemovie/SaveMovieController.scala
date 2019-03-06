@@ -13,6 +13,30 @@ import org.http4s.dsl.Http4sDsl
 
 class SaveMovieController(saveNewMovie: NewMovieRequest => IO[ValidatedNel[MovieValidationError, MovieId]]) extends Http4sDsl[IO] {
 
-  def apply(req: Request[IO]): IO[Response[IO]] = ???
+  /**
+    * If we have an `Invalid(NonEmptyList(errors))`, return a Json with the following shape:
+    *
+    * {
+    *   "errors": [
+    *     {
+    *       "type": "MOVIE_NAME_TOO_SHORT"
+    *     },
+    *     {
+    *       "type": "MOVIE_SYNOPSIS_TOO_SHORT"
+    *     }
+    *   ]
+    * }
+    *
+    * Hint: You can use the `BadRequest(...)` constructor to return a 403 response when there are errors.
+    */
+  def apply(req: Request[IO]): IO[Response[IO]] =
+    for {
+      newMovieRequest <- req.as[NewMovieRequest]
+      errorsOrMovieId <- saveNewMovie(newMovieRequest)
+      resp <- errorsOrMovieId match {
+        case Valid(movieId) => Created(movieId.asJson)
+        case Invalid(errors) => BadRequest(Json.obj("errors" -> errors.toList.asJson))
+      }
+    } yield resp
 
 }
