@@ -1,9 +1,21 @@
 # applied-scala
 
+## Pre-requisites
+
+Similar to [Intro to Scala](https://github.com/wjlow/intro-to-scala#pre-requisites)
+
 ## Open up SBT
 
+Using Docker
 ```
-./auto/dev-environment sbt
+./auto/sbt
+```
+
+or
+
+Using portable SBT 
+```
+./sbt
 ```
 
 ## Run test
@@ -56,8 +68,28 @@
 
 ## Test queries
 
+Fetch all movies
 ```
-$ curl -H "Accept: application/json"  -X POST -d "{\"name\": \"\", \"synopsis\": \"\"}" http://localhost:9200/movies
+$ curl http://localhost:9200/movies
+```
+
+Fetch movie
+```
+$ curl http://localhost:9200/movies/1
+```
+
+Fetch enriched movie
+
+```
 $ curl http://localhost:9200/movies/1?enriched=true
+```
+
+Save movie
+```
+$ curl -H "Accept: application/json" -X POST -d "{\"name\": \"Cars 3\", \"synopsis\": \"Great movie about cars\"}" http://localhost:9200/movies
+```
+
+Save review
+```
 $ curl -H "Accept: application/json"  -X POST -d "[{\"author\": \"Jack\", \"comment\": \"Great movie huh\"}, {\"author\": \"Bob\", \"comment\": \"\"}]" http://localhost:9200/movies/1/reviews
 ```
