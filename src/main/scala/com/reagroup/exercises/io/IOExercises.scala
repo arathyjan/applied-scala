@@ -45,6 +45,9 @@ object IOExercises {
     * your program instead of being caught in the `IO`.
     *
     * Use `IO.pure` for values that are not side-effects.
+    *
+    * Using `IO.apply` will always work, but understanding the distinction is important when you want to 
+    * take your FP knowledge past this course into the next level.
     */
 
   /**
