@@ -66,6 +66,10 @@ Using portable SBT
 | 16:00 | Wrap-up | 
 | 16:30 | End |
 
+## Further reading
+
+[Wiki](https://git.realestate.com.au/scala-course/applied-scala/wiki/Further-reading)
+
 ## Test queries
 
 Fetch all movies
