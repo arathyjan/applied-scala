@@ -85,11 +85,26 @@ $ curl http://localhost:9200/movies/1?enriched=true
 ```
 
 Save movie
+
+1. Successful save
 ```
 $ curl -H "Accept: application/json" -X POST -d "{\"name\": \"Cars 3\", \"synopsis\": \"Great movie about cars\"}" http://localhost:9200/movies
 ```
 
+2. Validation errors
+```
+$ curl -H "Accept: application/json" -X POST -d "{\"name\": \"\", \"synopsis\": \"\"}" http://localhost:9200/movies
+```
+
 Save review
+
+1. Successful save
 ```
 $ curl -H "Accept: application/json"  -X POST -d "[{\"author\": \"Jack\", \"comment\": \"Great movie huh\"}, {\"author\": \"Bob\", \"comment\": \"\"}]" http://localhost:9200/movies/1/reviews
+```
+
+2. Validation errors
+
+```
+$ curl -H "Accept: application/json"  -X POST -d "[{\"author\": \"\", \"comment\": \"\"}, {\"author\": \"Bob\", \"comment\": \"\"}]" http://localhost:9200/movies/1/reviews
 ```
