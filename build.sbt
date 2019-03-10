@@ -4,19 +4,7 @@ version := "1.0"
 
 scalaVersion := "2.12.8"
 
-// We force the timezone to UTC to be consistent between deving on host and within docker
-// To set this parameter we need to enable forking to a separate JVM process
-fork := true
-
-javaOptions += "-Duser.timezone=UTC"
-
-// When building for deployment
-// Overrides the "mainClass" setting in the "Compile" configuration
-mainClass in Compile := Some("com.reagroup.appliedscala.Main")
-
-// When building to run locally/test
-// Overrides the "mainClass setting in the "Compile" configuration, only during the "run" task
-mainClass in(Compile, run) := Some("com.reagroup.appliedscala.Main")
+mainClass := Some("com.reagroup.appliedscala.Main")
 
 resolvers ++= Seq(
   "rea nexus release" at "http://rea-sonatype-nexus.services.delivery.realestate.com.au/nexus/content/repositories/releases"
@@ -74,12 +62,3 @@ scalacOptions in (Compile, console) := Seq("without -Ywarn-unused-imports")
 scalacOptions in Test ++= Seq("-Yrangepos")
 
 testFrameworks := Seq(TestFrameworks.Specs2)
-
-test in assembly := {}
-
-assemblyMergeStrategy in assembly := {
-  case PathList("META-INF", xs@_*) => MergeStrategy.discard
-  case x => MergeStrategy.first
-}
-
-assemblyOutputPath in assembly := new File("target/app.jar")

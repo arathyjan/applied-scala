@@ -1,0 +1,8 @@
+# You need to supply a unique value here. It will be used in the hostname, so just use letters.
+#APPLIED_SCALA_USERNAME=
+
+VERSION="${APPLIED_SCALA_USERNAME:?You need to define APPLIED_SCALA_USERNAME in this file}-$(date +%Y%m%d%H%M)"
+# TODO: ECR repository in training account
+DOCKER_REPOSITORY=applied-scala
+
+: ${DOCKER_TAG:="$DOCKER_REPOSITORY:$VERSION"}

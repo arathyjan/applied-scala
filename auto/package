@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -euo pipefail
+
+auto="$(dirname "$0")"
+
+. "$auto"/_version
+
+"$auto"/sbt Universal/stage
+
+docker build \
+  -t "$DOCKER_TAG" \
+  -f Dockerfile \
+  --build-arg build_version="$VERSION" \
+  target/universal/stage/
+
+mkdir -p target
+echo "$DOCKER_TAG" >target/docker-image.txt
