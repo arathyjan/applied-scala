@@ -70,6 +70,12 @@ class PostgresqlRepository(transactor: Transactor[IO]) {
 
     insertMovie.transact(transactor)
   }
+
+  def diagnostic(): IO[Unit] = {
+    val checkConnection: ConnectionIO[Int] = sql"""SELECT 1""".query[Int].unique
+
+    checkConnection.transact(transactor).map(_ => ())
+  }
 }
 
 object PostgresqlRepository {
