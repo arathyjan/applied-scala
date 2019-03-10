@@ -1,6 +1,7 @@
 package com.reagroup.appliedscala.urls.repositories
 
 import cats.effect.IO
+import com.reagroup.appliedscala.config.DatabaseConfig
 import com.reagroup.appliedscala.models._
 import com.reagroup.appliedscala.urls.savemovie.ValidatedMovie
 import com.reagroup.appliedscala.urls.savereview.{ReviewId, ValidatedReview}
@@ -72,12 +73,12 @@ class PostgresqlRepository(transactor: Transactor[IO]) {
 }
 
 object PostgresqlRepository {
-  def apply(env: Map[String, String]): PostgresqlRepository = {
+  def apply(config: DatabaseConfig): PostgresqlRepository = {
     val ds = new PGSimpleDataSource()
-    ds.setServerName(env("DATABASE_HOST"))
-    ds.setUser(env("DATABASE_USERNAME"))
-    ds.setPassword(env("DATABASE_PASSWORD"))
-    ds.setDatabaseName(env("DATABASE_NAME"))
+    ds.setServerName(config.host)
+    ds.setUser(config.username)
+    ds.setPassword(config.password)
+    ds.setDatabaseName(config.databaseName)
     val transactor = Transactor.fromDataSource[IO](ds)
     new PostgresqlRepository(transactor)
   }
