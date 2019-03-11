@@ -1,0 +1,53 @@
+#!/bin/bash
+
+set -euo pipefail
+
+cd $(dirname $0)/../..
+
+admin=applied
+
+db() {
+	local word="$1"
+	local number="$2"
+
+	cat <<-SQL
+	CREATE ROLE $word LOGIN INHERIT ENCRYPTED PASSWORD 'scala$number';
+	GRANT $word TO $admin;
+	CREATE DATABASE $word OWNER $word;
+	REVOKE CONNECT ON DATABASE $word FROM public;
+	\\c $word
+	GRANT ALL ON SCHEMA public TO $word;
+	SET ROLE $word;
+	SQL
+	cat db/schema.sql
+	cat <<-SQL
+	\\c postgres
+	RESET ROLE;
+	SQL
+}
+
+cat <<SQL
+\set ON_ERROR_STOP
+REVOKE CREATE ON SCHEMA public FROM public;
+SQL
+
+db one 1
+db two 2
+db three 3
+db four 4
+db five 5
+db six 6
+db seven 7
+db eight 8
+db nine 9
+db ten 10
+db eleven 11
+db twelve 12
+db thirteen 13
+db fourteen 14
+db fifteen 15
+db sixteen 16
+db seventeen 17
+db eighteen 18
+db nineteen 19
+db twenty 20

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -eu
+
+cd $(dirname $0)/../..
+
+auto/stackup applied-scala-certificate-validation up \
+  --region ap-southeast-2 \
+  --template deploy/shared-resources/certificate-validation.json \
+  --parameters deploy/shared-resources/certificate-validation-reaio.json \
+  --tags deploy/shared-resources/tags.json
+

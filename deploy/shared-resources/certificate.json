@@ -1,0 +1,33 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+
+  "Description": "Applied Scala ACM certificate",
+
+  "Parameters": {
+    "DomainName": {
+      "Type": "String",
+      "Description": "Domain name for SSL Certificate"
+    }
+  },
+
+  "Resources": {
+    "ACMCertificate": {
+      "Type": "AWS::CertificateManager::Certificate",
+      "Properties": {
+        "DomainName": { "Ref": "DomainName" },
+        "Tags": [{
+          "Key": "cf-stack-name",
+          "Value": { "Ref": "AWS::StackName" }
+        }],
+        "ValidationMethod": "DNS"
+      }
+    }
+  },
+
+  "Outputs": {
+    "ACMCertificateARN": {
+      "Value": { "Ref": "ACMCertificate" },
+      "Description": "ARN of certificate"
+    }
+  }
+}

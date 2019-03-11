@@ -1,0 +1,16 @@
+var:
+  vpc_id: vpc-edbfb089
+  cluster: arn:aws:ecs:ap-southeast-2:954088256298:cluster/applied-scala-course
+  domain: reaio.realestate.com.au
+  kms_key: arn:aws:kms:ap-southeast-2:954088256298:key/19058b3f-5a8c-45f1-874f-6ad454746a5d
+  load_balancer:
+    hostname: appli-LoadB-LFQC025893IW-1245675712.ap-southeast-2.elb.amazonaws.com
+    hosted_zone: Z1GM3OXH4ZPM65
+    listener_arn: arn:aws:elasticloadbalancing:ap-southeast-2:954088256298:listener/app/appli-LoadB-LFQC025893IW/232b402dfac22347/4120e2d0c74cb74f
+  app_hostname: <(var.username)>.appliedscala
+  security_group: sg-04dcba2ffaa848d26
+  subnets:
+  - subnet-8b995bc2
+  - subnet-99ec3ffe
+  database:
+    host: ad10hs6oaghd9gj.c9xybueyronw.ap-southeast-2.rds.amazonaws.com

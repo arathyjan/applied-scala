@@ -1,0 +1,33 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+
+  "Description": "Route53 record for Applied Scala ACM DNS validation",
+
+  "Parameters": {
+    "HostedZoneName": {
+      "Type": "String",
+      "Description": "Name of the Route53 hosted zone"
+    },
+    "DomainName": {
+      "Type": "String",
+      "Description": "Name of the record to create"
+    },
+    "ValidationValue": {
+      "Type": "String",
+      "Description": "CNAME value for the record to create"
+    }
+  },
+
+  "Resources": {
+    "ACMCertificateValidationRecord": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneName": { "Ref": "HostedZoneName" },
+        "Name": { "Ref": "DomainName" },
+        "Type": "CNAME",
+        "TTL": 60,
+        "ResourceRecords": [{ "Ref": "ValidationValue" }]
+      }
+    }
+  }
+}

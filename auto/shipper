@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -euo pipefail
+
+cd $(dirname $0)/..
+
+. auto/_version
+
+docker-compose run --rm shipper \
+  --config deploy/rea-shipper.yml \
+  --override var.image="$DOCKER_TAG" \
+  --override var.username="$APPLIED_SCALA_USERNAME" \
+  "$@"

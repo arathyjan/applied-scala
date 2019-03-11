@@ -1,0 +1,51 @@
+target: ecs
+name: applied-scala-<(var.username)>
+reverse_proxy:
+  enabled: false
+
+containers:
+  app:
+    image: <(var.image)>
+    ports:
+      - 9200
+    environment:
+      DATABASE_HOST: <(var.database.host)>
+      DATABASE_USERNAME: <(var.database.username)>
+      KMS_ENCRYPTED_DATABASE_PASSWORD: <(var.database.encrypted_password)>
+      DATABASE_NAME: <(var.database.username)>
+      KMS_ENCRYPTED_OMDB_API_KEY: <(var.encrypted_omdb_api_key)>
+      NEW_RELIC_APP_NAME: <(name)>
+    cpu: 256
+    memory: 512
+
+aws:
+  region: ap-southeast-2
+  vpc: <(var.vpc_id)>
+  ecs:
+    cluster: <(var.cluster)>
+    networking:
+      subnets: <(var.subnets)>
+      security_group: <(var.security_group)>
+  tags:
+    application: applied-scala
+  load_balancing:
+    target_groups:
+      app:
+        container:
+          name: app
+          port: 9200
+        health_check:
+          path: /diagnostic/status/heartbeat
+        listener_rules:
+          app:
+            listener_arn: <(var.load_balancer.listener_arn)>
+            hostname: <(var.app_hostname)>.<(var.domain)>
+            priority: <(var.load_balancer.rule_priority)>
+        route53:
+          app:
+            host: <(var.app_hostname)>
+            zone: <(var.domain)>
+            load_balancer_dns: <(var.load_balancer.hostname)>
+            load_balancer_hosted_zone: <(var.load_balancer.hosted_zone)>
+  kms:
+    key: <(var.kms_key)>
