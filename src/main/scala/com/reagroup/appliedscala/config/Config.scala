@@ -13,7 +13,7 @@ case class Config(
 object Config {
   def apply(environment: Environment): ValidatedNel[ConfigError, Config] = {
     val omdbApiKey = environment.required("OMDB_API_KEY")
-    val version = environment.optional("VERSION", "dev")
+    val version = environment.optional("VERSION", "(unknown)")
     val databaseConfig = DatabaseConfig(environment)
     (omdbApiKey, version, databaseConfig).mapN(Config.apply)
   }
