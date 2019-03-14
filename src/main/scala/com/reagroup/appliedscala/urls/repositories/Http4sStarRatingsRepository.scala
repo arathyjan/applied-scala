@@ -9,10 +9,7 @@ import io.circe.parser.decode
 import org.http4s.client.Client
 import org.http4s.client.blaze._
 
-class Http4sStarRatingsRepository {
-
-  // TODO why unsafeRunSync
-  val httpClient: Client[IO] = Http1Client[IO]().unsafeRunSync
+class Http4sStarRatingsRepository private (httpClient: Client[IO]) {
 
   /**
     * For the purpose of this exercise, we return a `None` if we are unable to decode a `StarRating` out of the response from OMDB.
@@ -23,4 +20,10 @@ class Http4sStarRatingsRepository {
     ???
   }
 
+}
+
+object Http4sStarRatingsRepository {
+  def apply(): IO[Http4sStarRatingsRepository] = {
+    Http1Client[IO]().map(httpClient => new Http4sStarRatingsRepository(httpClient))
+  }
 }
