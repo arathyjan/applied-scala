@@ -77,7 +77,7 @@ object PostgresqlRepository {
     val ds = new PGSimpleDataSource()
     ds.setServerName(config.host)
     ds.setUser(config.username)
-    ds.setPassword(config.password)
+    ds.setPassword(config.password.value)
     ds.setDatabaseName(config.databaseName)
     val transactor = Transactor.fromDataSource[IO](ds)
     new PostgresqlRepository(transactor)
