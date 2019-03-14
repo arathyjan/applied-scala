@@ -2,7 +2,7 @@ name := "applied-scala"
 
 version := "1.0"
 
-scalaVersion := "2.12.6"
+scalaVersion := "2.12.8"
 
 // We force the timezone to UTC to be consistent between deving on host and within docker
 // To set this parameter we need to enable forking to a separate JVM process
@@ -24,7 +24,6 @@ resolvers ++= Seq(
 
 val catsVersion = "1.1.0"
 val circeVersion = "0.9.3"
-val monixVersion = "2.3.3"
 val Http4sVersion = "0.18.15"
 val Http4sTimerVersion = "0.0.3"
 val postgresqlVersion = "42.2.4"
@@ -42,12 +41,12 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-literal"
 ).map(_ % circeVersion)
 
-libraryDependencies ++= Seq(  "com.rea-group"               %% "rea-scala-logging"                % reaScalaLoggingVersion,
+libraryDependencies ++= Seq(
+  "com.rea-group" %% "rea-scala-logging" % reaScalaLoggingVersion,
   "org.typelevel" %% "cats-core" % catsVersion,
   "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
   "org.http4s" %% "http4s-blaze-client" % Http4sVersion,
   "org.http4s" %% "http4s-circe" % Http4sVersion,
-  "org.http4s" %% "http4s-testing" % Http4sVersion,
   "org.http4s" %% "http4s-dsl" % Http4sVersion,
   "org.postgresql" % "postgresql" % postgresqlVersion,
   "org.tpolecat" %% "doobie-core" % doobieVersion,
@@ -55,6 +54,7 @@ libraryDependencies ++= Seq(  "com.rea-group"               %% "rea-scala-loggin
   "org.specs2" %% "specs2-core" % specs2Version % "test",
   "org.specs2" %% "specs2-matcher-extra" % specs2Version % "test",
   "org.specs2" %% "specs2-scalacheck" % specs2Version % "test",
+  "org.http4s" %% "http4s-testing" % Http4sVersion % "test",
 )
 
 scalacOptions ++= Seq(
