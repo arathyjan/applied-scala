@@ -7,6 +7,7 @@ services:
     command: support/dev/run
     environment:
       PORT: 9200
+      OMDB_API_KEY: 7f9b5b06
       DATABASE_HOST: database
       DATABASE_NAME: moviedb
       DATABASE_USERNAME: moviedb

@@ -1,6 +1,7 @@
 package com.reagroup.appliedscala
 
 import cats.effect.IO
+import com.reagroup.appliedscala.config.Config
 import com.reagroup.appliedscala.urls.repositories.{Http4sStarRatingsRepository, PostgresqlRepository}
 import com.reagroup.appliedscala.urls.fetchallmovies.{FetchAllMoviesController, FetchAllMoviesService}
 import com.reagroup.appliedscala.urls.fetchenrichedmovie.{FetchEnrichedMovieController, FetchEnrichedMovieService}
@@ -9,12 +10,12 @@ import com.reagroup.appliedscala.urls.savemovie.{SaveMovieController, SaveMovieS
 import com.reagroup.appliedscala.urls.savereview.{SaveReviewController, SaveReviewService}
 import org.http4s._
 
-class AppRuntime() {
+class AppRuntime(config: Config) {
 
   /**
     * This is the real repository that talks to Postgresql
     */
-  private val pgsqlRepo = PostgresqlRepository(sys.env)
+  private val pgsqlRepo = PostgresqlRepository(config.databaseConfig)
 
   /**
     * This is where we instantiate our `Service` and `Controller` for each endpoint.
