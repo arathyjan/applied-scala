@@ -2,9 +2,10 @@ package com.reagroup.appliedscala.urls.savereview
 
 import cats.data.ValidatedNel
 import cats.effect.IO
-import com.reagroup.appliedscala.models.MovieId
+import com.reagroup.appliedscala.models.{Movie, MovieId}
 
-class SaveReviewService(saveReview: (MovieId, ValidatedReview) => IO[ReviewId]) {
+class SaveReviewService(saveReview: (MovieId, ValidatedReview) => IO[ReviewId],
+                        fetchMovie: MovieId => IO[Option[Movie]]) {
 
   /**
     * Before saving a `NewReviewRequest`, we want to validate the request in order to get a `ValidatedReview`.
