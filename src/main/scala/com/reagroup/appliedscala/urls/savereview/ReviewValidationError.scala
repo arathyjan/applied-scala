@@ -8,6 +8,8 @@ case object ReviewAuthorTooShort extends ReviewValidationError
 
 case object ReviewCommentTooShort extends ReviewValidationError
 
+case object MovieDoesNotExist extends ReviewValidationError
+
 object ReviewValidationError {
 
   /**
@@ -16,6 +18,7 @@ object ReviewValidationError {
     *
     * `ReviewAuthorTooShort` -> "REVIEW_AUTHOR_TOO_SHORT"
     * `ReviewCommentTooShort` -> "REVIEW_COMMENT_TOO_SHORT"
+    * `MovieDoesNotExist` -> "MOVIE_DOES_NOT_EXIST"
     *
     * Hint: Use pattern matching
     */
