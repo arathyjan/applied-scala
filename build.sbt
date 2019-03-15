@@ -24,12 +24,13 @@ resolvers ++= Seq(
 
 val catsVersion = "1.1.0"
 val circeVersion = "0.9.3"
-val Http4sVersion = "0.18.15"
+val Http4sVersion = "0.18.19"
 val Http4sTimerVersion = "0.0.3"
 val postgresqlVersion = "42.2.4"
 val doobieVersion = "0.5.3"
 val specs2Version = "4.3.6"
 val reaScalaLoggingVersion = "1.0.0"
+val reaDiagnosticsVersion = "1.1.0"
 
 libraryDependencies ++= Seq(
   "io.circe" %% "circe-core",
@@ -43,6 +44,7 @@ libraryDependencies ++= Seq(
 
 libraryDependencies ++= Seq(
   "com.rea-group" %% "rea-scala-logging" % reaScalaLoggingVersion,
+  "com.rea-group" %% "http4s-diagnostics" % reaDiagnosticsVersion,
   "org.typelevel" %% "cats-core" % catsVersion,
   "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
   "org.http4s" %% "http4s-blaze-client" % Http4sVersion,
