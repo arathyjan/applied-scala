@@ -59,7 +59,7 @@ object ValidationExercises {
     ???
 
   /**
-    * Compose `passwordStrengthValidation` and `passwordLengthValidation` using Applicative `mapN`
+    * Compose `passwordStrengthValidation` and `passwordLengthValidation` using Applicative `productR`
     * to construct a larger `passwordValidation`.
     */
   def passwordValidation(password: String): ValidatedNel[ValidationError, String] =
