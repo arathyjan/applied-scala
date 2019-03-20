@@ -28,7 +28,10 @@ class AppRuntime(config: Config) {
     new FetchAllMoviesController(fetchAllMoviesService.fetchAll)
   }
 
-  private val appRoutes = new AppRoutes(fetchAllMoviesController)
+  private val appRoutes = new AppRoutes(
+    fetchAllMoviesHandler = fetchAllMoviesController(),
+    saveMoviesHandler = _ => IO(Response[IO](status = Status.NotImplemented))
+  )
 
   private val diagnosticRoutes = Diagnostics(config, pgsqlRepo)
 
