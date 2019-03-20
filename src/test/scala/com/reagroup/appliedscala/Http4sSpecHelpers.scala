@@ -14,7 +14,19 @@ object Http4sSpecHelpers {
     new String(bytes.toArray, "utf-8")
   }
 
-  def request(path: String, query: String = "", method: Method = Method.GET): Request[IO] = {
-    Request[IO](method = method, uri = Uri(path = path, query = Query.fromString(query)))
+  def getRequest(path: String, queryOption: Option[String]): Request[IO] = {
+    request(path, queryOption, Method.GET)
+  }
+
+  def postRequest(path: String, queryOption: Option[String]): Request[IO] = {
+    request(path, queryOption, Method.POST)
+  }
+
+  private def request(path: String, queryOption: Option[String], method: Method) = {
+    queryOption.fold (
+      Request[IO](method = method, uri = Uri(path = path))
+    )(
+      query => Request[IO](method = method, uri = Uri(path = path, query = Query.fromString(query)))
+    )
   }
 }
