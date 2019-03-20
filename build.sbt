@@ -24,8 +24,7 @@ resolvers ++= Seq(
 
 val catsVersion = "1.1.0"
 val circeVersion = "0.9.3"
-val Http4sVersion = "0.18.19"
-val Http4sTimerVersion = "0.0.3"
+val http4sVersion = "0.18.19"
 val postgresqlVersion = "42.2.4"
 val doobieVersion = "0.5.3"
 val specs2Version = "4.3.6"
@@ -43,20 +42,20 @@ libraryDependencies ++= Seq(
 ).map(_ % circeVersion)
 
 libraryDependencies ++= Seq(
-  "com.rea-group" %% "rea-scala-logging" % reaScalaLoggingVersion,
-  "com.rea-group" %% "http4s-diagnostics" % reaDiagnosticsVersion,
-  "org.typelevel" %% "cats-core" % catsVersion,
-  "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
-  "org.http4s" %% "http4s-blaze-client" % Http4sVersion,
-  "org.http4s" %% "http4s-circe" % Http4sVersion,
-  "org.http4s" %% "http4s-dsl" % Http4sVersion,
-  "org.postgresql" % "postgresql" % postgresqlVersion,
-  "org.tpolecat" %% "doobie-core" % doobieVersion,
-  "org.tpolecat" %% "doobie-postgres" % doobieVersion,
-  "org.specs2" %% "specs2-core" % specs2Version % "test",
-  "org.specs2" %% "specs2-matcher-extra" % specs2Version % "test",
-  "org.specs2" %% "specs2-scalacheck" % specs2Version % "test",
-  "org.http4s" %% "http4s-testing" % Http4sVersion % "test",
+  "com.rea-group"   %% "rea-scala-logging"      % reaScalaLoggingVersion,
+  "com.rea-group"   %% "http4s-diagnostics"     % reaDiagnosticsVersion,
+  "org.typelevel"   %% "cats-core"              % catsVersion,
+  "org.http4s"      %% "http4s-blaze-server"    % http4sVersion,
+  "org.http4s"      %% "http4s-blaze-client"    % http4sVersion,
+  "org.http4s"      %% "http4s-circe"           % http4sVersion,
+  "org.http4s"      %% "http4s-dsl"             % http4sVersion,
+  "org.postgresql"   % "postgresql"             % postgresqlVersion,
+  "org.tpolecat"    %% "doobie-core"            % doobieVersion,
+  "org.tpolecat"    %% "doobie-postgres"        % doobieVersion,
+  "org.specs2"      %% "specs2-core"            % specs2Version % "test",
+  "org.specs2"      %% "specs2-matcher-extra"   % specs2Version % "test",
+  "org.specs2"      %% "specs2-scalacheck"      % specs2Version % "test",
+  "org.http4s"      %% "http4s-testing"         % http4sVersion % "test",
 )
 
 scalacOptions ++= Seq(
