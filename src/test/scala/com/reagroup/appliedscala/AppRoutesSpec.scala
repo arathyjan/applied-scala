@@ -17,9 +17,9 @@ class AppRoutesSpec extends Specification with Http4sDsl[IO] with Http4sMatchers
 
   "AppRoutes" should {
     val endpoints: List[(Request[IO], String)] = List(
-      getRequest(path = "/movies", queryOption = None) -> "great titles",
-      postRequest(path = "/movies", queryOption = None) -> "movies created",
-      postRequest(path = "/movies/123/reviews", queryOption = None) -> "123 reviews created"
+      request(path = "/movies", method = Method.GET) -> "great titles",
+      request(path = "/movies", method = Method.POST) -> "movies created",
+      request(path = "/movies/123/reviews", method = Method.POST) -> "123 reviews created"
     )
 
     Fragment.foreach(endpoints) { endpoint =>
