@@ -33,8 +33,6 @@ class AppRuntime(config: Config) {
     saveMoviesHandler = _ => IO(Response[IO](status = Status.NotImplemented))
   )
 
-  private val diagnosticRoutes = Diagnostics(config, pgsqlRepo)
-
-  val routes: HttpService[IO] = appRoutes.openRoutes <+> diagnosticRoutes
+  val routes: HttpService[IO] = appRoutes.openRoutes
 
 }
