@@ -15,7 +15,7 @@ import org.http4s._
 class AppRuntime(config: Config) {
 
   /**
-    * This is the real repository that talks to Postgresql
+    * This is the repository that talks to Postgresql
     */
   private val pgsqlRepo = PostgresqlRepository(config.databaseConfig)
 
@@ -33,6 +33,12 @@ class AppRuntime(config: Config) {
     saveMoviesHandler = _ => IO(Response[IO](status = Status.NotImplemented))
   )
 
-  val routes: HttpService[IO] = appRoutes.openRoutes
+  /*
+   * All routes that make up the application are exposed by AppRuntime here.
+   *
+   * Why isn't the return type for routes simply HttpService[IO]?
+   * We're not taking advantage of IO here yet, but some services can only be constructed via an IO action.
+   */
+  def routes: IO[HttpService[IO]] = IO.pure(appRoutes.openRoutes)
 
 }
