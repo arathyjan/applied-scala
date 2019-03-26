@@ -38,6 +38,12 @@ object CirceExercises {
 
   /**
     * Encoding
+    *
+    * Hint: Use `Json.obj()`
+    * Hint: Use `.asJson` to convert Scala standard types to Json
+    *
+    * For more comprehensive examples:
+    * https://circe.github.io/circe/codecs/custom-codecs.html
     */
 
   def personToJson(person: Person): Json =
@@ -89,6 +95,9 @@ object CirceExercises {
     * how you have named the fields inside `Person`
     *
     * Hint: Use `deriveEncoder`
+    *
+    * For more comprehensive examples:
+    * https://circe.github.io/circe/codecs/semiauto-derivation.html
     */
   def encodePersonSemiAuto(person: Person): Json = {
     import io.circe.generic.semiauto._
@@ -103,6 +112,9 @@ object CirceExercises {
 
   /**
     * Why is the return type an `Either`?
+    *
+    * For more comprehensive cursor docs:
+    * https://circe.github.io/circe/api/io/circe/HCursor.html
     */
   def jsonToPerson(json: Json): Either[DecodingFailure, Person] = {
     val cursor = json.hcursor
@@ -120,6 +132,9 @@ object CirceExercises {
     * Alternatively, you can use `c.get[Int]("name")` to do the same thing.
     *
     * Once you have retrieved the `name` and `age`, construct a `Person`!
+    *
+    * For more comprehensive examples:
+    * https://circe.github.io/circe/codecs/custom-codecs.html
     */
   def decodePerson(json: Json): Either[DecodingFailure, Person] = {
     import cats.implicits._
