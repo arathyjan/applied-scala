@@ -17,4 +17,8 @@ object Http4sSpecHelpers {
   def request(path: String, method: Method): Request[IO] = {
       Request[IO](method = method, uri = Uri(path = path))
   }
+
+  def request(uri: Uri, method: Method): Request[IO] = {
+      Request[IO](method = method, uri = uri)
+  }
 }

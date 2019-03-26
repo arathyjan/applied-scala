@@ -30,7 +30,7 @@ class AppRuntime(config: Config) {
 
   private val appRoutes = new AppRoutes(
     fetchAllMoviesHandler = fetchAllMoviesController(),
-    saveMoviesHandler = _ => IO(Response[IO](status = Status.NotImplemented))
+    saveMovieHandler = _ => IO(Response[IO](status = Status.NotImplemented))
   )
 
   /*
