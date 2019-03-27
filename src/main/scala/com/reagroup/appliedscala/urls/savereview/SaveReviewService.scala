@@ -1,6 +1,6 @@
 package com.reagroup.appliedscala.urls.savereview
 
-import cats.data.ValidatedNel
+import cats.data.{NonEmptyList, Validated, ValidatedNel}
 import cats.effect.IO
 import com.reagroup.appliedscala.models.{Movie, MovieId}
 
@@ -12,10 +12,13 @@ class SaveReviewService(saveReview: (MovieId, ValidatedReview) => IO[ReviewId],
     * validate the request in order to get a `ValidatedReview`.
     * Complete `NewReviewValidator`, then use it here before calling `saveReview`.
     *
-    * You can convert `Option`s to `ValidatedNel` with methods in the `validated` package.
+    * You can convert `Option`s to `ValidatedNel` using `optionToValidatedNel`
     *
     */
   def save(movieId: MovieId, review: NewReviewRequest): IO[ValidatedNel[ReviewValidationError, ReviewId]] =
     ???
+
+  private def optionToValidatedNel[A, B](o: Option[A], error: B): ValidatedNel[B, A] =
+    Validated.fromOption(o, NonEmptyList.one(error))
 
 }
