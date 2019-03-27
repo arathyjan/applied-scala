@@ -7,3 +7,8 @@ steps:
   - label: ':sbt: Compile Everything'
     command: auto/test-compile
 
+
+  - label: ':sbt: Test solution branch'
+    branches: solution
+    command: auto/test
+
