@@ -2,4 +2,4 @@
 
 cd $(dirname $0)/..
 
-auto/dev-environment sbt
+auto/dev-environment sbt "$@"
