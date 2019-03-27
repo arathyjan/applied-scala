@@ -11,8 +11,9 @@ import com.reagroup.appliedscala.urls.fetchmovie.{FetchMovieController, FetchMov
 import com.reagroup.appliedscala.urls.savemovie.{SaveMovieController, SaveMovieService}
 import com.reagroup.appliedscala.urls.savereview.{SaveReviewController, SaveReviewService}
 import org.http4s._
+import org.http4s.client.Client
 
-class AppRuntime(config: Config) {
+class AppRuntime(config: Config, httpClient: Client[IO]) {
 
   /**
     * This is the repository that talks to Postgresql
@@ -35,10 +36,7 @@ class AppRuntime(config: Config) {
 
   /*
    * All routes that make up the application are exposed by AppRuntime here.
-   *
-   * Why isn't the return type for routes simply HttpService[IO]?
-   * We're not taking advantage of IO here yet, but some services can only be constructed via an IO action.
    */
-  def routes: IO[HttpService[IO]] = IO.pure(appRoutes.openRoutes)
+  def routes: HttpService[IO] = appRoutes.openRoutes
 
 }

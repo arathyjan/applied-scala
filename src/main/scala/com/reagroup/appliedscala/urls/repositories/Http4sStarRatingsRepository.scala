@@ -8,7 +8,7 @@ import org.http4s.Uri
 import org.http4s.client.Client
 import org.http4s.client.blaze._
 
-class Http4sStarRatingsRepository private (httpClient: Client[IO], apiKey: String) {
+class Http4sStarRatingsRepository(httpClient: Client[IO], apiKey: String) {
 
   /**
     * For the purpose of this exercise, we return a `None` if we are unable to decode a `StarRating` out of the response from OMDB.
@@ -21,10 +21,4 @@ class Http4sStarRatingsRepository private (httpClient: Client[IO], apiKey: Strin
     ???
   }
 
-}
-
-object Http4sStarRatingsRepository {
-  def apply(apiKey: String): IO[Http4sStarRatingsRepository] = {
-    Http1Client[IO]().map(httpClient => new Http4sStarRatingsRepository(httpClient, apiKey))
-  }
 }
