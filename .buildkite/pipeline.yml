@@ -1,0 +1,9 @@
+---
+env:
+  BUILDKITE_TIMESTAMP_LINES: true
+
+steps:
+
+  - label: ':sbt: Compile Everything'
+    command: auto/test-compile
+

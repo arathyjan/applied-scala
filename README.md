@@ -1,5 +1,7 @@
 # applied-scala
 
+[![Build Status](https://badge.buildkite.com/17c1e11361daf6a504a721d6b280306789cd81a0a77cad7fc3.svg)](https://buildkite.com/rea/applied-scala)
+
 ## Pre-requisites
 
 Similar to [Intro to Scala](https://github.com/wjlow/intro-to-scala#pre-requisites)
