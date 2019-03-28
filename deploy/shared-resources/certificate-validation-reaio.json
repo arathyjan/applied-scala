@@ -1,0 +1,14 @@
+[
+  {
+    "ParameterKey": "HostedZoneName",
+    "ParameterValue": "reaio.realestate.com.au."
+  },
+  {
+    "ParameterKey": "DomainName",
+    "ParameterValue": "_3fc80b6ebbe5f34072ded989f47b9a6a.appliedscala.reaio.realestate.com.au."
+  },
+  {
+    "ParameterKey": "ValidationValue",
+    "ParameterValue": "_1b6b2d8b287d69c13dcb11f478a9ff5d.hkvuiqjoua.acm-validations.aws."
+  }
+]

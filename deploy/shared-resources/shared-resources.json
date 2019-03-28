@@ -1,0 +1,164 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Shared resources for deploying the API using rea-shipper",
+  "Parameters": {
+    "VpcId": {
+      "Type": "AWS::EC2::VPC::Id"
+    },
+    "LoadBalancerSubnets": {
+      "Type": "List<AWS::EC2::Subnet::Id>"
+    },
+    "DatabaseSubnets": {
+      "Type": "List<AWS::EC2::Subnet::Id>"
+    },
+    "LoadBalancerCertificateARN": {
+      "Type": "String"
+    },
+    "DatabaseMasterUsername": {
+      "Type": "String"
+    },
+    "DatabaseMasterPassword": {
+      "Type": "String",
+      "NoEcho": true
+    }
+  },
+  "Resources": {
+    "Cluster": {
+      "Type": "AWS::ECS::Cluster",
+      "Properties": {
+        "ClusterName": "applied-scala-course"
+      }
+    },
+    "Repository": {
+      "Type": "AWS::ECR::Repository",
+      "Properties": {
+        "RepositoryName": "applied-scala"
+      }
+    },
+    "LoadBalancer": {
+      "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+      "Properties": {
+        "Scheme": "internet-facing",
+        "Subnets": { "Ref": "LoadBalancerSubnets" },
+        "SecurityGroups": [{ "Ref": "LoadBalancerSecurityGroup" }]
+      }
+    },
+    "LoadBalancerListener": {
+      "Type": "AWS::ElasticLoadBalancingV2::Listener",
+      "Properties": {
+        "Certificates": [{
+          "CertificateArn": { "Ref": "LoadBalancerCertificateARN" }
+        }],
+        "DefaultActions": [{
+          "Type": "fixed-response",
+          "Order": "1",
+          "FixedResponseConfig": {
+            "StatusCode": "400",
+            "ContentType": "text/plain",
+            "MessageBody": "https://twitter.com/dril/status/922321981"
+          }
+        }],
+        "LoadBalancerArn": { "Ref": "LoadBalancer" },
+        "Port": 443,
+        "Protocol": "HTTPS"
+      }
+    },
+    "LoadBalancerSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Security group containing the load balancer for the Fargate cluster",
+        "VpcId": { "Ref": "VpcId" },
+        "SecurityGroupIngress": [{
+          "IpProtocol": "tcp",
+          "CidrIp": "203.13.23.10/32",
+          "FromPort": 443,
+          "ToPort": 443
+        }, {
+          "IpProtocol": "tcp",
+          "CidrIp": "203.13.23.30/32",
+          "FromPort": 443,
+          "ToPort": 443
+        }]
+      }
+    },
+    "TaskSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Security group for tasks attached to the load balancer",
+        "VpcId": { "Ref": "VpcId" },
+        "SecurityGroupIngress": {
+          "IpProtocol": "tcp",
+          "SourceSecurityGroupId": { "Ref": "LoadBalancerSecurityGroup" },
+          "FromPort": 9200,
+          "ToPort": 9200
+        }
+      }
+    },
+    "DatabaseInstance": {
+      "Type": "AWS::RDS::DBInstance",
+      "Properties": {
+        "AllocatedStorage": 10,
+        "AvailabilityZone": "ap-southeast-2b",
+        "DBInstanceClass": "db.t3.micro",
+        "DBSubnetGroupName": { "Ref": "DatabaseSubnetGroup" },
+        "Engine": "postgres",
+        "EngineVersion": "10.6",
+        "MasterUsername": { "Ref": "DatabaseMasterUsername" },
+        "MasterUserPassword": { "Ref": "DatabaseMasterPassword" },
+        "StorageEncrypted": true,
+        "StorageType": "gp2",
+        "Tags": [{
+          "Key": "application",
+          "Value": "applied-scala-course"
+        }],
+        "VPCSecurityGroups": [{ "Ref": "DatabaseSecurityGroup" }]
+      }
+    },
+    "DatabaseSubnetGroup": {
+      "Type": "AWS::RDS::DBSubnetGroup",
+      "Properties": {
+        "DBSubnetGroupDescription": "Subnet group for Applied Scala course database instance",
+        "SubnetIds": { "Ref": "DatabaseSubnets" }
+      }
+    },
+    "DatabaseSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Security group for Applied Scala course database instance",
+        "VpcId": { "Ref": "VpcId" },
+        "SecurityGroupIngress": {
+          "IpProtocol": "tcp",
+          "CidrIp": "10.0.0.0/8",
+          "FromPort": 5432,
+          "ToPort": 5432
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "Cluster": {
+      "Description": "ECS cluster ARN",
+      "Value": { "Fn::GetAtt": ["Cluster", "Arn"] }
+    },
+    "LoadBalancerDNSName": {
+      "Description": "Load balancer DNS name",
+      "Value": { "Fn::GetAtt": ["LoadBalancer", "DNSName"] }
+    },
+    "LoadBalancerHostedZone": {
+      "Description": "Load balancer Route53 hosted zone id",
+      "Value": { "Fn::GetAtt": ["LoadBalancer", "CanonicalHostedZoneID"] }
+    },
+    "LoadBalancerListenerARN": {
+      "Description": "Load balancer listener ARN",
+      "Value": { "Ref": "LoadBalancerListener" }
+    },
+    "LoadBalancerSecurityGroup": {
+      "Description": "Load balancer security group",
+      "Value": { "Ref": "LoadBalancerSecurityGroup" }
+    },
+    "DatabaseHostname": {
+      "Description": "Database instance hostname",
+      "Value": { "Fn::GetAtt": ["DatabaseInstance", "Endpoint.Address"] }
+    }
+  }
+}
