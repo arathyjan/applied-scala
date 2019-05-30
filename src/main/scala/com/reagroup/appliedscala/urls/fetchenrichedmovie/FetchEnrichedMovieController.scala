@@ -10,7 +10,7 @@ import org.http4s.dsl.Http4sDsl
 
 class FetchEnrichedMovieController(fetchEnrichedMovie: MovieId => IO[Option[EnrichedMovie]]) extends Http4sDsl[IO] {
 
-  def apply(movieId: Long): IO[Response[IO]] =
+  def fetch(movieId: Long): IO[Response[IO]] =
     ???
 
 }

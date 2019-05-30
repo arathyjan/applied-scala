@@ -15,7 +15,7 @@ class FetchMovieControllerSpec extends Specification with Http4sMatchers {
 
     val controller = new FetchMovieController((_: MovieId) => IO.pure(Some(expectedMovie)))
 
-    val actual = controller(123).unsafeRunSync()
+    val actual = controller.fetch(123).unsafeRunSync()
 
     "return status code OK" in {
 
@@ -39,7 +39,7 @@ class FetchMovieControllerSpec extends Specification with Http4sMatchers {
 
     val controller = new FetchMovieController((_: MovieId) => IO.pure(None))
 
-    val actual = controller(123).unsafeRunSync()
+    val actual = controller.fetch(123).unsafeRunSync()
 
     "return status code NotFound" in {
 
@@ -53,7 +53,7 @@ class FetchMovieControllerSpec extends Specification with Http4sMatchers {
 
     val controller = new FetchMovieController((_: MovieId) => IO.raiseError(new RuntimeException("unknown error")))
 
-    val actual = controller(123).unsafeRunSync()
+    val actual = controller.fetch(123).unsafeRunSync()
 
     "return status code InternalServerError" in {
 

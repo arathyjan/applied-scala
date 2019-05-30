@@ -25,7 +25,7 @@ class SaveMovieControllerSpec extends Specification with Http4sMatchers {
 
     val controller = new SaveMovieController((_: NewMovieRequest) => IO.pure(MovieId(1).valid))
 
-    val actual = controller(request).unsafeRunSync()
+    val actual = controller.save(request).unsafeRunSync()
 
     "return status code Created" in {
 
@@ -61,7 +61,7 @@ class SaveMovieControllerSpec extends Specification with Http4sMatchers {
 
     val controller = new SaveMovieController(saveNewMovie)
 
-    val actual = controller(request).unsafeRunSync()
+    val actual = controller.save(request).unsafeRunSync()
 
     "return status code BadRequest" in {
 

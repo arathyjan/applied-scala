@@ -17,7 +17,7 @@ class FetchEnrichedMovieControllerSpec extends Specification with Http4sMatchers
 
     val controller = new FetchEnrichedMovieController(fetchMovie)
 
-    val actual = controller(123).unsafeRunSync()
+    val actual = controller.fetch(123).unsafeRunSync()
 
     "return status code OK" in {
 
@@ -48,7 +48,7 @@ class FetchEnrichedMovieControllerSpec extends Specification with Http4sMatchers
 
     val controller = new FetchEnrichedMovieController(fetchEnrichedMovie)
 
-    val actual = controller(123).unsafeRunSync()
+    val actual = controller.fetch(123).unsafeRunSync()
 
     "return status code NotFound" in {
 
@@ -64,7 +64,7 @@ class FetchEnrichedMovieControllerSpec extends Specification with Http4sMatchers
 
     val controller = new FetchEnrichedMovieController(fetchEnrichedMovie)
 
-    val actual = controller(123).unsafeRunSync()
+    val actual = controller.fetch(123).unsafeRunSync()
 
     "return status code InternalServerError" in {
 
