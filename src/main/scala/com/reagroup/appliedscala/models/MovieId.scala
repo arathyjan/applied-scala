@@ -1,6 +1,7 @@
 package com.reagroup.appliedscala.models
 
 import io.circe.Encoder
+import io.circe.Json
 
 case class MovieId(value: Long)
 
