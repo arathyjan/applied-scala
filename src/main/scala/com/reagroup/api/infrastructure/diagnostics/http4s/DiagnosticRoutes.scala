@@ -11,8 +11,6 @@ import org.http4s.HttpRoutes
 import org.http4s.circe._
 import org.http4s.dsl.Http4sDsl
 
-import com.reagroup.api.infrastructure.newrelic.http4s.NewRelicMiddleware
-
 class DiagnosticRoutes(
   diagnosticConfig: DiagnosticConfig[IO],
   additionalDiagnosticRoutes: Vector[DiagnosticLink],
@@ -33,7 +31,7 @@ class DiagnosticRoutes(
   )
 
   @SuppressWarnings(Array("org.wartremover.warts.Equals"))
-  def routes(prefix: String): HttpRoutes[IO] = NoCachingMiddleware(NewRelicMiddleware.routes {
+  def routes(prefix: String): HttpRoutes[IO] = HttpRoutes.of {
     case req if req.pathInfo == s"$prefix/status/heartbeat" => controller.getHeartBeat
     case req if req.pathInfo == s"$prefix/status/nagios" => controller.getNagios
     case req if req.pathInfo == s"$prefix/status/diagnosis" => controller.getDiagnosis
@@ -43,7 +41,7 @@ class DiagnosticRoutes(
     case req if additionalDiagnosticCheckUrls.contains(req.pathInfo) =>
       controller.executeChecks(additionalDiagnosticCheckUrls(req.pathInfo))
     case GET -> Root / "diagnostic" / "version" => Ok(diagnosticConfig.version)
-  })
+  }
 
   private def getLinks(prefix: String) = {
     Ok(allPaths(prefix))

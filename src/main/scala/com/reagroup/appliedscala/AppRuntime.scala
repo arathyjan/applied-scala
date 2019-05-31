@@ -43,8 +43,6 @@ class AppRuntime(config: Config, httpClient: Client[IO])(implicit contextShift: 
   /*
    * All routes that make up the application are exposed by AppRuntime here.
    */
-  def routes: IO[HttpApp[IO]] = IO {
-    Kleisli((req: Request[IO]) => appRoutes.openRoutes(req)).orNotFound
-  }
+  def routes: HttpApp[IO] = HttpApp((req: Request[IO]) => appRoutes.openRoutes(req).getOrElse(Response[IO](status = Status.NotFound)))
 
 }
