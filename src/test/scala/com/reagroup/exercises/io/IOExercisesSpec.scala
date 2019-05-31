@@ -118,5 +118,14 @@ class IOExercisesSpec extends Specification {
     }
   }
 
+  "explain" should {
+    "write logs in the correct order" in {
+      val logger = new TestLogger
+
+      explain(logger).unsafeRunSync
+      logger.loggedMessages.toList ==== List("executing step 1", "executing step 2", "executing step 3")
+    }
+  }
+
 }
 

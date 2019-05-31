@@ -46,7 +46,7 @@ object IOExercises {
     *
     * Use `IO.pure` for values that are not side-effects.
     *
-    * Using `IO.apply` will always work, but understanding the distinction is important when you want to 
+    * Using `IO.apply` will always work, but understanding the distinction is important when you want to
     * take your FP knowledge past this course into the next level.
     */
 
@@ -144,6 +144,18 @@ object IOExercises {
   def mkUsernameThenPrint(username: String, logger: String => Unit): IO[Unit] =
     ???
 
+
+  /**
+    * What is the output of the following program?
+    * Is it different to what you expected?
+    *
+    * Change it to make the test pass
+    */
+  def explain(logger: String => Unit): IO[Unit] = {
+    IO(logger("executing step 1"))
+    IO(logger("executing step 2"))
+    IO(logger("executing step 3"))
+  }
 
   /**
     * Finally, we want to learn how to execute an IO. We are not going to need to do this when writing a REST API however,
