@@ -19,18 +19,17 @@ object Main extends IOApp {
     server
   }
 
-  private def runServer(config: Config): IO[Option[ExitCode]] = {
+  private def runServerWith(config: Config): IO[Option[ExitCode]] = {
     BlazeClientBuilder[IO](global).resource.use { httpClient =>
       val app = new AppRuntime(config, httpClient).routes
       new AppServer(9200, app).start()
     }
   }
 
-  @SuppressWarnings(Array("org.wartremover.warts.NonUnitStatements"))
   def startServer(): IO[ExitCode] = {
     for {
       config <- Config.fromEnvironment()
-      _      <- runServer(config)
+      _      <- runServerWith(config)
     } yield ExitCode.Success
   }
 
