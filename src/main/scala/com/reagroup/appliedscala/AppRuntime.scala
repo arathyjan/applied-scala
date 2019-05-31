@@ -6,7 +6,6 @@ import cats.effect.ContextShift
 import cats.effect.Timer
 import cats.effect.IO
 import cats.implicits._
-import scala.concurrent.ExecutionContext.Implicits.{global => globalEC}
 import com.reagroup.appliedscala.config.Config
 import com.reagroup.appliedscala.urls.repositories.{Http4sStarRatingsRepository, PostgresqlRepository}
 import com.reagroup.appliedscala.urls.diagnostics.Diagnostics
