@@ -1,7 +1,12 @@
 package com.reagroup.appliedscala
 
+import cats.data.Kleisli
+import cats.effect.IO
+import cats.effect.ContextShift
+import cats.effect.Timer
 import cats.effect.IO
 import cats.implicits._
+import scala.concurrent.ExecutionContext.Implicits.{global => globalEC}
 import com.reagroup.appliedscala.config.Config
 import com.reagroup.appliedscala.urls.repositories.{Http4sStarRatingsRepository, PostgresqlRepository}
 import com.reagroup.appliedscala.urls.diagnostics.Diagnostics
@@ -11,9 +16,10 @@ import com.reagroup.appliedscala.urls.fetchmovie.{FetchMovieController, FetchMov
 import com.reagroup.appliedscala.urls.savemovie.{SaveMovieController, SaveMovieService}
 import com.reagroup.appliedscala.urls.savereview.{SaveReviewController, SaveReviewService}
 import org.http4s._
+import org.http4s.implicits._
 import org.http4s.client.Client
 
-class AppRuntime(config: Config, httpClient: Client[IO]) {
+class AppRuntime(config: Config, httpClient: Client[IO])(implicit contextShift: ContextShift[IO], timer: Timer[IO]) {
 
   /**
     * This is the repository that talks to Postgresql
@@ -37,6 +43,8 @@ class AppRuntime(config: Config, httpClient: Client[IO]) {
   /*
    * All routes that make up the application are exposed by AppRuntime here.
    */
-  def routes: HttpService[IO] = appRoutes.openRoutes
+  def routes: IO[HttpApp[IO]] = IO {
+    Kleisli((req: Request[IO]) => appRoutes.openRoutes(req)).orNotFound
+  }
 
 }
