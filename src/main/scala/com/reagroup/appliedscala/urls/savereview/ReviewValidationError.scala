@@ -1,5 +1,7 @@
 package com.reagroup.appliedscala.urls.savereview
 
+import io.circe.Json
+import io.circe.syntax._
 import io.circe.Encoder
 
 sealed trait ReviewValidationError

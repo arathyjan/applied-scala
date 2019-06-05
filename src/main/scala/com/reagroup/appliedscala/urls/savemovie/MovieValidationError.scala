@@ -1,6 +1,8 @@
 package com.reagroup.appliedscala.urls.savemovie
 
 import io.circe.Encoder
+import io.circe.Json
+import io.circe.syntax._
 
 sealed trait MovieValidationError
 

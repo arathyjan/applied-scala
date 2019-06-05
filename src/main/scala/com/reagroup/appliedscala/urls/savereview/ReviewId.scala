@@ -1,6 +1,7 @@
 package com.reagroup.appliedscala.urls.savereview
 
 import io.circe.Encoder
+import io.circe.Json
 
 case class ReviewId(value: Long)
 
