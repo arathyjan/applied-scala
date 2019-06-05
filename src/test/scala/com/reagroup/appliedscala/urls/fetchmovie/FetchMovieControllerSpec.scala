@@ -5,9 +5,10 @@ import com.reagroup.appliedscala.models._
 import io.circe.literal._
 import org.http4s._
 import org.http4s.testing.Http4sMatchers
+import org.http4s.testing.IOMatchers
 import org.specs2.mutable.Specification
 
-class FetchMovieControllerSpec extends Specification with Http4sMatchers {
+class FetchMovieControllerSpec extends Specification with Http4sMatchers[IO] with IOMatchers {
 
   "when fetching a movie that exists" should {
 

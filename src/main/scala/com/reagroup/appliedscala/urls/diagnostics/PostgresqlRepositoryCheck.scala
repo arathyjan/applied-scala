@@ -3,7 +3,7 @@ package com.reagroup.appliedscala.urls.diagnostics
 import java.util.concurrent.TimeUnit.SECONDS
 import scala.concurrent.duration.Duration
 import cats.effect.IO
-import com.reagroup.api.infrastructure.diagnostics.Diagnostic._
+import com.reagroup.api.infrastructure.diagnostics._
 
 class PostgresqlRepositoryCheck(diagnostic: () => IO[Unit]) {
 
@@ -19,7 +19,7 @@ class PostgresqlRepositoryCheck(diagnostic: () => IO[Unit]) {
 
 object PostgresqlRepositoryCheck {
 
-  def apply(diagnostic: () => IO[Unit]): DiagnosticCheckDefinition = {
+  def apply(diagnostic: () => IO[Unit]): DiagnosticCheckDefinition[IO] = {
     val postgresqlRepositoryCheck = new PostgresqlRepositoryCheck(diagnostic)
 
     /*

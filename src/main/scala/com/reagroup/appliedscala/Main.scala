@@ -1,35 +1,36 @@
 package com.reagroup.appliedscala
 
 import cats.effect.IO
+import cats.effect.IOApp
+import cats.effect.ExitCode
 import com.reagroup.appliedscala.config.Config
 import java.util.concurrent.Executors
+import org.http4s.client.blaze._
+import org.http4s.client._
+import scala.concurrent.ExecutionContext.Implicits.global
 
-import org.http4s.client.blaze.Http1Client
+object Main extends IOApp {
 
-import scala.concurrent.ExecutionContext
-
-object Main {
-
-  def main(args: Array[String]): Unit = {
+  def run(args: List[String]): IO[ExitCode] = {
     val server = startServer()
 
     println("Starting server")
 
-    server.unsafeRunSync()
+    server
   }
 
-  @SuppressWarnings(Array("org.wartremover.warts.NonUnitStatements"))
-  def startServer(): IO[Unit] = {
+  private def runServerWith(config: Config): IO[Option[ExitCode]] = {
+    BlazeClientBuilder[IO](global).resource.use { httpClient =>
+      val app = new AppRuntime(config, httpClient, contextShift, timer).routes
+      new AppServer(9200, app).start()
+    }
+  }
 
-    implicit val executionContext: ExecutionContext = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(40))
-
+  def startServer(): IO[ExitCode] = {
     for {
-      httpClient <- Http1Client[IO]()
       config <- Config.fromEnvironment()
-      routes = new AppRuntime(config, httpClient).routes
-      _ <- new AppServer(9200, routes).start()
-    } yield ()
-
+      _      <- runServerWith(config)
+    } yield ExitCode.Success
   }
 
 }

@@ -1,16 +1,18 @@
 package com.reagroup.appliedscala.urls.diagnostics
 
 import cats.effect.IO
-import com.reagroup.api.infrastructure.diagnostics.Diagnostic.DiagnosticCheckDefinition
+import cats.effect.ContextShift
+import cats.effect.Timer
+import com.reagroup.api.infrastructure.diagnostics.DiagnosticCheckDefinition
 import com.reagroup.api.infrastructure.diagnostics.DiagnosticConfig
 import com.reagroup.api.infrastructure.diagnostics.http4s.DiagnosticRoutes
 import com.reagroup.appliedscala.config.Config
 import com.reagroup.appliedscala.urls.repositories.PostgresqlRepository
-import org.http4s.HttpService
+import org.http4s.HttpRoutes
 
 object Diagnostics {
 
-  def apply(config: Config, pgsqlRepo: PostgresqlRepository): HttpService[IO] = {
+  def apply(config: Config, pgsqlRepo: PostgresqlRepository)(implicit contextShift: ContextShift[IO], timer: Timer[IO]): HttpRoutes[IO] = {
     /*
      * Heartbeat checks are executed by the /diagnostic/status/heartbeat endpoint.
      *
@@ -29,7 +31,7 @@ object Diagnostics {
      * Just being able to hit the heartbeat endpoint and get back a 200 response
      * is enough for a load balancer to determine whether or not this server is healthy.
      */
-    val heartbeatChecks: Vector[DiagnosticCheckDefinition] = ???
+    val heartbeatChecks: Vector[DiagnosticCheckDefinition[IO]] = ???
 
     /*
      * The /diagnostic/status/diagnosis endpoint runs these checks and the heartbeat checks,
@@ -41,14 +43,14 @@ object Diagnostics {
      * Where the heartbeat endpoint is normally used for health checks, the diagnosis endpoint
      * is one we might only check manually when we suspect there is a problem.
      */
-    val diagnosticChecks: Vector[DiagnosticCheckDefinition] = ???
+    val diagnosticChecks: Vector[DiagnosticCheckDefinition[IO]] = ???
 
     val diagnosticConfig = DiagnosticConfig(
       version = config.version,
       heartbeatChecks = heartbeatChecks,
       diagnosticChecks = diagnosticChecks
     )
-    new DiagnosticRoutes(diagnosticConfig, Vector.empty, Map.empty).routes()
+    new DiagnosticRoutes(diagnosticConfig, Vector.empty, Map.empty).routes("/diagnostic")
   }
 
 }

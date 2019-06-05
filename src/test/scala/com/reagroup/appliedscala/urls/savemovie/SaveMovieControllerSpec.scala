@@ -7,9 +7,10 @@ import com.reagroup.appliedscala.models._
 import io.circe.literal._
 import org.http4s._
 import org.http4s.testing.Http4sMatchers
+import org.http4s.testing.IOMatchers
 import org.specs2.mutable.Specification
 
-class SaveMovieControllerSpec extends Specification with Http4sMatchers {
+class SaveMovieControllerSpec extends Specification with Http4sMatchers[IO] with IOMatchers {
 
   "when saving a valid movie" should {
 
@@ -21,7 +22,7 @@ class SaveMovieControllerSpec extends Specification with Http4sMatchers {
         }
       """
 
-    val request = Request[IO](method = Method.POST).withBody(json.noSpaces).unsafeRunSync()
+    val request = Request[IO](method = Method.POST).withEntity(json.noSpaces)
 
     val controller = new SaveMovieController((_: NewMovieRequest) => IO.pure(MovieId(1).valid))
 
@@ -55,7 +56,7 @@ class SaveMovieControllerSpec extends Specification with Http4sMatchers {
         }
       """
 
-    val request = Request[IO](method = Method.POST).withBody(invalidJson.noSpaces).unsafeRunSync()
+    val request = Request[IO](method = Method.POST).withEntity(invalidJson.noSpaces)
 
     val saveNewMovie = (_: NewMovieRequest) => IO.pure(NonEmptyList.of(MovieNameTooShort, MovieSynopsisTooShort).invalid)
 

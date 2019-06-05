@@ -4,7 +4,7 @@ resolvers += "Flyway" at "https://davidmweber.github.io/flyway-sbt.repo"
 
 addSbtPlugin("org.flywaydb" % "flyway-sbt" % "4.2.0")
 
-addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.2.1")
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.4.2")
 
 addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.2")
 
