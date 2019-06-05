@@ -18,7 +18,7 @@ import org.http4s._
 import org.http4s.implicits._
 import org.http4s.client.Client
 
-class AppRuntime(config: Config, httpClient: Client[IO])(contextShift: ContextShift[IO], timer: Timer[IO]) {
+class AppRuntime(config: Config, httpClient: Client[IO], contextShift: ContextShift[IO], timer: Timer[IO]) {
 
   /**
     * This is the repository that talks to Postgresql
