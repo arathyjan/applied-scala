@@ -1,11 +1,10 @@
 package com.reagroup.appliedscala.urls.fetchenrichedmovie
 
-import org.http4s.testing.Http4sMatchers
 import org.scalacheck.Gen
 import org.specs2.ScalaCheck
 import org.specs2.mutable.Specification
 
-class StarRatingSpec extends Specification with Http4sMatchers with ScalaCheck {
+class StarRatingSpec extends Specification with ScalaCheck {
 
   "fromScore" should {
 
