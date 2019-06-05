@@ -29,7 +29,7 @@ class SaveMovieController(saveNewMovie: NewMovieRequest => IO[ValidatedNel[Movie
     *
     * Hint: You can use the `BadRequest(...)` constructor to return a 403 response when there are errors.
     */
-  def apply(req: Request[IO]): IO[Response[IO]] =
+  def save(req: Request[IO]): IO[Response[IO]] =
     ???
 
 }

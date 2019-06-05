@@ -11,7 +11,7 @@ import org.http4s.dsl.Http4sDsl
 
 class FetchAllMoviesController(fetchAll: IO[Vector[Movie]]) extends Http4sDsl[IO] {
 
-  def apply(): IO[Response[IO]] = for {
+  def fetchAll(): IO[Response[IO]] = for {
     errorOrMovies <- fetchAll.attempt
     resp <- errorOrMovies match {
       case Right(movies) => Ok(movies.map(movieToJson))

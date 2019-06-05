@@ -25,7 +25,7 @@ class SaveReviewControllerSpec extends Specification with Http4sMatchers {
 
     val controller = new SaveReviewController((_: MovieId, _: NewReviewRequest) => IO.pure(ReviewId(1).valid))
 
-    val actual = controller(100, request).unsafeRunSync()
+    val actual = controller.save(100, request).unsafeRunSync()
 
     "return status code Created" in {
 
@@ -61,7 +61,7 @@ class SaveReviewControllerSpec extends Specification with Http4sMatchers {
 
     val controller = new SaveReviewController(saveNewReview)
 
-    val actual = controller(100, request).unsafeRunSync()
+    val actual = controller.save(100, request).unsafeRunSync()
 
     "return status code BadRequest" in {
 
