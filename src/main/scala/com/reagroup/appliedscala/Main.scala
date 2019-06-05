@@ -21,7 +21,7 @@ object Main extends IOApp {
 
   private def runServerWith(config: Config): IO[Option[ExitCode]] = {
     BlazeClientBuilder[IO](global).resource.use { httpClient =>
-      val app = new AppRuntime(config, httpClient).routes
+      val app = new AppRuntime(config, httpClient)(contextShift, timer).routes
       new AppServer(9200, app).start()
     }
   }
