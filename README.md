@@ -6,6 +6,13 @@
 
 Similar to [Intro to Scala](https://github.com/wjlow/intro-to-scala#pre-requisites)
 
+1. If you're going to use IntelliJ IDEA, you need to install Java 8 even if you have a newer version.
+
+```
+brew tap caskroom/versions
+brew cask install caskroom/versions/adoptopenjdk8
+```
+
 ## Open up SBT
 
 Using Docker
