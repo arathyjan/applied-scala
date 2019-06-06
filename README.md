@@ -6,7 +6,7 @@
 
 Similar to [Intro to Scala](https://github.com/wjlow/intro-to-scala#pre-requisites)
 
-1. If you're going to use IntelliJ IDEA, you need to install Java 8 even if you have a newer version.
+1. If you're going to use [IntelliJ IDEA](https://www.jetbrains.com/idea/download/) (Community edition is fine), you need to install Java 8 even if you have a newer version.
 
 ```
 brew tap caskroom/versions
