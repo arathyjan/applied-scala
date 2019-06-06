@@ -74,15 +74,15 @@ Open up the project in IntelliJ IDEA and make sure it all compiles. Now you're r
 
 ### Day 2 (12/6)
 
-| Time | Topic/Exercise | Presenter | Helper(s)
-| :---: | :---: | :--: | :-:
-|  9.15 | Day 2 Keynote | Jake | Jack
+| Time | Topic/Exercise |
+| :---: | :---: |
+|  9.15 | Day 2 Keynote |
 | 10.00 | Endpoint 4: GET movie?enriched=true |
 | 10.30 | Morning break | 
-| 10.45 | Endpoint 4 (continued) | Jack | Adam, Chris
+| 10.45 | Endpoint 4 (continued) |
 | 11.15 | Validated and Traverse Theory |
 | 12.00 | Catered lunch |
-| 13.00 | Validated Exercises | Chris | Jack, ???
+| 13.00 | Validated Exercises | 
 | 14.00 | Endpoint 5: POST movie |
 | 15.15 | Afternoon break | 
 | 15.30 | Endpoint 6: POST movie/id/review |
