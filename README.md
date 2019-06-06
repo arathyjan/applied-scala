@@ -32,6 +32,25 @@ Using portable SBT
 ./auto/start-local
 ```
 
+## Getting Started
+
+Before the course, please run the following:
+
+```
+git clone https://git.realestate.com.au/scala-course/applied-scala/
+./auto/test 
+./auto/start-local
+```
+
+This should start the app. Now test this out:
+
+```
+curl http://localhost:9200/movies
+```
+
+You should get back `[{"name":"Titanic"}]`.
+
+Open up the project in IntelliJ IDEA and make sure it all compiles. Now you're ready to go!
 
 ## Schedule
 
