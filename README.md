@@ -42,13 +42,13 @@ git clone https://git.realestate.com.au/scala-course/applied-scala/
 ./auto/start-local
 ```
 
-This should start the app. Now test this out:
+This should start the app. Now test this out in a new tab.
 
 ```
 curl http://localhost:9200/movies
 ```
 
-You should get back `[{"name":"Titanic"}]`.
+You should get back `[{"name":"Titanic"}]`. Now press `ctrl+c` in the previous tab to shut down the app.
 
 Open up the project in IntelliJ IDEA and make sure it all compiles. Now you're ready to go!
 
