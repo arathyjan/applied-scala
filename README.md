@@ -16,7 +16,7 @@ brew cask install caskroom/versions/adoptopenjdk8
 2. Before the course, please run the following:
 
 ```
-git clone https://git.realestate.com.au/scala-course/applied-scala/
+git clone git@git.realestate.com.au:scala-course/applied-scala.git
 ./auto/test 
 ./auto/start-local
 ```
