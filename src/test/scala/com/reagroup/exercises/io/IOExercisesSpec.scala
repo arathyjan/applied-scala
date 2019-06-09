@@ -127,5 +127,16 @@ class IOExercisesSpec extends Specification {
     }
   }
 
+  "execute" should {
+    "run an IO program" in {
+      val logger = new TestLogger
+      val result = helloWorld(logger)
+
+      execute(result)
+
+      logger.loggedMessages.toList === List("hello world")
+    }
+  }
+
 }
 
