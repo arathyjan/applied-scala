@@ -1,18 +1,14 @@
 package com.reagroup.appliedscala.urls.diagnostics
 
-import cats.effect.IO
-import cats.effect.ContextShift
-import cats.effect.Timer
-import com.reagroup.api.infrastructure.diagnostics.DiagnosticCheckDefinition
-import com.reagroup.api.infrastructure.diagnostics.DiagnosticConfig
-import com.reagroup.api.infrastructure.diagnostics.http4s.DiagnosticRoutes
+import cats.effect.{ContextShift, IO, Timer}
+import com.reagroup.api.infrastructure.diagnostics.{Diagnostic, DiagnosticCheckDefinition, DiagnosticConfig}
+import com.reagroup.api.infrastructure.diagnostics.http4s.{DiagnosticController, DiagnosticRoutes}
 import com.reagroup.appliedscala.config.Config
 import com.reagroup.appliedscala.urls.repositories.PostgresqlRepository
-import org.http4s.HttpRoutes
 
 object Diagnostics {
 
-  def apply(config: Config, pgsqlRepo: PostgresqlRepository)(implicit contextShift: ContextShift[IO], timer: Timer[IO]): HttpRoutes[IO] = {
+  def apply(config: Config, pgsqlRepo: PostgresqlRepository)(implicit contextShift: ContextShift[IO], timer: Timer[IO]): DiagnosticRoutes = {
     /*
      * Heartbeat checks are executed by the /diagnostic/status/heartbeat endpoint.
      *
@@ -50,7 +46,11 @@ object Diagnostics {
       heartbeatChecks = heartbeatChecks,
       diagnosticChecks = diagnosticChecks
     )
-    new DiagnosticRoutes(diagnosticConfig, Vector.empty, Map.empty).routes("/diagnostic")
+
+    val diagnosticExecutor = new Diagnostic[IO, IO.Par]()
+    val controller = new DiagnosticController(diagnosticExecutor, diagnosticConfig)
+
+    new DiagnosticRoutes(controller)
   }
 
 }

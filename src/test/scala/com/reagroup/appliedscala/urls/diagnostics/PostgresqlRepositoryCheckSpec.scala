@@ -10,15 +10,16 @@ import org.specs2.matcher.FutureMatchers
 import org.specs2.mutable.Specification
 
 class PostgresqlRepositoryCheckSpec(implicit ee: ExecutionEnv) extends Specification with FutureMatchers {
-
   implicit val contextShift: ContextShift[IO] = IO.contextShift(ee.ec)
   implicit val timer: Timer[IO] = IO.timer(ee.ec)
+
+  private val diagnosticExecutor = new Diagnostic[IO, IO.Par]()
 
   "when the diagnostic succeeds" should {
     val successfulCheck: IO[Unit] = IO.pure(())
 
     "the result should indicate success" in {
-      new Diagnostic[IO, IO.Par]().execute(PostgresqlRepositoryCheck(successfulCheck)).unsafeToFuture must beEqualTo(CheckSucceeded()).await
+      diagnosticExecutor.execute(PostgresqlRepositoryCheck(successfulCheck)).unsafeToFuture must beEqualTo(CheckSucceeded()).await
     }
   }
 
@@ -28,7 +29,7 @@ class PostgresqlRepositoryCheckSpec(implicit ee: ExecutionEnv) extends Specifica
     val unsuccessfulCheck: IO[Unit] = IO.raiseError(failure)
 
     "the result should indicate failure" in {
-      new Diagnostic[IO, IO.Par]().execute(PostgresqlRepositoryCheck(unsuccessfulCheck)).unsafeToFuture must beLike[CheckResult] {
+      diagnosticExecutor.execute(PostgresqlRepositoryCheck(unsuccessfulCheck)).unsafeToFuture must beLike[CheckResult] {
         case CheckFailed(message, throwable) =>
           message must_=== "postgresql diagnostic failed"
           throwable must beSome(beTheSameAs[Throwable](failure))

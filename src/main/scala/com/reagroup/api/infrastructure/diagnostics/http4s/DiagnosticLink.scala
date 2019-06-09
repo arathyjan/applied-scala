@@ -1,3 +1,10 @@
 package com.reagroup.api.infrastructure.diagnostics.http4s
 
-final case class DiagnosticLink(name: String, url: String)
+import io.circe.Encoder
+import io.circe.generic.semiauto._
+
+final case class DiagnosticLink(name: String, path: String)
+
+object DiagnosticLink {
+  implicit val encoder: Encoder[DiagnosticLink] = deriveEncoder
+}
