@@ -9,10 +9,10 @@ import org.http4s._
 import org.http4s.circe.CirceEntityCodec._
 import org.http4s.dsl.Http4sDsl
 
-class FetchAllMoviesController(fetchAll: IO[Vector[Movie]]) extends Http4sDsl[IO] {
+class FetchAllMoviesController(fetchMovies: IO[Vector[Movie]]) extends Http4sDsl[IO] {
 
-  def fetchAll(): IO[Response[IO]] = for {
-    errorOrMovies <- fetchAll.attempt
+  def fetchAll: IO[Response[IO]] = for {
+    errorOrMovies <- fetchMovies.attempt
     resp <- errorOrMovies match {
       case Right(movies) => Ok(movies.map(movieToJson))
       case Left(e) => ErrorHandler(e)

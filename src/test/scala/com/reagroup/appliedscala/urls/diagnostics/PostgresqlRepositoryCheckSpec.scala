@@ -1,9 +1,8 @@
 package com.reagroup.appliedscala.urls.diagnostics
 
 import java.util.concurrent.atomic.{AtomicInteger, AtomicReference}
-import cats.effect.IO
-import cats.effect.ContextShift
-import cats.effect.Timer
+import cats.effect.{ContextShift, IO, Timer}
+import cats.implicits._
 import com.reagroup.api.infrastructure.diagnostics.Diagnostic
 import com.reagroup.api.infrastructure.diagnostics._
 import org.specs2.concurrent.ExecutionEnv
@@ -16,22 +15,20 @@ class PostgresqlRepositoryCheckSpec(implicit ee: ExecutionEnv) extends Specifica
   implicit val timer: Timer[IO] = IO.timer(ee.ec)
 
   "when the diagnostic succeeds" should {
-    def successfulCheck(): IO[Unit] = IO.pure(())
+    val successfulCheck: IO[Unit] = IO.pure(())
 
     "the result should indicate success" in {
-      new Diagnostic[IO, IO.Par]().execute(PostgresqlRepositoryCheck(successfulCheck _)).unsafeToFuture must beEqualTo(CheckSucceeded()).await
+      new Diagnostic[IO, IO.Par]().execute(PostgresqlRepositoryCheck(successfulCheck)).unsafeToFuture must beEqualTo(CheckSucceeded()).await
     }
   }
 
   "when the diagnostic fails" should {
     val failure = new RuntimeException("check failed")
 
-    def unsuccessfulCheck(): IO[Unit] = {
-      IO.raiseError(failure)
-    }
+    val unsuccessfulCheck: IO[Unit] = IO.raiseError(failure)
 
     "the result should indicate failure" in {
-      new Diagnostic[IO, IO.Par]().execute(PostgresqlRepositoryCheck(unsuccessfulCheck _)).unsafeToFuture must beLike[CheckResult] {
+      new Diagnostic[IO, IO.Par]().execute(PostgresqlRepositoryCheck(unsuccessfulCheck)).unsafeToFuture must beLike[CheckResult] {
         case CheckFailed(message, throwable) =>
           message must_=== "postgresql diagnostic failed"
           throwable must beSome(beTheSameAs[Throwable](failure))
@@ -42,11 +39,9 @@ class PostgresqlRepositoryCheckSpec(implicit ee: ExecutionEnv) extends Specifica
   "handling Futures safely" in {
     "the check never runs if the diagnostic isn't executed" in {
       val message = new AtomicReference[Option[String]](None)
-      def check(): IO[Unit] = IO {
-        message.set(Some("check() should not have been invoked"))
-      }
+      val check: IO[Unit] = IO(message.set(Some("check() should not have been invoked")))
 
-      val checkDefinition = PostgresqlRepositoryCheck(check _)
+      val checkDefinition = PostgresqlRepositoryCheck(check)
 
       checkDefinition must beAnInstanceOf[DiagnosticCheckDefinition[IO]]
       message.get() must beNone
@@ -54,14 +49,18 @@ class PostgresqlRepositoryCheckSpec(implicit ee: ExecutionEnv) extends Specifica
 
     "the check runs as many times as the diagnostic is executed" in {
       val counter = new AtomicInteger(0)
-      def check(): IO[Unit] = IO {
+      val check: IO[Unit] = IO {
         counter.incrementAndGet()
         ()
       }
 
-      val checkDefinition = PostgresqlRepositoryCheck(check _)
+      val checkDefinition = PostgresqlRepositoryCheck(check)
 
-      Range(0, 10).foreach(_ => new Diagnostic[IO, IO.Par]().execute(checkDefinition))
+      val io: IO[Unit] = Range(0, 10).map(_ => new Diagnostic[IO, IO.Par]().execute(checkDefinition))
+        .toStream
+        .sequence_
+
+      io.unsafeToFuture() must beEqualTo(()).await
 
       counter.get() must_== 10
     }

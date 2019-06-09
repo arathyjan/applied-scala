@@ -2,6 +2,7 @@ package com.reagroup.appliedscala.urls.savereview
 
 import cats.data.{NonEmptyList, Validated, ValidatedNel}
 import cats.effect.IO
+import cats.implicits._
 import com.reagroup.appliedscala.models.{Movie, MovieId}
 
 class SaveReviewService(saveReview: (MovieId, ValidatedReview) => IO[ReviewId],

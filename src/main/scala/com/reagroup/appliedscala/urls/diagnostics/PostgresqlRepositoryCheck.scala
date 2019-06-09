@@ -5,7 +5,7 @@ import scala.concurrent.duration.Duration
 import cats.effect.IO
 import com.reagroup.api.infrastructure.diagnostics._
 
-class PostgresqlRepositoryCheck(diagnostic: () => IO[Unit]) {
+class PostgresqlRepositoryCheck(diagnostic: IO[Unit]) {
 
   /*
    * Calling `diagnostic` returns `IO[Unit]`. The rea-scala-diagnostics library
@@ -19,13 +19,13 @@ class PostgresqlRepositoryCheck(diagnostic: () => IO[Unit]) {
 
 object PostgresqlRepositoryCheck {
 
-  def apply(diagnostic: () => IO[Unit]): DiagnosticCheckDefinition[IO] = {
+  def apply(diagnostic: IO[Unit]): DiagnosticCheckDefinition[IO] = {
     val postgresqlRepositoryCheck = new PostgresqlRepositoryCheck(diagnostic)
 
     /*
      * We need to construct a `DiagnosticCheckDefinition` that uses `postgresqlRepositoryCheck`.
      *
-     * Hint: `task.unsafeToFuture()` will give you the `Future` rea-scala-diagnostics wants.
+     * Hint: `io.unsafeToFuture()` will give you the `Future` rea-scala-diagnostics wants.
      */
     ???
   }

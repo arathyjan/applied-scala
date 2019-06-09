@@ -15,7 +15,6 @@ import com.reagroup.appliedscala.urls.fetchmovie.{FetchMovieController, FetchMov
 import com.reagroup.appliedscala.urls.savemovie.{SaveMovieController, SaveMovieService}
 import com.reagroup.appliedscala.urls.savereview.{SaveReviewController, SaveReviewService}
 import org.http4s._
-import org.http4s.implicits._
 import org.http4s.client.Client
 
 class AppRuntime(config: Config, httpClient: Client[IO], contextShift: ContextShift[IO], timer: Timer[IO]) {
