@@ -10,7 +10,7 @@ We are using a library called `Doobie`. If we look at this file, we have one fun
 
 The function that is useful for us for this endpoint is `fetchMovie`, which has type signature of `MovieId => IO[Option[Movie]]`.
 
-### 2. `FetchMovieService`
+### 2. `FetchMovieService` (exercise)
 
 The `Service` typically has business logic. For example, it may call multiple repositories and then validate their responses to construct another response.
 
@@ -22,7 +22,7 @@ _**Complete exercise**_
 
 _**Run unit test: `FetchMovieServiceSpec`**_
 
-### 3. `FetchMovieController`
+### 3. `FetchMovieController` (exercise)
 
 The `fetch` method has a `movieId` passed in as a `Long`. This is the id that is in the path of the request `GET movie/123`. The return type is `IO[Response[IO]]`. This is Http4s' response type. 
 
@@ -37,13 +37,13 @@ _**Complete exercise**_
 
 _**Run unit test: `FetchMovieControllerSpec`**_
 
-### 4. Wire it all up in `AppRuntime`
+### 4. Wire it all up in `AppRuntime` (exercise)
 
 Now let's wire the `Service` and `Controller` up in `AppRuntime`.
 
 Pass the newly instantiated `fetchMovieController` into `AppRoutes`.
 
-### 5. Update `AppRoutes`
+### 5. Update `AppRoutes` (exercise)
 
 Change `AppRoutes` to accept a `FetchMovieController` and then call `fetchMovie` with the `id` extracted out using `LongVar`.
 
