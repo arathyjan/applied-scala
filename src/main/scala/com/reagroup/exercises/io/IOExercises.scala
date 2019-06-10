@@ -139,7 +139,7 @@ object IOExercises {
     if (username.nonEmpty) Right(Username(username)) else Left(UsernameError("Username cannot be empty"))
 
   /**
-    * Use `mkUsername` to create a `Username` and if successful print the username, otherwise fail with an error.
+    * Use `mkUsername` to create a `Username` and if successful print the username, otherwise fail with a UsernameError.
     */
   def mkUsernameThenPrint(username: String, logger: String => Unit): IO[Unit] =
     ???
@@ -149,7 +149,10 @@ object IOExercises {
     * What is the output of the following program?
     * Is it different to what you expected?
     *
-    * Change it to make the test pass
+    * Change it so that it outputs the following when run:
+    * > executing step 1
+    * > executing step 2
+    * > executing step 3
     */
   def explain(logger: String => Unit): IO[Unit] = {
     IO(logger("executing step 1"))
