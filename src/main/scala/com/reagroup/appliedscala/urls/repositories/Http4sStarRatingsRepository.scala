@@ -14,7 +14,7 @@ class Http4sStarRatingsRepository(httpClient: Client[IO], apiKey: String) {
   def apply(movieName: String): IO[Option[StarRating]] = {
     val uri = Uri.uri("http://www.omdbapi.com/")
       .withQueryParam("apikey", apiKey)
-      .withQueryParam("s", movieName)
+      .withQueryParam("t", movieName)
     val str: IO[String] = httpClient.expect[String](uri)
     ???
   }
