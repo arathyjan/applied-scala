@@ -4,7 +4,7 @@ This endpoint is different than the `GET` ones because there is a request body t
 
 ### 1. `MovieValidationError`
 
-We have an built an ADT that represents all possible validation errors for a new `NewMovieRequest`.
+We have built an ADT that represents all possible validation errors for a `NewMovieRequest`.
 
 If the `name` is empty, return a `MovieNameTooShort` and if the `synopsis` is empty, return a `MovieSynopsisTooShort`.
 
