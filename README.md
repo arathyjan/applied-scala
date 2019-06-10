@@ -72,7 +72,7 @@ Using portable SBT
 | 11.15 | Http4s overview + Endpoint 1: Hello World |
 | 12.00 | Catered lunch | 
 | 13.00 | Circe Exercises | Stili  |
-| 14.00 | Code walkthrough: GET all movies (no exercises) |
+| 14.00 | [Code walkthrough: GET all movies (no exercises)](./src/main/scala/com/reagroup/appliedscala/urls/fetchallmovies/README.md) |
 | 14.30 | [Endpoint 2: GET movie](./src/main/scala/com/reagroup/appliedscala/urls/fetchmovie/README.md) |
 | 15.30 | Afternoon break |
 | 15.45 | Endpoint 3: Diagnostics |
