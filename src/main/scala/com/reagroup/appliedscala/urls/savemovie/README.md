@@ -1,82 +1,112 @@
-## GET movies/id/?enriched=true
+## POST movies
 
-Let's add an endpoint to fetch a movie, which is enriched with star rating info from the OMDB API.
+This endpoint is different than the `GET` ones because there is a request body that we receive from the client that we need to decode and turn into a Movie.
 
-### 1. Intro to OMDB
+### 1. `MovieValidationError`
 
-Go to [http://www.omdbapi.com/](http://www.omdbapi.com/), scroll down to _By ID or Title_.
+We have an built an ADT that represents all possible validation errors for a new `NewMovieRequest`.
 
-We are going to search for a movie using the `?t` query parameter. If we go to [http://www.omdbapi.com/?t=Titanic&apikey=7f9b5b06](http://www.omdbapi.com/?t=Titanic&apikey=7f9b5b06), we will see the following response:
+If the `name` is empty, return a `MovieNameTooShort` and if the `synopsis` is empty, return a `MovieSynopsisTooShort`.
+
+### 2. `NewMovieRequest` vs `ValidatedMovie`
+
+We have two different models here. A `NewMovieRequest` represents a request that has been successfully decoded containing a `name` and `synopsis` to save into the database. 
+
+However, at the point of decoding, we do not know whether the `name` and `synopsis` obey our business rules.
+
+We need to validate this model and if it is valid, we create a different type `ValidatedMovie` that represents this. The two types contain the same information, but by making them two distinct types, we can enforce additional type safety and better readability.
+
+### 3. `NewMovieValidator` (exercise)
+
+Build a `validate` function that takes a `NewMovieRequest` and returns either an `Invalid[NonEmptyList[MovieValidationError]]` or a `Valid[ValidatedMovie]`.
+
+Remember what you learned from `ValidationExercises`.
+
+_**Complete exercise**_
+
+_**Run unit test: `NewMovieValidatorSpec`**_
+
+### 4. `SaveMovieService` (exercise)
+
+We can see `SaveMovieService` has a `saveMovie` function taken in as a dependency. It is of type `ValidatedMovie => IO[MovieId]`. 
+
+The `save` function accepts a `NewMovieRequest` and returns a `IO[ValidatedNel[MovieValidationError, MovieId]]`. We want to validate the request, if it is valid, we save the movie and return the `MovieId`, otherwise we return all the errors. 
+
+_**Complete exercise**_
+
+_**Run unit test: `SaveMovieServiceSpec`**_
+
+### 5. `SaveMovieController` (exercise)
+
+The `Controller` is a little different this time. We have the entire request as an argument to the function. We want to decode the request into a `NewMovieRequest` and then pass that into the `saveNewMovie` function in the class constructor.
+
+After that, we want to `attempt` as usual and handle each possibility.
+
+You will need to complete the following in order to get the `Controller` to compile:
+
+- `Decoder[NewMovieRequest]` 
+- `Encoder[MovieValidationError]`
+- `Encoder[MovieId]`
+
+### 6. `NewMovieRequest` decoder (exercise)
+
+We need to describe how to convert from a `Json` into `NewMovieRequest`.
+
+Hint: The incoming JSON body is the same shape as our `NewMovieRequest` case class.
 
 ```
 {
-  Title: "Titanic",
-  Year: "1997",
-  Rated: "PG-13",
-  Released: "19 Dec 1997",
-  Metascore: "75"
-  ...
-  ...
-  ...
+  "name": "Titanic",
+  "synopsis": "A movie about ships"
 }
 ```
 
-We want to access the `Metascore` and turn it into a `StarRating`. For our purpose, if the score is between 0 and 20, we return `One`, etc.
+_**Complete exercise**_
 
-### 2. `StarRating` - fromScore (exercise)
+### 7. `MovieValidationError.show` and `MovieValidationError` encoder (exercise)
 
-`StarRating` is an algebraic data type (ADT) that represents all the possible star ratings. 
-
-Let's implement `fromScore`, which we will use to convert a `Metascore` to a `StarRating`. Remember, if the `Int` is outside of 0-100, we want to return `None`.
+Implement the `show` function first. This is a way to go from our type into a `String`. 
 
 _**Complete exercise**_
 
-_**Run unit test: `StarRatingSpec`**_
+_**Run unit test: `MovieValidationErrorSpec`**_
 
-### 3. `StarRating` - decoder (exercise)
-
-We can now implement a `Decoder` instance to convert a `Json` response from OMDB to a `StarRating` using `fromScore`.
-
-If we get a `None` instead of `Some(starRating)`, we want to report a `Left(DecodingFailure(..))`.
-
-The `c.history` that we pass into the `DecodingFailure` contains the path that the cursor has taken to get to this error. It can be useful when you are trying to debug your decoding failures.
+Next, create an `Encoder` instance to convert our type into `Json`.
 
 _**Complete exercise**_
 
-_**Run unit test: `StarRatingSpec`**_
+### 8. `MovieId` encoder (exercise)
 
-### 4. `Http4sStarRatingRepository` (exercise)
-
-This has mostly been implemented for you. We encode the `movieName` so spaces become `%20`, for instance, and then we make a request using an Http4s HTTP Client. 
-
-Hint: We want to start by converting the `String` in the response body into a `StarRating`. For the purpose of this exercise, let's convert any failures from Circe into a `None`.
+We also need a way to convert a `MovieId` into `Json`.
 
 _**Complete exercise**_
 
-### 5. `FetchEnrichedMovieService` (exercise)
-
-Moving on to the `Service`, we can see it has access to _two_ functions. The first one is to fetch a `Movie` and the second is to fetch a `StarRating`. More concretely, the first is the Postgresql database call and the second one is the OMDB API call.
-
-For the purpose of this exercise, if we get no `StarRating`, we want to error.
+### 9. Finish off `SaveMovieController`!
 
 _**Complete exercise**_
 
-_**Run unit test: `FetchEnrichedMovieServiceSpec`**_
+_**Run unit test: `SaveMovieControllerSpec`**_
 
-### 6. `FetchEnrichedMovieController` and `Encoder[EnrichedMovie]` (exercise)
+### 10. Wire it all up in `AppRuntime`
 
-Again, this is not much different than what we've seen. If we have `Some(enrichedMovie)` we want to return `Ok(...)`. If we have `None`, we want to return `NotFound()`. If we have a `Left`, we want to call the `ErrorHandler`.
+Now let's wire the `Service` and `Controller` up in `AppRuntime`.
 
-If you try to convert an `EnrichedMovie` to `Json` using `.asJson`, you will get a compilation error. This is because we have not created the `Encoder` instance for `EnrichedMovie`.
+Pass the newly instantiated `saveMovieController` into `AppRoutes`.
 
-Work on the `Controller` and also the `Encoder`. You will have to create your own custom encoder this time because we want to return a flat `Json`, even though `EnrichedMovie` is a nested structure.
+### 11. Update `AppRoutes`
 
-_**Complete exercise**_
+Change AppRoutes to accept a `SaveMovieController` and then call `saveMovie` given the `req`uest!
 
-_**Run unit test: `FetchEnrichedMovieControllerSpec`**_
+Note that `req@POST...` means that `req` is an alias for the value on the right hand side.
 
-### 7. Wire it all up in `AppRuntime` and `AppRoutes`
+Start the app using `./auto/start-local` and test it out!
 
-In `AppRuntime` we can now instantiate our `FetchEnrichedMovieService` and `FetchEnrichedMovieController`, and pass the `Controller` into `AppRoutes`
+### Test queries:
 
-Finally, we can extend `AppRoutes` to accept `FetchEnrichedMovieController` into the constructor.
+```
+curl -H "Accept: application/json"  -X POST -d "{\"name\": \"\", \"synopsis\": \"\"}" http://localhost:9200/movies
+
+curl -H "Accept: application/json"  -X POST -d "{\"name\": \"Space Jam\", \"synopsis\": \"A movie about basketball\"}" http://localhost:9200/movies
+
+curl http://localhost:9200/movies/2
+```
