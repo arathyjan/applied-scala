@@ -44,7 +44,11 @@ class IOExercisesSpec extends Specification {
     "run `logger` if `msg` is not empty" in {
       val logger = new TestLogger
       val msg = "message"
-      logMessageOrFailIfEmpty(msg, logger).unsafeRunSync
+
+      val program = logMessageOrFailIfEmpty(msg, logger)
+      logger.loggedMessages === List.empty
+
+      program.unsafeRunSync
 
       logger.loggedMessages.toList === List(msg)
 
