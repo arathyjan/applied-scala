@@ -98,7 +98,7 @@
       "Type": "AWS::RDS::DBInstance",
       "Properties": {
         "AllocatedStorage": 10,
-        "AvailabilityZone": "ap-southeast-2b",
+        "AvailabilityZone": "ap-southeast-2a",
         "DBInstanceClass": "db.t3.micro",
         "DBSubnetGroupName": { "Ref": "DatabaseSubnetGroup" },
         "Engine": "postgres",
@@ -152,13 +152,17 @@
       "Description": "Load balancer listener ARN",
       "Value": { "Ref": "LoadBalancerListener" }
     },
-    "LoadBalancerSecurityGroup": {
-      "Description": "Load balancer security group",
+    "TaskSecurityGroup": {
+      "Description": "Security group for tasks attached to the load balancer",
       "Value": { "Ref": "LoadBalancerSecurityGroup" }
     },
     "DatabaseHostname": {
       "Description": "Database instance hostname",
       "Value": { "Fn::GetAtt": ["DatabaseInstance", "Endpoint.Address"] }
+    },
+    "RepositoryARN": {
+      "Description": "ARN of the ECS repository",
+      "Value": { "Fn::GetAtt":  ["Repository", "Arn"] }
     }
   }
 }

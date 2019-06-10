@@ -23,29 +23,26 @@ aws:
   vpc: <(var.vpc_id)>
   ecs:
     cluster: <(var.cluster)>
-    networking:
-      subnets: <(var.subnets)>
-      security_group: <(var.security_group)>
+  networking:
+    subnets: <(var.subnets)>
   tags:
     application: applied-scala
-  load_balancing:
-    target_groups:
-      app:
-        container:
-          name: app
-          port: 9200
-        health_check:
-          path: /diagnostic/status/heartbeat
-        listener_rules:
-          app:
-            listener_arn: <(var.load_balancer.listener_arn)>
-            hostname: <(var.app_hostname)>.<(var.domain)>
-            priority: <(var.load_balancer.rule_priority)>
+  application_load_balancers:
+    app:
+      container:
+        name: app
+        port: 9200
+      health_check:
+        path: /diagnostic/status/heartbeat
+      listener_rules:
+        app:
+          listener_arn: <(var.load_balancer.listener_arn)>
+      dns:
         route53:
           app:
             host: <(var.app_hostname)>
             zone: <(var.domain)>
-            load_balancer_dns: <(var.load_balancer.hostname)>
-            load_balancer_hosted_zone: <(var.load_balancer.hosted_zone)>
+      load_balancer_dns: <(var.load_balancer.hostname)>
+      load_balancer_hosted_zone: <(var.load_balancer.hosted_zone)>
   kms:
     key: <(var.kms_key)>

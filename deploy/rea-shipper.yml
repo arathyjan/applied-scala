@@ -2,12 +2,10 @@ include:
   # This file contains everything that doesn't change between deployments.
   - rea-shipper-common.yml
   # This file contains details of the account we're deploying in (ids of VPC, subnets, load balancer, ECS cluster, etc).
-  - rea-shipper-training.yml
+  - rea-shipper-cpdev.yml
 
 # That just leaves a handful of values specific to your deployment.
 var:
-  load_balancer:
-    rule_priority: 42 # TODO
   database:
     username: ''
     encrypted_password: ''

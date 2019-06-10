@@ -34,7 +34,7 @@ services:
       - ./db:/docker-entrypoint-initdb.d
 
   shipper:
-    image: registry.cowbell.realestate.com.au/cowbell/rea-shipper:1.1.2
+    image: registry.cowbell.realestate.com.au/cowbell/rea-shipper:2.0.1
     environment:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY

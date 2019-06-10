@@ -1,0 +1,15 @@
+var:
+  vpc_id: vpc-399e7a5c
+  cluster: arn:aws:ecs:ap-southeast-2:822908674847:cluster/applied-scala-course
+  domain: cpdev.realestate.com.au
+  kms_key: arn:aws:kms:ap-southeast-2:822908674847:key/f975b08e-9110-4f78-8ed3-02eedd87b6f8
+  load_balancer:
+    hostname: appli-LoadB-YY46YSUZEF7J-220182358.ap-southeast-2.elb.amazonaws.com
+    hosted_zone: Z1GM3OXH4ZPM65
+    listener_arn: arn:aws:elasticloadbalancing:ap-southeast-2:822908674847:listener/app/appli-LoadB-YY46YSUZEF7J/541917aba847b731/ae953bf265b2bc46
+  app_hostname: applied-scala-<(var.username)>
+  subnets:
+  - subnet-7b17fe1e
+  - subnet-174b5f63
+  database:
+    host: adoulw3ns1g7xe.cjl5rwbt2kzv.ap-southeast-2.rds.amazonaws.com
