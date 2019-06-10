@@ -2,7 +2,6 @@
 #APPLIED_SCALA_USERNAME=
 
 VERSION="${APPLIED_SCALA_USERNAME:?You need to define APPLIED_SCALA_USERNAME in this file}-$(date +%Y%m%d%H%M)"
-# TODO: ECR repository in training account
-DOCKER_REPOSITORY=954088256298.dkr.ecr.ap-southeast-2.amazonaws.com/applied-scala
+DOCKER_REPOSITORY=822908674847.dkr.ecr.ap-southeast-2.amazonaws.com/applied-scala
 
 : ${DOCKER_TAG:="$DOCKER_REPOSITORY:$VERSION"}

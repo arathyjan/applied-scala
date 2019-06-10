@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -euo pipefail
+
+cd $(dirname $0)/../..
+
+auto/stackup \
+  applied-scala-shared-resources \
+  up -t deploy/shared-resources/shared-resources.json \
+  -o VpcId=vpc-399e7a5c \
+  -o LoadBalancerSubnets=subnet-7917fe1c,subnet-104b5f64 \
+  -o LoadBalancerCertificateARN=arn:aws:acm:ap-southeast-2:822908674847:certificate/eff94c2d-48b2-451b-be84-fce1e1553008 \
+  -o DatabaseMasterUsername=applied \
+  -o DatabaseMasterPassword="$DATABASE_MASTER_PASSWORD" \
+  -o DatabaseSubnets=subnet-7b17fe1e,subnet-174b5f63 \
+  --tags deploy/shared-resources/tags.json
+
+auto/stackup \
+  applied-scala-shared-resources \
+  outputs -Y
