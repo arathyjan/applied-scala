@@ -72,8 +72,8 @@ Using portable SBT
 | 11.15 | Http4s overview + Endpoint 1: Hello World |
 | 12.00 | Catered lunch | 
 | 13.00 | Circe Exercises | Stili  |
-| 14.00 | Code walkthrough: GET all movies (no exercises) |
-| 14.30 | Endpoint 2: GET movie |
+| 14.00 | [Code walkthrough: GET all movies (no exercises)](./src/main/scala/com/reagroup/appliedscala/urls/fetchallmovies/README.md) |
+| 14.30 | [Endpoint 2: GET movie](./src/main/scala/com/reagroup/appliedscala/urls/fetchmovie/README.md) |
 | 15.30 | Afternoon break |
 | 15.45 | Endpoint 3: Diagnostics |
 | 16.45 | Demonstration: Deploy to AWS |
@@ -84,15 +84,15 @@ Using portable SBT
 | Time | Topic/Exercise |
 | :---: | :---: |
 |  9.15 | Day 2 Keynote |
-| 10.00 | Endpoint 4: GET movie?enriched=true |
+| 10.00 | [Endpoint 4: GET movie?enriched=true](./src/main/scala/com/reagroup/appliedscala/urls/fetchenrichedmovie/README.md) |
 | 10.30 | Morning break | 
 | 10.45 | Endpoint 4 (continued) |
 | 11.15 | Validated and Traverse Theory |
 | 12.00 | Catered lunch |
 | 13.00 | Validated Exercises | 
-| 14.00 | Endpoint 5: POST movie |
+| 14.00 | [Endpoint 5: POST movie](./src/main/scala/com/reagroup/appliedscala/urls/savemovie/README.md) |
 | 15.15 | Afternoon break | 
-| 15.30 | Endpoint 6: POST movie/id/review |
+| 15.30 | [Endpoint 6: POST movie/id/review](./src/main/scala/com/reagroup/appliedscala/urls/savereview/README.md) |
 | 16:45 | Wrap-up | Jake
 | 17:00 | End |
 
