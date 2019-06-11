@@ -9,6 +9,7 @@ class AppRoutes(fetchAllMoviesHandler: IO[Response[IO]],
 
   val openRoutes: HttpRoutes[IO] = HttpRoutes.of {
     case GET -> Root / "movies" => fetchAllMoviesHandler
+    case GET -> Root / "hello" => Ok("hello World")
     case req @ POST -> Root / "movies" => saveMovieHandler(req)
     case req @ POST -> Root / "movies" / LongVar(id) / "reviews" => ???
   }
