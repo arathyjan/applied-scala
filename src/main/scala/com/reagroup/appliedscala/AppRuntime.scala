@@ -7,6 +7,7 @@ import cats.effect.Timer
 import cats.effect.IO
 import cats.implicits._
 import com.reagroup.appliedscala.config.Config
+import com.reagroup.appliedscala.models.MovieId
 import com.reagroup.appliedscala.urls.repositories.{Http4sStarRatingsRepository, PostgresqlRepository}
 import com.reagroup.appliedscala.urls.diagnostics.Diagnostics
 import com.reagroup.appliedscala.urls.fetchallmovies.{FetchAllMoviesController, FetchAllMoviesService}
@@ -33,8 +34,14 @@ class AppRuntime(config: Config, httpClient: Client[IO], contextShift: ContextSh
     new FetchAllMoviesController(fetchAllMoviesService.fetchAll)
   }
 
+  private val fetchMovieController: FetchMovieController = {
+    val fetchMovieService: FetchMovieService = new FetchMovieService(pgsqlRepo.fetchMovie)
+    new FetchMovieController(fetchMovieService.fetch)
+  }
+
   private val appRoutes = new AppRoutes(
     fetchAllMoviesHandler = fetchAllMoviesController.fetchAll,
+    fetchMovieHandler = fetchMovieController.fetch,
     saveMovieHandler = _ => IO(Response[IO](status = Status.NotImplemented))
   )
 

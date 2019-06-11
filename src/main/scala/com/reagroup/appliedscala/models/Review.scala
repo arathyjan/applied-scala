@@ -6,11 +6,7 @@ import io.circe.generic.semiauto._
 case class Review(author: String, comment: String)
 
 object Review {
+  implicit val reviewEncoder = deriveEncoder[Review]
 
-  /**
-    * Add an Encoder instance here
-    *
-    * Hint: Use `deriveEncoder`
-    */
 
 }
