@@ -1,6 +1,8 @@
 package com.reagroup.appliedscala.urls.fetchenrichedmovie
 
-import io.circe.{Decoder, DecodingFailure, Encoder, HCursor}
+import com.reagroup.exercises.circe.CirceExercises.Person
+import io.circe.Decoder.Result
+import io.circe.{Decoder, DecodingFailure, HCursor}
 
 sealed trait StarRating
 
@@ -26,7 +28,18 @@ object StarRating {
     * If the score is out of range, return `None`
     */
   def fromScore(score: Int): Option[StarRating] =
-    ???
+    if(score >= 0 && score < 25)
+      Some(One)
+    else if (score >= 25 && score < 50)
+      Some(Two)
+    else if (score >= 50 && score < 75)
+      Some(Three)
+    else if (score >= 75 && score < 100)
+      Some(Four)
+    else
+      None
+
+
 
   /**
     * Write a function that turns a `StarRating` to a `String`.
@@ -38,8 +51,19 @@ object StarRating {
     * etc.
     */
   def show(starRating: StarRating): String =
-    ???
+    starRating match {
+      case One => "One Star"
+      case Two => "Two Stars"
+      case Three => "Three Stars"
+      case Four => "Four Stars"
+    }
 
+
+  implicit val decorder: Decoder[StarRating] = (c: HCursor) => {
+    val errorOrScore: Result[Int] = c.downField("Metascore").as[Int]
+    val errorOrMayBeStarRating: Result[Option[StarRating]] = errorOrScore.map(fromScore)
+    errorOrMayBeStarRating.flatMap(mayBeStarRating => mayBeStarRating.toRight(DecodingFailure("Score is out of range: 0-100", c.history)))
+  }
   /**
     * Add a Decoder instance here
     *

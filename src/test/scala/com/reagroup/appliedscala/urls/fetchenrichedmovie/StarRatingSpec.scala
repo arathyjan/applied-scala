@@ -32,7 +32,7 @@ class StarRatingSpec extends Specification with ScalaCheck {
 
     }.setGen(Gen.chooseNum(50, 74)).noShrink
 
-    "return Three when score is between 75 and 100" in prop { score: Int =>
+    "return Four when score is between 75 and 100" in prop { score: Int =>
 
       val result = StarRating.fromScore(score)
 
