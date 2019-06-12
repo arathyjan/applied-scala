@@ -36,4 +36,9 @@ object EnrichedMovie {
     * Hint: You will need to create a custom encoder. Also use `StarRating.show`
     */
 
+  implicit val encoder: Encoder[EnrichedMovie] =
+    Encoder.forProduct4("name", "synopsis", "reviews",
+      "ratings")(enrichedM =>
+      (enrichedM.movie.name, enrichedM.movie.synopsis, enrichedM.movie.reviews, StarRating.show(enrichedM.starRating)))
+
 }

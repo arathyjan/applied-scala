@@ -24,7 +24,7 @@ class AppRuntime(config: Config, httpClient: Client[IO], contextShift: ContextSh
     * This is the repository that talks to Postgresql
     */
   private val pgsqlRepo = PostgresqlRepository(config.databaseConfig)
-
+  private val http4sStarRatingsRepository = new Http4sStarRatingsRepository(httpClient, config.omdbApiKey)
   /**
     * This is where we instantiate our `Service` and `Controller` for each endpoint.
     * We will need to write a similar block for each endpoint we write.
@@ -39,10 +39,16 @@ class AppRuntime(config: Config, httpClient: Client[IO], contextShift: ContextSh
     new FetchMovieController(fetchMovieService.fetch)
   }
 
+  private val fetchEnrichedMovieController: FetchEnrichedMovieController = {
+    val service: FetchEnrichedMovieService = new FetchEnrichedMovieService(pgsqlRepo.fetchMovie, http4sStarRatingsRepository.apply)
+    new FetchEnrichedMovieController(service.fetch)
+  }
+
   private val appRoutes = new AppRoutes(
     fetchAllMoviesHandler = fetchAllMoviesController.fetchAll,
     fetchMovieHandler = fetchMovieController.fetch,
-    saveMovieHandler = _ => IO(Response[IO](status = Status.NotImplemented))
+    saveMovieHandler = _ => IO(Response[IO](status = Status.NotImplemented)),
+    fetchEnrichedMovieHandler = fetchEnrichedMovieController.fetch
   )
 
   private val diagnosticRoutes = Diagnostics(config, pgsqlRepo)(contextShift, timer)

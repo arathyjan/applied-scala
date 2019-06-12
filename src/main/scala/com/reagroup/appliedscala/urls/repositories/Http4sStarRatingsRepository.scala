@@ -16,7 +16,13 @@ class Http4sStarRatingsRepository(httpClient: Client[IO], apiKey: String) {
       .withQueryParam("apikey", apiKey)
       .withQueryParam("t", movieName)
     val str: IO[String] = httpClient.expect[String](uri)
-    ???
+//    val errorOrStarRating: IO[Either[circe.Error, StarRating]] = str.map(decode[StarRating])
+//    val mayBeStarRating: IO[Option[StarRating]] = errorOrStarRating.map(errorOrStarRating => errorOrStarRating.toOption)
+//    mayBeStarRating
+//    toOption convert Either to Option by removing the error to None
+
+    str.map(decode[StarRating]).map(errorOrStarRating => errorOrStarRating.toOption)
+
   }
 
 }

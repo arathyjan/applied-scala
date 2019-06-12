@@ -34,7 +34,7 @@ object StarRating {
       Some(Two)
     else if (score >= 50 && score < 75)
       Some(Three)
-    else if (score >= 75 && score < 100)
+    else if (score >= 75 && score <= 100)
       Some(Four)
     else
       None
