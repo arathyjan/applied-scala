@@ -47,9 +47,20 @@ class AppRuntime(config: Config, httpClient: Client[IO], contextShift: ContextSh
   private val appRoutes = new AppRoutes(
     fetchAllMoviesHandler = fetchAllMoviesController.fetchAll,
     fetchMovieHandler = fetchMovieController.fetch,
-    saveMovieHandler = _ => IO(Response[IO](status = Status.NotImplemented)),
-    fetchEnrichedMovieHandler = fetchEnrichedMovieController.fetch
+    fetchEnrichedMovieHandler = fetchEnrichedMovieController.fetch,
+    saveReviewHandler = saveReviewController.save,
+    saveMovieHandler = saveMovieController.save
   )
+
+  private val saveMovieController: SaveMovieController = {
+    val saveMovieService: SaveMovieService = new SaveMovieService(pgsqlRepo.saveMovie)
+    new SaveMovieController(saveMovieService.save)
+  }
+
+  private val saveReviewController: SaveReviewController = {
+    val savereviewService: SaveReviewService = new SaveReviewService(pgsqlRepo.saveReview, pgsqlRepo.fetchMovie)
+    new SaveReviewController(savereviewService.save)
+  }
 
   private val diagnosticRoutes = Diagnostics(config, pgsqlRepo)(contextShift, timer)
   /*

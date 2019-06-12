@@ -24,6 +24,7 @@ class AppRoutesSpec extends Specification with Http4sDsl[IO] with Http4sMatchers
     fetchAllMoviesHandler = fetchAllMovies,
     fetchMovieHandler = fetchMovie,
     fetchEnrichedMovieHandler = fetchEnrichedMovie,
+    saveReviewHandler = saveReview,
     saveMovieHandler = saveMovie
   )
 
@@ -93,6 +94,5 @@ class AppRoutesSpec extends Specification with Http4sDsl[IO] with Http4sMatchers
       }
     }
   }
-
 }
 

@@ -16,8 +16,44 @@ class SaveReviewService(saveReview: (MovieId, ValidatedReview) => IO[ReviewId],
     * You can convert `Option`s to `ValidatedNel` using `optionToValidatedNel`
     *
     */
-  def save(movieId: MovieId, review: NewReviewRequest): IO[ValidatedNel[ReviewValidationError, ReviewId]] =
-    ???
+  def save(movieId: MovieId, review: NewReviewRequest): IO[ValidatedNel[ReviewValidationError, ReviewId]] = {
+
+    val validatedReview: ValidatedNel[ReviewValidationError, ValidatedReview] = NewReviewValidator.validate(review)
+
+    val ioMayBeMovie: IO[Option[Movie]] = fetchMovie(movieId)
+    val ioValidatedMovie: IO[ValidatedNel[ReviewValidationError, Movie]] =
+      ioMayBeMovie.map(maybeMovie => optionToValidatedNel(maybeMovie, MovieDoesNotExist))
+
+    val validatedReviewWithErrorsIO: IO[ValidatedNel[ReviewValidationError, ValidatedReview]] =
+      ioValidatedMovie.map(validatedMovie => validatedMovie.productR(validatedReview))
+
+//    val savedReviewResp: IO[Validated[NonEmptyList[ReviewValidationError], ReviewId]] =
+//      validatedReviewWithErrorsIO
+//        .flatMap(
+//          validatedReview => validatedReview
+//            .map(validReview =>
+//              saveReview(movieId, validReview)
+//            ).sequence
+//        )
+
+    val savedReviewResp: IO[Validated[NonEmptyList[ReviewValidationError], ReviewId]] =
+      validatedReviewWithErrorsIO
+        .flatMap(
+          validatedReview => validatedReview
+            .traverse(validReview =>
+              saveReview(movieId, validReview)
+            )
+        )
+
+    savedReviewResp
+//
+//    for {
+//      mayBeMovie <- fetchMovie(movieId)
+//      validatedMovie <- optionToValidatedNel(maybeMovie, MovieDoesNotExist)
+//
+//    } yield ???
+  }
+
 
   private def optionToValidatedNel[A, B](o: Option[A], error: B): ValidatedNel[B, A] =
     Validated.fromOption(o, NonEmptyList.one(error))

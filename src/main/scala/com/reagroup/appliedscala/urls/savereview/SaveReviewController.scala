@@ -14,6 +14,14 @@ import org.http4s.dsl.Http4sDsl
 class SaveReviewController(saveNewReview: (MovieId, NewReviewRequest) => IO[ValidatedNel[ReviewValidationError, ReviewId]]) extends Http4sDsl[IO] {
 
   def save(movieId: Long, req: Request[IO]): IO[Response[IO]] =
-    ???
+    for {
+      newReviewReq <- req.as[NewReviewRequest]
+      failureOrErrorOrReview <- saveNewReview(MovieId(movieId), newReviewReq).attempt
+      resp <- failureOrErrorOrReview match {
+        case Right(Valid(reviewId)) => Created(reviewId.asJson)
+        case Right(Invalid(reviewValidationError)) => BadRequest(Json.obj("errors" -> reviewValidationError.asJson))
+        case Left(e) => ErrorHandler(e)
+      }
+    } yield resp
 
 }

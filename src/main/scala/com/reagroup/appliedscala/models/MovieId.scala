@@ -8,7 +8,6 @@ case class MovieId(value: Long)
 
 object MovieId {
 
-  implicit val movieIdEncoder = deriveEncoder[MovieId]
 
   /**
     * Add an Encoder instance here
@@ -21,4 +20,6 @@ object MovieId {
     *
     * Hint: You don't want to use `deriveEncoder` here
     */
+
+  implicit val encoder: Encoder[MovieId] = Encoder.forProduct1("id")(movieId => movieId.value)
 }

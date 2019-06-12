@@ -16,4 +16,5 @@ object NewReviewRequest {
     * }
     */
 
+  implicit val newReviewDecoder = deriveDecoder[NewReviewRequest]
 }

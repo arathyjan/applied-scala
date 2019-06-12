@@ -24,7 +24,12 @@ object ReviewValidationError {
     *
     * Hint: Use pattern matching
     */
-  def show(error: ReviewValidationError): String = ???
+  def show(error: ReviewValidationError): String =
+    error match {
+      case ReviewAuthorTooShort => "REVIEW_AUTHOR_TOO_SHORT"
+      case ReviewCommentTooShort => "REVIEW_COMMENT_TOO_SHORT"
+      case MovieDoesNotExist => "MOVIE_DOES_NOT_EXIST"
+    }
 
   /**
     * Add an Encoder instance here
@@ -37,5 +42,7 @@ object ReviewValidationError {
     *
     * Hint: You don't want to use `deriveEncoder` here
     */
+
+  implicit val encoder: Encoder[ReviewValidationError] = Encoder.forProduct1("type")(e => show(e))
 
 }

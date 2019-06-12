@@ -1,5 +1,6 @@
 package com.reagroup.appliedscala.urls.savemovie
 
+import com.reagroup.appliedscala.urls.savereview.NewReviewRequest
 import io.circe.Decoder
 import io.circe.generic.semiauto._
 
@@ -17,5 +18,8 @@ object NewMovieRequest {
     *
     * Hint: The keys in the JSON are named exactly the same as the fields in `NewMovieRequest`.
     */
+
+  implicit val newMovieDecoder = deriveDecoder[NewMovieRequest]
+
 
 }
