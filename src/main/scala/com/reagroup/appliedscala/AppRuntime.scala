@@ -45,9 +45,13 @@ class AppRuntime(config: Config, httpClient: Client[IO], contextShift: ContextSh
     saveMovieHandler = _ => IO(Response[IO](status = Status.NotImplemented))
   )
 
+  private val diagnosticRoutes = Diagnostics(config, pgsqlRepo)(contextShift, timer)
   /*
    * All routes that make up the application are exposed by AppRuntime here.
    */
-  def routes: HttpApp[IO] = HttpApp((req: Request[IO]) => appRoutes.openRoutes(req).getOrElse(Response[IO](status = Status.NotFound)))
+
+  private val allRoutes = appRoutes.openRoutes.combineK(diagnosticRoutes.routes)
+//  def routes: HttpApp[IO] = HttpApp((req: Request[IO]) => appRoutes.openRoutes(req).getOrElse(Response[IO](status = Status.NotFound)))
+  def routes: HttpApp[IO] = HttpApp((req: Request[IO]) => allRoutes(req).getOrElse(Response[IO](status = Status.NotFound)))
 
 }

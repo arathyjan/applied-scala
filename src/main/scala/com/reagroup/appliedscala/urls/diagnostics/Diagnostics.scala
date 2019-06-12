@@ -27,7 +27,7 @@ object Diagnostics {
      * Just being able to hit the heartbeat endpoint and get back a 200 response
      * is enough for a load balancer to determine whether or not this server is healthy.
      */
-    val heartbeatChecks: Vector[DiagnosticCheckDefinition[IO]] = ???
+    val heartbeatChecks: Vector[DiagnosticCheckDefinition[IO]] = Vector.empty
 
     /*
      * The /diagnostic/status/diagnosis endpoint runs these checks and the heartbeat checks,
@@ -39,7 +39,7 @@ object Diagnostics {
      * Where the heartbeat endpoint is normally used for health checks, the diagnosis endpoint
      * is one we might only check manually when we suspect there is a problem.
      */
-    val diagnosticChecks: Vector[DiagnosticCheckDefinition[IO]] = ???
+    val diagnosticChecks: Vector[DiagnosticCheckDefinition[IO]] = Vector(PostgresqlRepositoryCheck(pgsqlRepo.diagnostic()))
 
     val diagnosticConfig = DiagnosticConfig(
       version = config.version,
